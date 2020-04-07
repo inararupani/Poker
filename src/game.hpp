@@ -147,7 +147,6 @@ public:
     playerWindow(player p);
     virtual ~playerWindow();
 
-protected:
     //Signal handlers
     void on_Menu();
     void on_Help();
@@ -163,6 +162,8 @@ protected:
     void on_chip_5();
     void on_chip_25();
 
+
+
     Gtk::Image DealerAvatar;
     Gtk::Image PlayerAvatar;
     Gtk::Image chips;
@@ -174,6 +175,8 @@ protected:
     Gtk::Image Card5;
     Gtk::Entry Amount; // amount to bet or raise
     Gtk::Entry Chat;
+    Gtk::Label chatLabel;
+    Gtk::Label balanceLabel;
     Gtk::Button chip1;
     Gtk::Button chip5;
     Gtk::Button chip25;
@@ -188,8 +191,10 @@ protected:
     Gtk::Button SitOut;
     Gtk::Button Send;
     Gtk::VBox Box;
+    Gtk::HBox chipBox;
     Gtk::HBox actionBox;
     Gtk::HBox cardsBox;
+
     //Gtk::Grid grid;//Keeps the object in a certain way
 };
 

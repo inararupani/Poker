@@ -179,25 +179,42 @@ playerWindow::playerWindow(player p):Player(p){
 	Box.set_spacing(10);
 
 	cardsBox.set_spacing(10);
-	Card1.set("blank_card.jpg");
+	Card1.set("src/blank_card.jpg");
 	cardsBox.pack_start(Card1);
 
-	Card2.set("blank_card.jpg");
+	Card2.set("src/blank_card.jpg");
 	cardsBox.pack_start(Card2);
 
-	Card3.set("blank_card.jpg");
+	Card3.set("src/blank_card.jpg");
 	cardsBox.pack_start(Card3);
 
-	Card4.set("blank_card.jpg");
+	Card4.set("src/blank_card.jpg");
 	cardsBox.pack_start(Card4);
 
-	Card5.set("blank_card.jpg");
+	Card5.set("src/blank_card.jpg");
 	cardsBox.pack_start(Card5);
 
 	Box.pack_start(cardsBox);
 
+	balanceLabel.set_label("Balance:   $1:   $5:   $25:   ");
+	Box.pack_start(balanceLabel);
+
 	Amount.set_placeholder_text("eg: 5");
 	Box.pack_start(Amount);
+
+	chip1.set_label("$1");
+	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
+    chipBox.pack_start(chip1);
+
+    chip5.set_label("$5");
+	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_5));
+    chipBox.pack_start(chip5);
+
+    chip25.set_label("$25");
+	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_25));
+    chipBox.pack_start(chip25);
+
+    Box.pack_start(chipBox);
 
 	Call.set_label("Call");
     Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Call));
@@ -219,6 +236,11 @@ playerWindow::playerWindow(player p):Player(p){
     CardSwap.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_CardSwap));
     actionBox.pack_start(CardSwap);
 
+    SitOut.set_label("Sit Out");
+    SitOut.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_SitOut));
+    actionBox.pack_start(SitOut);
+
+
     Box.pack_start(actionBox);
     
     Chat.set_placeholder_text("eg: Hi");
@@ -227,6 +249,9 @@ playerWindow::playerWindow(player p):Player(p){
     Send.set_label("Send");
     Send.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Send));
     Box.pack_start(Send);
+
+    chatLabel.set_label("Chat History:");
+    Box.pack_start(chatLabel);
 
     Exit.set_label("Exit");
     Exit.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Exit));
@@ -252,6 +277,7 @@ void playerWindow::on_Exit() {
 
 void playerWindow::on_Send(){
 	chatMessage = Chat.get_text();
+	Chat.set_text("");
 
 	char line[chat_message::max_body_length + 1];
 
