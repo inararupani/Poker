@@ -179,19 +179,19 @@ playerWindow::playerWindow(player p):Player(p){
 	Box.set_spacing(10);
 
 	cardsBox.set_spacing(10);
-	Card1.set("src/blank_card.jpg");
+	Card1.set("src/cards/blank_card.png");
 	cardsBox.pack_start(Card1);
 
-	Card2.set("src/blank_card.jpg");
+	Card2.set("src/cards/blank_card.png");
 	cardsBox.pack_start(Card2);
 
-	Card3.set("src/blank_card.jpg");
+	Card3.set("src/cards/blank_card.png");
 	cardsBox.pack_start(Card3);
 
-	Card4.set("src/blank_card.jpg");
+	Card4.set("src/cards/blank_card.png");
 	cardsBox.pack_start(Card4);
 
-	Card5.set("src/blank_card.jpg");
+	Card5.set("src/cards/blank_card.png");
 	cardsBox.pack_start(Card5);
 
 	Box.pack_start(cardsBox);
