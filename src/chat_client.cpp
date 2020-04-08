@@ -23,6 +23,8 @@ using asio::ip::tcp;
 
 typedef std::deque<chat_message> chat_message_queue;
 
+Gtk::Label *fromView = NULL;
+
 class chat_client
 {
 public:
@@ -91,6 +93,12 @@ private:
         {
           if (!ec)
           {
+            char outline[read_msg_.body_length() + 2];
+                     // '\n' + '\0' is 2 more chars
+            outline[0] = '\n';
+            outline[read_msg_.body_length() + 1] = '\0';
+            std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+            fromView->set_text(outline);
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
             do_read_header();
@@ -135,96 +143,95 @@ chat_client *c;
 
 //gtk classes start
 playerNameWindow::playerNameWindow() {
-	set_title("Enter game");
-	set_border_width(30);
-	resize(400,200);
-	set_position(Gtk::WIN_POS_CENTER_ALWAYS);
-	Box.set_spacing(10);
+  set_title("Enter game");
+  set_border_width(30);
+  resize(400,200);
+  set_position(Gtk::WIN_POS_CENTER_ALWAYS);
+  Box.set_spacing(10);
 
-	nameLabel.set_text("Enter your name:");
-	Box.pack_start(nameLabel);
+  nameLabel.set_text("Enter your name:");
+  Box.pack_start(nameLabel);
 
-	Name.set_placeholder_text("eg: John");
-	Box.pack_start(Name);
+  Name.set_placeholder_text("eg: John");
+  Box.pack_start(Name);
 
-	OK.set_label("Ok");
-	OK.signal_clicked().connect(sigc::mem_fun(*this, &playerNameWindow::on_OK));
-	Box.pack_start(OK);
+  OK.set_label("Ok");
+  OK.signal_clicked().connect(sigc::mem_fun(*this, &playerNameWindow::on_OK));
+  Box.pack_start(OK);
 
-	Box.show_all();
-	add(Box);
+  Box.show_all();
+  add(Box);
 
 }
 
 playerNameWindow::~playerNameWindow() {}
 void playerNameWindow::on_OK() {
-	hide();
+  hide();
 
-	string playerName = Name.get_text();
+  string playerName = Name.get_text();
 
+  player p(playerName, true);
 
-	player p(playerName, true);
-
-	playerWindow w(p);
-	Gtk::Main::run(w);
+  playerWindow w(p);
+  Gtk::Main::run(w);
 } // get player's name from entry, opens playerWindow
 
 
 playerWindow::playerWindow(player p):Player(p){
 
-	set_title(Player.playerName + "'s Game Window");
-	set_border_width(30);
-	resize(600,400);
-	set_position(Gtk::WIN_POS_CENTER_ALWAYS);
-	Box.set_spacing(10);
+  set_title(Player.playerName + "'s Game Window");
+  set_border_width(30);
+  resize(600,400);
+  set_position(Gtk::WIN_POS_CENTER_ALWAYS);
+  Box.set_spacing(10);
 
-	cardsBox.set_spacing(10);
-	Card1.set("src/cards/blank_card.png");
-	cardsBox.pack_start(Card1);
+  cardsBox.set_spacing(10);
+  Card1.set("src/cards/blank_card.png");
+  cardsBox.pack_start(Card1);
 
-	Card2.set("src/cards/blank_card.png");
-	cardsBox.pack_start(Card2);
+  Card2.set("src/cards/blank_card.png");
+  cardsBox.pack_start(Card2);
 
-	Card3.set("src/cards/blank_card.png");
-	cardsBox.pack_start(Card3);
+  Card3.set("src/cards/blank_card.png");
+  cardsBox.pack_start(Card3);
 
-	Card4.set("src/cards/blank_card.png");
-	cardsBox.pack_start(Card4);
+  Card4.set("src/cards/blank_card.png");
+  cardsBox.pack_start(Card4);
 
-	Card5.set("src/cards/blank_card.png");
-	cardsBox.pack_start(Card5);
+  Card5.set("src/cards/blank_card.png");
+  cardsBox.pack_start(Card5);
 
-	Box.pack_start(cardsBox);
+  Box.pack_start(cardsBox);
 
-	balanceLabel.set_label("Balance:   $1:   $5:   $25:   ");
-	Box.pack_start(balanceLabel);
+  balanceLabel.set_label("Balance:   $1:   $5:   $25:   ");
+  Box.pack_start(balanceLabel);
 
-	Amount.set_placeholder_text("eg: 5");
-	Box.pack_start(Amount);
+  Amount.set_placeholder_text("eg: 5");
+  Box.pack_start(Amount);
 
-	chip1.set_label("$1");
-	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
+  chip1.set_label("$1");
+  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
     chipBox.pack_start(chip1);
 
     chip5.set_label("$5");
-	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_5));
+  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_5));
     chipBox.pack_start(chip5);
 
     chip25.set_label("$25");
-	Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_25));
+  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_25));
     chipBox.pack_start(chip25);
 
     Box.pack_start(chipBox);
 
-	Call.set_label("Call");
+  Call.set_label("Call");
     Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Call));
     actionBox.pack_start(Call);
-	
-	Bet.set_label("Bet");
+  
+  Bet.set_label("Bet");
     Bet.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Bet));
     actionBox.pack_start(Bet);
 
-	Raise.set_label("Raise");
+  Raise.set_label("Raise");
     Raise.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Raise));
     actionBox.pack_start(Raise);
 
@@ -250,16 +257,18 @@ playerWindow::playerWindow(player p):Player(p){
     Send.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Send));
     Box.pack_start(Send);
 
-    chatLabel.set_label("Chat History:");
-    Box.pack_start(chatLabel);
+    chatLabel = new Gtk::Label();
+    fromView = chatLabel;
+    chatLabel->set_label("Chat History:"); 
+    Box.pack_start(*chatLabel);
 
     Exit.set_label("Exit");
     Exit.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Exit));
     Box.pack_start(Exit);
 
 
-	Box.show_all();
-	add(Box);
+  Box.show_all();
+  add(Box);
 }
 
 playerWindow::~playerWindow() {}
@@ -271,25 +280,25 @@ void playerWindow::on_Raise() {}
 void playerWindow::on_Fold() {}
 void playerWindow::on_Bet() {}
 void playerWindow::on_Exit() {
-	hide();
+  hide();
 }
 
 
 void playerWindow::on_Send(){
-	chatMessage = Chat.get_text();
-	Chat.set_text("");
+  chatMessage = Chat.get_text();
+  Chat.set_text("");
 
-	char line[chat_message::max_body_length + 1];
+  char line[chat_message::max_body_length + 1];
 
-	strcpy(line, chatMessage.c_str());
-	
-	chat_message msg;
-	msg.body_length (strlen(line));
-	std::memcpy(msg.body(), line, msg.body_length());
-	msg.encode_header();
+  strcpy(line, chatMessage.c_str());
+  
+  chat_message msg;
+  msg.body_length (strlen(line));
+  std::memcpy(msg.body(), line, msg.body_length());
+  msg.encode_header();
 
-	assert(c);
-	c->write(msg);
+  assert(c);
+  c->write(msg);
 }
 
 void playerWindow::on_CardSwap() {}
@@ -319,7 +328,7 @@ int main(int argc, char* argv[])
     assert(c);
     std::thread t([&io_context](){ io_context.run(); });
 
-   	Gtk::Main app(argc, argv);
+    Gtk::Main app(argc, argv);
     playerNameWindow w;
     Gtk::Main::run(w);
 

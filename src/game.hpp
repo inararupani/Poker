@@ -175,7 +175,7 @@ public:
     Gtk::Image Card5;
     Gtk::Entry Amount; // amount to bet or raise
     Gtk::Entry Chat;
-    Gtk::Label chatLabel;
+    Gtk::Label* chatLabel;
     Gtk::Label balanceLabel;
     Gtk::Button chip1;
     Gtk::Button chip5;
