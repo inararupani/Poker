@@ -20,8 +20,7 @@ chat_client:./src/chat_client.cpp  ./src/player.cpp
 chat_server:./src/chat_server.cpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< -lpthread
 
-
 clean:
 	-rm -rf asio-1.12.2
 	-rm -f chat_client
-	-rm -f chat_server		
+	-rm -f chat_server
