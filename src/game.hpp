@@ -141,10 +141,10 @@ protected:
 
 class playerWindow: public Gtk::Window{
 public:
-    player Player;
+    player *Player;
     string chatMessage;
 
-    playerWindow(player p);
+    playerWindow(player *p);
     virtual ~playerWindow();
 
     //Signal handlers

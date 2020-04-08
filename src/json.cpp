@@ -17,7 +17,7 @@ int main(int argc,char *argv[])
    to_dealer["total_bet"] = 5.00;
    to_dealer["chat"] = "this is a string of text representing a chat message";
    std::cout << "to dealer:" << std::endl;
-   std::cout << to_dealer.dump(2) << std::endl;
+   std::cout << to_dealer.dump(2) << std::endl; 
 
    nlohmann::json to_player;  // represents the entire game state.  sent to all players
    to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 

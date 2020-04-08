@@ -18,12 +18,15 @@
 #include "chat_message.hpp"
 #include <gtkmm.h>
 #include "game.hpp"
+#include "json.hpp"
 
 using asio::ip::tcp;
 
 typedef std::deque<chat_message> chat_message_queue;
 
+nlohmann::json to_dealer;
 Gtk::Label *fromView = NULL;
+player *curr_player = NULL;
 
 class chat_client
 {
@@ -42,6 +45,7 @@ public:
         [this, msg]()
         {
           bool write_in_progress = !write_msgs_.empty();
+
           write_msgs_.push_back(msg);
           if (!write_in_progress)
           {
@@ -98,6 +102,7 @@ private:
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+
             fromView->set_text(outline);
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
@@ -146,7 +151,7 @@ playerNameWindow::playerNameWindow() {
   set_title("Enter game");
   set_border_width(30);
   resize(400,200);
-  set_position(Gtk::WIN_POS_CENTER_ALWAYS);
+  //set_position(Gtk::WIN_POS_CENTER_ALWAYS);
   Box.set_spacing(10);
 
   nameLabel.set_text("Enter your name:");
@@ -170,16 +175,17 @@ void playerNameWindow::on_OK() {
 
   string playerName = Name.get_text();
 
-  player p(playerName, true);
+  player *p = new player(playerName, true);
+  curr_player = p;
 
   playerWindow w(p);
   Gtk::Main::run(w);
 } // get player's name from entry, opens playerWindow
 
 
-playerWindow::playerWindow(player p):Player(p){
+playerWindow::playerWindow(player *p):Player(p){
 
-  set_title(Player.playerName + "'s Game Window");
+  set_title(Player->playerName + "'s Game Window");
   set_border_width(30);
   resize(600,400);
   set_position(Gtk::WIN_POS_CENTER_ALWAYS);
@@ -285,7 +291,7 @@ void playerWindow::on_Exit() {
 
 
 void playerWindow::on_Send(){
-  chatMessage = Chat.get_text();
+  chatMessage = curr_player->playerName +": "+ Chat.get_text();
   Chat.set_text("");
 
   char line[chat_message::max_body_length + 1];
