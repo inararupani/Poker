@@ -89,6 +89,9 @@ player::player(string playerName, bool status) {
 	this->status = status;
 	id = boost::uuids::random_generator()();
 	balance = 100;
+	chip1 = 25;
+	chip5 = 10;
+	chip25 = 1;
 }
 void player::update_hand(Card newCard) {}
 int player::request_card_swap() {}

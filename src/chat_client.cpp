@@ -184,7 +184,9 @@ void playerNameWindow::on_OK() {
 
 
 playerWindow::playerWindow(player *p):Player(p){
-
+  temp1 = 0;
+  temp5 = 0;
+  temp25 = 0;
   set_title(Player->playerName + "'s Game Window");
   set_border_width(30);
   resize(600,400);
@@ -209,69 +211,82 @@ playerWindow::playerWindow(player *p):Player(p){
 
   Box.pack_start(cardsBox);
 
-  balanceLabel.set_label("Balance:   $1:   $5:   $25:   ");
+  balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+                              "\t$1: " + to_string(Player->chip1) + 
+                              "\t$5: " + to_string(Player->chip5) + 
+                              "\t$25: " + to_string(Player->chip25));
+
   Box.pack_start(balanceLabel);
 
-  Amount.set_placeholder_text("eg: 5");
+  yourBet.set_markup("<b>YOUR BET</b>");
+  Box.pack_start(yourBet);
+
+  Amount.set_markup("<b>0</b>");
   Box.pack_start(Amount);
 
   chip1.set_label("$1");
-  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
-    chipBox.pack_start(chip1);
+  chip1.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
+  chipBox.pack_start(chip1);
 
-    chip5.set_label("$5");
-  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_5));
-    chipBox.pack_start(chip5);
+  chip5.set_label("$5");
+  chip5.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_5));
+  chipBox.pack_start(chip5);
 
-    chip25.set_label("$25");
-  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_25));
-    chipBox.pack_start(chip25);
+  chip25.set_label("$25");
+  chip25.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_25));
+  chipBox.pack_start(chip25);
 
-    Box.pack_start(chipBox);
+  clear.set_label("Clear");
+  clear.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Clear));
+  chipBox.pack_start(clear);
+
+  Help.set_label("Help");
+  Help.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Help));
+  chipBox.pack_start(Help);
+
+  Box.pack_start(chipBox);
 
   Call.set_label("Call");
-    Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Call));
-    actionBox.pack_start(Call);
+  Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Call));
+  actionBox.pack_start(Call);
   
   Bet.set_label("Bet");
-    Bet.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Bet));
-    actionBox.pack_start(Bet);
+  Bet.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Bet));
+  actionBox.pack_start(Bet);
 
   Raise.set_label("Raise");
-    Raise.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Raise));
-    actionBox.pack_start(Raise);
+  Raise.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Raise));
+  actionBox.pack_start(Raise);
 
-    Fold.set_label("Fold");
-    Fold.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Fold));
-    actionBox.pack_start(Fold);
+  Fold.set_label("Fold");
+  Fold.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Fold));
+  actionBox.pack_start(Fold);
 
-    CardSwap.set_label("Swap");
-    CardSwap.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_CardSwap));
-    actionBox.pack_start(CardSwap);
+  CardSwap.set_label("Swap");
+  CardSwap.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_CardSwap));
+  actionBox.pack_start(CardSwap);
 
-    SitOut.set_label("Sit Out");
-    SitOut.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_SitOut));
-    actionBox.pack_start(SitOut);
+  SitOut.set_label("Sit Out");
+  SitOut.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_SitOut));
+  actionBox.pack_start(SitOut);
 
-
-    Box.pack_start(actionBox);
+  Box.pack_start(actionBox);
     
-    Chat.set_placeholder_text("eg: Hi");
-    Box.pack_start(Chat);
+  Chat.set_placeholder_text("eg: Hi");
+  Box.pack_start(Chat);
 
-    Send.set_label("Send");
-    Send.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Send));
-    Box.pack_start(Send);
+  Send.set_label("Send");
+  Send.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Send));
+  Box.pack_start(Send);
 
-    chatLabel = new Gtk::Label();
-    fromView = chatLabel;
-    chatLabel->set_label("Chat History:"); 
-    Box.pack_start(*chatLabel);
+  chatLabel = new Gtk::Label();
+  fromView = chatLabel;
+  chatLabel->set_label("Chat History:"); 
+  Box.pack_start(*chatLabel);
 
-    Exit.set_label("Exit");
-    Exit.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Exit));
-    Box.pack_start(Exit);
-
+  Exit.set_label("Exit");
+  Exit.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Exit));
+  Box.pack_start(Exit);
 
   Box.show_all();
   add(Box);
@@ -280,8 +295,13 @@ playerWindow::playerWindow(player *p):Player(p){
 playerWindow::~playerWindow() {}
 
 void playerWindow::on_Menu() {}
-void playerWindow::on_Help() {}
-void playerWindow::on_Call() {}
+void playerWindow::on_Help() {
+	Gtk::MessageDialog dialog(*this, "Learn how to play 5 card draw:\nhttps://www.youtube.com/watch?v=UmtSUhSfyYE");
+    dialog.run();
+    dialog.hide();
+}
+void playerWindow::on_Call() {
+}
 void playerWindow::on_Raise() {}
 void playerWindow::on_Fold() {}
 void playerWindow::on_Bet() {}
@@ -308,16 +328,108 @@ void playerWindow::on_Send(){
 }
 
 void playerWindow::on_CardSwap() {}
-void playerWindow::on_SitOut() {}
-void playerWindow::on_chip_1() {}
-void playerWindow::on_chip_5() {}
-void playerWindow::on_chip_25() {}
+void playerWindow::on_SitOut() {
+	hide();
+}
+
+void playerWindow::on_chip_1() {
+  if(Player->chip1 <= 0){
+      Gtk::MessageDialog dialog(*this, "Not enough $1 chips.");
+      dialog.run();
+      dialog.hide();
+  }
+  else{
+    Player->chip1--;
+    temp1++;
+    Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
+
+    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+                                "\t$1: " + to_string(Player->chip1) + 
+                                "\t$5: " + to_string(Player->chip5) + 
+                                "\t$25: " + to_string(Player->chip25));
+    
+    string curr_bet_s = Amount.get_text();
+    int curr_bet = std::atoi(curr_bet_s.c_str());
+    curr_bet = curr_bet + 1;
+    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");    
+  }
+
+  
+}
+void playerWindow::on_chip_5() {
+  if(Player->chip5 <= 0){
+    Gtk::MessageDialog dialog(*this, "Not enough $5 chips.");
+    dialog.run();
+    dialog.hide();
+  }
+  else{
+    Player->chip5--;
+    temp5++;
+    Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
+
+    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+                                "\t$1: " + to_string(Player->chip1) + 
+                                "\t$5: " + to_string(Player->chip5) + 
+                                "\t$25: " + to_string(Player->chip25));
+    
+    string curr_bet_s = Amount.get_text();
+    int curr_bet = std::atoi(curr_bet_s.c_str());
+    curr_bet = curr_bet + 5;
+    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");     
+  }
+
+}
+void playerWindow::on_chip_25() {
+  if(Player->chip25 <= 0){
+    Gtk::MessageDialog dialog(*this, "Not enough $25 chips.");
+    dialog.run();
+    dialog.hide();
+  }
+  else{
+    Player->chip25--;
+    temp25++;
+    Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
+
+    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+                                "\t$1: " + to_string(Player->chip1) + 
+                                "\t$5: " + to_string(Player->chip5) + 
+                                "\t$25: " + to_string(Player->chip25));
+    
+    string curr_bet_s = Amount.get_text();
+    int curr_bet = std::atoi(curr_bet_s.c_str());
+    curr_bet = curr_bet + 25;
+    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");    
+  }
+
+}
+
+void playerWindow::on_Clear(){
+	Player->chip1 = Player->chip1 + temp1;
+	Player->chip5 = Player->chip5 + temp5;
+	Player->chip25 = Player->chip25 + temp25;
+
+	temp1 = 0;
+	temp5 = 0;
+	temp25 = 0;
+
+	Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
+
+    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+                            "\t$1: " + to_string(Player->chip1) + 
+                            "\t$5: " + to_string(Player->chip5) + 
+                            "\t$25: " + to_string(Player->chip25));
+
+
+
+	Amount.set_markup("<b>0</b>");
+}
 
 //gtk classes end
 
 
 int main(int argc, char* argv[])
 {
+	//clear temp1, temp5, temp25, in every button click
   try
   {
     if (argc != 3)

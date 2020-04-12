@@ -17,6 +17,8 @@
 #include <utility>
 #include "asio.hpp"
 #include "chat_message.hpp"
+#include "game.hpp"
+#include "json.hpp"
 
 using asio::ip::tcp;
 

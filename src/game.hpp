@@ -48,13 +48,13 @@ public:
 
 
 class player{
-
+public:
     boost::uuids::uuid id;
     int balance;
     int chip1;
     int chip5;
     int chip25;
-public:
+
     string playerName;
     hand playerHand;
     bool status;
@@ -141,6 +141,7 @@ protected:
 
 class playerWindow: public Gtk::Window{
 public:
+    int temp1, temp5, temp25;
     player *Player;
     string chatMessage;
 
@@ -161,6 +162,7 @@ public:
     void on_chip_1();
     void on_chip_5();
     void on_chip_25();
+    void on_Clear();
 
 
 
@@ -173,14 +175,17 @@ public:
     Gtk::Image Card3;
     Gtk::Image Card4;
     Gtk::Image Card5;
-    Gtk::Entry Amount; // amount to bet or raise
+    Gtk::Label Amount; // amount to bet or raise
     Gtk::Entry Chat;
     Gtk::Label* chatLabel;
+    Gtk::Label* currBet;
+    Gtk::Label* totalPot; 
     Gtk::Label balanceLabel;
+    Gtk::Label yourBet;
     Gtk::Button chip1;
     Gtk::Button chip5;
     Gtk::Button chip25;
-    //Gtk::Button Menu;
+    Gtk::Button clear;
     Gtk::Button Help;
     Gtk::Button Bet;
     Gtk::Button Call;
