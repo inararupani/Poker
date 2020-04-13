@@ -17,7 +17,7 @@ asio-1.12.2:
 chat_client:./src/chat_client.cpp  ./src/player.cpp
 	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${GTKCOMPILEFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
 
-chat_server:./src/chat_server.cpp
+chat_server:./src/chat_server.cpp  ./src/player.cpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< -lpthread
 
 clean:

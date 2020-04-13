@@ -24,9 +24,14 @@ using asio::ip::tcp;
 
 typedef std::deque<chat_message> chat_message_queue;
 
+
 nlohmann::json to_dealer;
+int curr_bet; // the most recent bet amount to be 
 Gtk::Label *fromView = NULL;
+Gtk::Label *totPot = NULL;
+Gtk::Label *currBet = NULL;
 player *curr_player = NULL;
+//string chatBox[5];
 
 class chat_client
 {
@@ -102,8 +107,22 @@ private:
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+            /*
+            for(int i = 0; i < 4; i++){
+            	chatBox[i] = chatBox[i+1];
+            }
+			
+            chatBox[4] = outline;
+			*/
+			fromView->set_label(outline);
 
-            fromView->set_text(outline);
+				/*chatBox[0] + "\n" 
+								+ chatBox[1] + "\n"
+								+ chatBox[2] + "\n"
+								+ chatBox[3] + "\n"
+								+ chatBox[4] + "received"); 
+								*/
+
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
             do_read_header();
@@ -176,6 +195,7 @@ void playerNameWindow::on_OK() {
   string playerName = Name.get_text();
 
   player *p = new player(playerName, true);
+  to_dealer["from"] = { {"uuid", p->id} , {"name",p->playerName} };
   curr_player = p;
 
   playerWindow w(p);
@@ -188,9 +208,8 @@ playerWindow::playerWindow(player *p):Player(p){
   temp5 = 0;
   temp25 = 0;
   set_title(Player->playerName + "'s Game Window");
-  set_border_width(30);
+  set_border_width(10);
   resize(600,400);
-  set_position(Gtk::WIN_POS_CENTER_ALWAYS);
   Box.set_spacing(10);
 
   cardsBox.set_spacing(10);
@@ -210,6 +229,22 @@ playerWindow::playerWindow(player *p):Player(p){
   cardsBox.pack_start(Card5);
 
   Box.pack_start(cardsBox);
+
+  totalPot.set_markup("<b>TOTAL POT:</b>");
+  Box.pack_start(totalPot);
+
+  totPotLabel = new Gtk::Label();
+  totPot = totPotLabel;
+  totPotLabel->set_markup("<b>0</b>"); 
+  Box.pack_start(*totPotLabel);
+
+  currentBet.set_markup("<b>CURRENT BET:</b>");	
+  Box.pack_start(currentBet);
+
+  currBetLabel = new Gtk::Label();
+  currBet = currBetLabel;
+  currBetLabel->set_markup("<b>1</b>"); 
+  Box.pack_start(*currBetLabel);
 
   balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
                               "\t$1: " + to_string(Player->chip1) + 
@@ -279,9 +314,20 @@ playerWindow::playerWindow(player *p):Player(p){
   Send.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Send));
   Box.pack_start(Send);
 
+  chatHistory.set_markup("<b>CHAT HISTORY:</b>");
+  Box.pack_start(chatHistory);
+
   chatLabel = new Gtk::Label();
   fromView = chatLabel;
-  chatLabel->set_label("Chat History:"); 
+  chatLabel->set_label("");
+
+  	/*chatBox[0] + "\n" 
+  						+ chatBox[1] + "\n"
+  						+ chatBox[2] + "\n"
+  						+ chatBox[3] + "\n"
+  						+ chatBox[4]);
+  						*/ 
+
   Box.pack_start(*chatLabel);
 
   Exit.set_label("Exit");
@@ -301,36 +347,73 @@ void playerWindow::on_Help() {
     dialog.hide();
 }
 void playerWindow::on_Call() {
+	if(std::atoi(Amount.get_text().c_str()) == curr_bet){
+		temp1 = 0;
+		temp5 = 0;
+		temp25 = 0;
+
+		to_dealer["event"] = "call";
+		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());
+		to_dealer["chat"] = curr_player->playerName + " called.";
+
+		Amount.set_markup("<b>0</b>");
+
+		chat_message msg;
+		std::string t = to_dealer.dump();
+
+		msg.body_length(t.size());
+		std::memcpy(msg.body(), t.c_str() , msg.body_length());
+		msg.encode_header();
+		c->write(msg);
+	}
+	else{
+		Gtk::MessageDialog dialog(*this, "Your call doesn't match current bet.");
+	    dialog.run();
+	    dialog.hide();
+	}
+
+
 }
-void playerWindow::on_Raise() {}
-void playerWindow::on_Fold() {}
-void playerWindow::on_Bet() {}
+void playerWindow::on_Raise() {
+	to_dealer["event"] = "raise";
+}
+void playerWindow::on_Fold() {
+	to_dealer["event"] = "fold";
+}
+void playerWindow::on_Bet() {
+	to_dealer["event"] = "bet";
+}
+void playerWindow::on_CardSwap() {
+	to_dealer["event"] = "request_cards";
+}
+void playerWindow::on_SitOut() {
+	to_dealer["event"] = "sit_out";
+	hide();
+}
 void playerWindow::on_Exit() {
   hide();
 }
 
 
 void playerWindow::on_Send(){
-  chatMessage = curr_player->playerName +": "+ Chat.get_text();
-  Chat.set_text("");
 
-  char line[chat_message::max_body_length + 1];
+	to_dealer["event"] = "chat";
+	to_dealer["chat"] = Chat.get_text().c_str();
 
-  strcpy(line, chatMessage.c_str());
-  
-  chat_message msg;
-  msg.body_length (strlen(line));
-  std::memcpy(msg.body(), line, msg.body_length());
-  msg.encode_header();
+	Chat.set_text("");
 
-  assert(c);
-  c->write(msg);
+	std::string t = to_dealer.dump();
+
+	chat_message msg;
+
+	msg.body_length(t.size());
+	std::memcpy(msg.body(), t.c_str() , msg.body_length());
+	msg.encode_header();
+	c->write(msg);
+
 }
 
-void playerWindow::on_CardSwap() {}
-void playerWindow::on_SitOut() {
-	hide();
-}
+
 
 void playerWindow::on_chip_1() {
   if(Player->chip1 <= 0){
@@ -348,10 +431,10 @@ void playerWindow::on_chip_1() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string curr_bet_s = Amount.get_text();
-    int curr_bet = std::atoi(curr_bet_s.c_str());
-    curr_bet = curr_bet + 1;
-    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");    
+    string your_bet_s = Amount.get_text();
+    int your_bet = std::atoi(your_bet_s.c_str());
+    your_bet = your_bet + 1;
+    Amount.set_markup("<b>" + to_string(your_bet) + "</b>");    
   }
 
   
@@ -372,10 +455,10 @@ void playerWindow::on_chip_5() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string curr_bet_s = Amount.get_text();
-    int curr_bet = std::atoi(curr_bet_s.c_str());
-    curr_bet = curr_bet + 5;
-    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");     
+    string your_bet_s = Amount.get_text();
+    int your_bet = std::atoi(your_bet_s.c_str());
+    your_bet = your_bet + 5;
+    Amount.set_markup("<b>" + to_string(your_bet) + "</b>");   
   }
 
 }
@@ -395,10 +478,10 @@ void playerWindow::on_chip_25() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string curr_bet_s = Amount.get_text();
-    int curr_bet = std::atoi(curr_bet_s.c_str());
-    curr_bet = curr_bet + 25;
-    Amount.set_markup("<b>" + to_string(curr_bet) + "</b>");    
+    string your_bet_s = Amount.get_text();
+    int your_bet = std::atoi(your_bet_s.c_str());
+    your_bet = your_bet + 25;
+    Amount.set_markup("<b>" + to_string(your_bet) + "</b>");    
   }
 
 }
@@ -429,6 +512,20 @@ void playerWindow::on_Clear(){
 
 int main(int argc, char* argv[])
 {
+	for(int i = 0; i < 5; i++){
+		chatBox[i] = "";
+	}
+
+	curr_bet = 6;
+	/*
+    to_dealer["from"] = { {"uuid",} , {"name","Bud"} };
+    to_dealer["event"] = "stand";        // "stand","hit","fold","raise","join","request_cards"
+    to_dealer["cards_requested"] = 3;    // optional, number of cards requested, 1 to 5
+    to_dealer["current_bet"] = 1.00;
+    to_dealer["total_bet"] = 5.00;
+    to_dealer["chat"] = std::string(line);
+    */
+
 	//clear temp1, temp5, temp25, in every button click
   try
   {

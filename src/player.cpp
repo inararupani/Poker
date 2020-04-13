@@ -75,6 +75,7 @@ void hand::sequenceHand() { // puts hand in sequence based on card value, should
 
 int hand::compareHand(hand firstHand, hand secondHand) {
 // difficult
+	return 0;
 }
 
 vector <Card> hand::getHand(){
@@ -94,12 +95,16 @@ player::player(string playerName, bool status) {
 	chip25 = 1;
 }
 void player::update_hand(Card newCard) {}
-int player::request_card_swap() {}
+int player::request_card_swap() {
+	return 0;
+}
 void player::placeBet(int amount) {}
 void player::check() {}
 void player::call() {}
 void player::sitOut() {}
 void player::fold() {}
 void player::raise(int amount) {}
-string player::playerMessage() {}
+string player::playerMessage() {
+	return "0";
+}
 

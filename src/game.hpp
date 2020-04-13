@@ -178,10 +178,13 @@ public:
     Gtk::Label Amount; // amount to bet or raise
     Gtk::Entry Chat;
     Gtk::Label* chatLabel;
-    Gtk::Label* currBet;
-    Gtk::Label* totalPot; 
+    Gtk::Label* currBetLabel;
+    Gtk::Label* totPotLabel; 
+    Gtk::Label currentBet;
+    Gtk::Label totalPot;
     Gtk::Label balanceLabel;
     Gtk::Label yourBet;
+    Gtk::Label chatHistory;
     Gtk::Button chip1;
     Gtk::Button chip5;
     Gtk::Button chip25;
