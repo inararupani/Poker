@@ -31,7 +31,7 @@ Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
 player *curr_player = NULL;
-//string chatBox[5];
+string chatBox[5];
 
 class chat_client
 {
@@ -107,21 +107,19 @@ private:
             outline[0] = '\n';
             outline[read_msg_.body_length() + 1] = '\0';
             std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
-            /*
+            
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
             }
 			
             chatBox[4] = outline;
-			*/
-			fromView->set_label(outline);
-
-				/*chatBox[0] + "\n" 
+			
+			fromView->set_label(chatBox[0] + "\n" 
 								+ chatBox[1] + "\n"
 								+ chatBox[2] + "\n"
 								+ chatBox[3] + "\n"
-								+ chatBox[4] + "received"); 
-								*/
+								+ chatBox[4]); 
+							
 
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
@@ -212,6 +210,8 @@ playerWindow::playerWindow(player *p):Player(p){
   resize(600,400);
   Box.set_spacing(10);
 
+
+
   cardsBox.set_spacing(10);
   Card1.set("src/cards/blank_card.png");
   cardsBox.pack_start(Card1);
@@ -246,6 +246,8 @@ playerWindow::playerWindow(player *p):Player(p){
   currBetLabel->set_markup("<b>1</b>"); 
   Box.pack_start(*currBetLabel);
 
+
+
   balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
                               "\t$1: " + to_string(Player->chip1) + 
                               "\t$5: " + to_string(Player->chip5) + 
@@ -258,6 +260,10 @@ playerWindow::playerWindow(player *p):Player(p){
 
   Amount.set_markup("<b>0</b>");
   Box.pack_start(Amount);
+
+  Start.set_label("Start");
+  Start.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Start));
+  Box.pack_start(Start);
 
   chip1.set_label("$1");
   chip1.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
@@ -319,14 +325,12 @@ playerWindow::playerWindow(player *p):Player(p){
 
   chatLabel = new Gtk::Label();
   fromView = chatLabel;
-  chatLabel->set_label("");
-
-  	/*chatBox[0] + "\n" 
+  chatLabel->set_label(chatBox[0] + "\n" 
   						+ chatBox[1] + "\n"
   						+ chatBox[2] + "\n"
   						+ chatBox[3] + "\n"
   						+ chatBox[4]);
-  						*/ 
+  						
 
   Box.pack_start(*chatLabel);
 
@@ -339,6 +343,10 @@ playerWindow::playerWindow(player *p):Player(p){
 }
 
 playerWindow::~playerWindow() {}
+
+void playerWindow::on_Start() {
+	to_dealer["event"] = "start";
+}
 
 void playerWindow::on_Menu() {}
 void playerWindow::on_Help() {
@@ -353,7 +361,7 @@ void playerWindow::on_Call() {
 		temp25 = 0;
 
 		to_dealer["event"] = "call";
-		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());
+		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
 		to_dealer["chat"] = curr_player->playerName + " called.";
 
 		Amount.set_markup("<b>0</b>");
@@ -398,7 +406,7 @@ void playerWindow::on_Exit() {
 void playerWindow::on_Send(){
 
 	to_dealer["event"] = "chat";
-	to_dealer["chat"] = Chat.get_text().c_str();
+	to_dealer["chat"] = std::string((Chat.get_text()).c_str());
 
 	Chat.set_text("");
 

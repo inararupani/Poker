@@ -108,7 +108,6 @@ public:
     void set_gameOn(); //sets the status of game.
     int get_activePlayer(); //get number of active players
     void StartGame();
-
     void set_pot(int potAmount);
     int get_pot(int potAmount);
     int get_totalBalance(player p); //gets how much balance a player have
@@ -149,6 +148,7 @@ public:
     virtual ~playerWindow();
 
     //Signal handlers
+    void on_Start();
     void on_Menu();
     void on_Help();
     void on_Bet();
@@ -185,6 +185,7 @@ public:
     Gtk::Label balanceLabel;
     Gtk::Label yourBet;
     Gtk::Label chatHistory;
+    Gtk::Button Start;
     Gtk::Button chip1;
     Gtk::Button chip5;
     Gtk::Button chip25;

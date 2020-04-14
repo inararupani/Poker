@@ -28,6 +28,8 @@ typedef std::deque<chat_message> chat_message_queue;
 
 //----------------------------------------------------------------------
 
+Deck* deck = NULL;
+
 class chat_participant
 {
 public:
@@ -133,6 +135,11 @@ private:
             nlohmann::json to_player;  // represents the entire game state.  sent to all players
         
             to_player["chat"] = to_dealer["chat"];
+
+            if(to_dealer["event"] == "start" ){
+              cerr << "Start clicked server side." << endl;
+            }
+
         /*    to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 
             to_player["chat"] = to_dealer["chat"];
             to_player["dealer_comment"] = "fred has raised and received 2 new cards";
@@ -230,6 +237,9 @@ private:
 
 int main(int argc, char* argv[])
 {
+  deck = new Deck();
+  deck->shuffle_deck();
+
   try
   {
     if (argc < 2)
