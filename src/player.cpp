@@ -5,7 +5,8 @@
 #include "chat_message.hpp"
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
 //Card Class Functions
 Card::Card () {
 }
@@ -21,10 +22,23 @@ int Card::compareCard(Card secondCard) {
 	return diff;
 }
 
+string Card::generateCardName(){
+	string suit;
+	switch(this->suit){
+		case 0: suit = "D"; break;
+		case 1: suit = "H"; break;
+		case 2: suit = "C"; break;
+		case 3: suit = "S"; break;
+		default: std::cerr << "Invalid card suit." << std::endl;
+	}
+	string name = std::to_string(this->value) + "" + suit;
+	return name;
+}
+
 
 //Class Deck Functions
 Deck::Deck() {
-	for(int j = DIAMONDS; j <= SPADES; j++){
+	for(int j = D; j <= S; j++){
         for(int k = 1; k < 14; k++){
             deckOfCards.push_back(Card(k,(SUIT)j));
         }
@@ -88,7 +102,7 @@ vector <Card> hand::getHand(){
 player::player(string playerName) {
 	this->playerName = playerName;
 	this->status = false;
-	id = boost::uuids::random_generator()();
+	id = boost::uuids::to_string(boost::uuids::random_generator()());
 	balance = 100;
 	chip1 = 25;
 	chip5 = 10;

@@ -19,6 +19,10 @@
 #include "chat_message.hpp"
 #include "game.hpp"
 #include "json.hpp"
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using asio::ip::tcp;
 
@@ -34,6 +38,8 @@ typedef std::deque<chat_message> chat_message_queue;
 Deck* deck = NULL;
 int totalPot;
 vector <string> idlist;
+int gameStatus; // -1 means not started, 1 means round 1, 2 means round 2
+int currentBet;
 
 class chat_participant
 {
@@ -150,14 +156,24 @@ private:
         
             to_player["chat"] = to_dealer["chat"];
 
-            if(to_dealer["event"] == "start" ){
-              cerr << "Start clicked server side." << endl;
-              to_player["card"] = deck->get_card().value;
-
+            if(to_dealer["event"] == "start"){
+              if(gameStatus >= 1){
+                to_player["chat"] = "Game is already started.";
+              }
+              else if(idlist.size() <= 1){
+                to_player["chat"] = "Not enough players to start the game.";
+              }
+              else{
+                gameStatus = 1;
+                std::cerr << deck->get_card().generateCardName() << std::endl;
+              }
             }
             else if(to_dealer["event"] == "ante"){
-              cout << (to_dealer["from"]["uuid"]) << endl;;
+              cout << (to_dealer["from"]["uuid"]) << endl;
+              idlist.push_back(to_dealer["from"]["uuid"]);
             }
+
+
         
         /*    to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 
             to_player["chat"] = to_dealer["chat"];
@@ -259,6 +275,8 @@ int main(int argc, char* argv[])
   deck = new Deck();
   deck->shuffle_deck();
   totalPot = 0;
+  gameStatus = -1;
+  currentBet = 0;
 
   try
   {

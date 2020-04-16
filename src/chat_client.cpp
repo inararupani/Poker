@@ -19,6 +19,10 @@
 #include <gtkmm.h>
 #include "game.hpp"
 #include "json.hpp"
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using asio::ip::tcp;
 
@@ -353,6 +357,11 @@ playerWindow::playerWindow(player *p):Player(p){
 playerWindow::~playerWindow() {}
 
 void playerWindow::on_Start() {
+  if(Player->status = false){
+    Gtk::MessageDialog dialog(*this, "Can't start without ante.");
+    dialog.run();
+    dialog.hide();
+  }
 	to_dealer["event"] = "start";
 	to_dealer["chat"] = Player->playerName + " started the game.";
 
@@ -369,11 +378,11 @@ void playerWindow::on_Start() {
 void playerWindow::on_Ante(){
 	if(Player->chip1 <= 0 || Player->status == true){
 		Gtk::MessageDialog dialog(*this, "You do not have enough $1 chips to ante or you have already anted.");
-	    dialog.run();
-	    dialog.hide();
+	  dialog.run();
+	  dialog.hide();
 	}
 	else{
-		Player->status = true;
+		Player->status = true; //player status is true when the player has already ante.
 		to_dealer["event"] = "ante";
 		to_dealer["chat"] = Player->playerName + " put ante.";
 

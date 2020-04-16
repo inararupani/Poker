@@ -6,10 +6,12 @@
 #include <vector>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using namespace std;
 
-typedef enum {DIAMONDS,HEARTS,CLUBS,SPADES} SUIT;
+typedef enum {D,H,C,S} SUIT;
 class Card
 {
 public:
@@ -19,6 +21,7 @@ public:
     Card();
     Card(int value, SUIT suit);
     int compareCard(Card secondCard); // compare two cards to put cards in sequence for players
+    string generateCardName();
 
 };
 
@@ -49,7 +52,7 @@ public:
 
 class player{
 public:
-    boost::uuids::uuid id;
+    string id;
     int balance;
     int chip1;
     int chip5;
