@@ -85,6 +85,14 @@ private:
         {
           if (!ec && read_msg_.decode_header())
           {
+          	// clear out the old buffer from the last read
+            // a '\0' is a good value to make sure a string
+            // is terminated
+            for (unsigned int i=0;i<chat_message::max_body_length;i++)
+            {
+                read_msg_.body() [i] = '\0';
+            }
+
             do_read_body();
           }
           else
@@ -102,17 +110,13 @@ private:
         {
           if (!ec)
           {
-            char outline[read_msg_.body_length() + 2];
-                     // '\n' + '\0' is 2 more chars
-            outline[0] = '\n';
-            outline[read_msg_.body_length() + 1] = '\0';
-            std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+          	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
             
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
             }
 			
-            chatBox[4] = outline;
+            chatBox[4] = to_player["chat"];
 			
 			fromView->set_label(chatBox[0] + "\n" 
 								+ chatBox[1] + "\n"
@@ -192,7 +196,7 @@ void playerNameWindow::on_OK() {
 
   string playerName = Name.get_text();
 
-  player *p = new player(playerName, true);
+  player *p = new player(playerName);
   to_dealer["from"] = { {"uuid", p->id} , {"name",p->playerName} };
   curr_player = p;
 
@@ -246,8 +250,6 @@ playerWindow::playerWindow(player *p):Player(p){
   currBetLabel->set_markup("<b>1</b>"); 
   Box.pack_start(*currBetLabel);
 
-
-
   balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
                               "\t$1: " + to_string(Player->chip1) + 
                               "\t$5: " + to_string(Player->chip5) + 
@@ -263,7 +265,13 @@ playerWindow::playerWindow(player *p):Player(p){
 
   Start.set_label("Start");
   Start.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Start));
-  Box.pack_start(Start);
+  startBox.pack_start(Start);
+
+  Ante.set_label("Ante($1)");
+  Ante.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Ante));
+  startBox.pack_start(Ante);
+
+  Box.pack_start(startBox);
 
   chip1.set_label("$1");
   chip1.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_chip_1));
@@ -346,6 +354,46 @@ playerWindow::~playerWindow() {}
 
 void playerWindow::on_Start() {
 	to_dealer["event"] = "start";
+	to_dealer["chat"] = Player->playerName + " started the game.";
+
+	std::string t = to_dealer.dump();
+
+	chat_message msg;
+
+	msg.body_length(t.size());
+	std::memcpy(msg.body(), t.c_str() , msg.body_length());
+	msg.encode_header();
+	c->write(msg);
+}
+
+void playerWindow::on_Ante(){
+	if(Player->chip1 <= 0 || Player->status == true){
+		Gtk::MessageDialog dialog(*this, "You do not have enough $1 chips to ante or you have already anted.");
+	    dialog.run();
+	    dialog.hide();
+	}
+	else{
+		Player->status = true;
+		to_dealer["event"] = "ante";
+		to_dealer["chat"] = Player->playerName + " put ante.";
+
+		std::string t = to_dealer.dump();
+
+		chat_message msg;
+
+		msg.body_length(t.size());
+		std::memcpy(msg.body(), t.c_str() , msg.body_length());
+		msg.encode_header();
+		c->write(msg);
+
+		Player->chip1--;
+		Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
+		balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+		                    "\t$1: " + to_string(Player->chip1) + 
+		                    "\t$5: " + to_string(Player->chip5) + 
+		                    "\t$25: " + to_string(Player->chip25));
+
+	}
 }
 
 void playerWindow::on_Menu() {}
@@ -360,9 +408,9 @@ void playerWindow::on_Call() {
 		temp5 = 0;
 		temp25 = 0;
 
-		to_dealer["event"] = "call";
+		to_dealer["event"] = "call ";
 		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
-		to_dealer["chat"] = curr_player->playerName + " called.";
+		to_dealer["chat"] = Player->playerName + " called.";
 
 		Amount.set_markup("<b>0</b>");
 
@@ -406,7 +454,7 @@ void playerWindow::on_Exit() {
 void playerWindow::on_Send(){
 
 	to_dealer["event"] = "chat";
-	to_dealer["chat"] = std::string((Chat.get_text()).c_str());
+	to_dealer["chat"] =  Player->playerName + ": " + std::string((Chat.get_text()).c_str());
 
 	Chat.set_text("");
 

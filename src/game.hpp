@@ -61,7 +61,7 @@ public:
 
     //constructors
     //player();
-    player(string PlayerName, bool status);
+    player(string PlayerName);
     //player(string PlayerName, bool status); //Used for spectators
 
     int get_id();
@@ -149,6 +149,7 @@ public:
 
     //Signal handlers
     void on_Start();
+    void on_Ante();
     void on_Menu();
     void on_Help();
     void on_Bet();
@@ -186,6 +187,7 @@ public:
     Gtk::Label yourBet;
     Gtk::Label chatHistory;
     Gtk::Button Start;
+    Gtk::Button Ante;
     Gtk::Button chip1;
     Gtk::Button chip5;
     Gtk::Button chip25;
@@ -200,6 +202,7 @@ public:
     Gtk::Button SitOut;
     Gtk::Button Send;
     Gtk::VBox Box;
+    Gtk::HBox startBox;
     Gtk::HBox chipBox;
     Gtk::HBox actionBox;
     Gtk::HBox cardsBox;

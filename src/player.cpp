@@ -85,9 +85,9 @@ vector <Card> hand::getHand(){
 //Class player Functions
 //player::player() {}
 //player::player(string PlayerName, int StartBalance, int id, bool status) {}
-player::player(string playerName, bool status) {
+player::player(string playerName) {
 	this->playerName = playerName;
-	this->status = status;
+	this->status = false;
 	id = boost::uuids::random_generator()();
 	balance = 100;
 	chip1 = 25;

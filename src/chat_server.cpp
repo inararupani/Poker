@@ -22,6 +22,9 @@
 
 using asio::ip::tcp;
 
+
+
+
 //----------------------------------------------------------------------
 
 typedef std::deque<chat_message> chat_message_queue;
@@ -29,6 +32,8 @@ typedef std::deque<chat_message> chat_message_queue;
 //----------------------------------------------------------------------
 
 Deck* deck = NULL;
+int totalPot;
+vector <string> idlist;
 
 class chat_participant
 {
@@ -111,6 +116,15 @@ private:
         {
           if (!ec && read_msg_.decode_header())
           {
+            // clear out the old buffer from the last read
+            // a '\0' is a good value to make sure a string
+            // is terminated
+            for (unsigned int i=0;i<chat_message::max_body_length;i++)
+            {
+                read_msg_.body() [i] = '\0';
+            }
+
+
             do_read_body();
           }
           else
@@ -138,8 +152,13 @@ private:
 
             if(to_dealer["event"] == "start" ){
               cerr << "Start clicked server side." << endl;
-            }
+              to_player["card"] = deck->get_card().value;
 
+            }
+            else if(to_dealer["event"] == "ante"){
+              cout << (to_dealer["from"]["uuid"]) << endl;;
+            }
+        
         /*    to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 
             to_player["chat"] = to_dealer["chat"];
             to_player["dealer_comment"] = "fred has raised and received 2 new cards";
@@ -239,6 +258,7 @@ int main(int argc, char* argv[])
 {
   deck = new Deck();
   deck->shuffle_deck();
+  totalPot = 0;
 
   try
   {
