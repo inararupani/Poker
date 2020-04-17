@@ -36,10 +36,12 @@ typedef std::deque<chat_message> chat_message_queue;
 //----------------------------------------------------------------------
 
 Deck* deck = NULL;
-int totalPot;
+
 vector <string> idlist;
 int gameStatus; // -1 means not started, 1 means round 1, 2 means round 2
 int currentBet;
+
+int totalPot;
 
 class chat_participant
 {
@@ -153,43 +155,67 @@ private:
             nlohmann::json to_dealer = nlohmann::json::parse(std::string(read_msg_.body()));
 
             nlohmann::json to_player;  // represents the entire game state.  sent to all players
-        
+          
             to_player["chat"] = to_dealer["chat"];
 
-            if(to_dealer["event"] == "start"){
-              if(gameStatus >= 1){
-                to_player["chat"] = "Game is already started.";
-              }
-              else if(idlist.size() <= 1){
-                to_player["chat"] = "Not enough players to start the game.";
-              }
-              else{
-                gameStatus = 1;
+            if(to_dealer["event"] != "chat"){
+              to_player["current_bet"] = to_dealer["total_bet"];
+              //to_player["total_pot"] = to_player["total_pot"] + to_player["current_bet"];
+
+              if(to_dealer["event"] == "start"){
+                if(gameStatus >= 1){
+                  to_player["chat"] = "Game is already started.";
+                }
+                else if(idlist.size() <= 1){
+                  to_player["chat"] = "Not enough players to start the game.";
+                }
+                else{
+                  gameStatus = 1;
 
 
 
-                for(int i = 0; i < idlist.size(); i++){
-                  hand H;
+                  for(int i = 0; i < idlist.size(); i++){
+                    hand H;
 
-                  for(int j = 0; j < 5; j++){
-                    H.handOfCards.push_back(deck->get_card());
+                    for(int j = 0; j < 5; j++){
+                      H.handOfCards.push_back(deck->get_card());
+                    }
+
+                    H.sequenceHand();
+
+                    to_player["hand"][idlist.at(i)] = {{"card1",H.handOfCards.at(0).generateCardName()},
+                                                        {"card2",H.handOfCards.at(1).generateCardName()},
+                                                        {"card3",H.handOfCards.at(2).generateCardName()},
+                                                        {"card4",H.handOfCards.at(3).generateCardName()},
+                                                        {"card5",H.handOfCards.at(4).generateCardName()}};
+
                   }
-
-                  H.sequenceHand();
-
-                  to_player["hand"][idlist.at(i)] = {{"card1",H.handOfCards.at(0).generateCardName()},
-                                                      {"card2",H.handOfCards.at(1).generateCardName()},
-                                                      {"card3",H.handOfCards.at(2).generateCardName()},
-                                                      {"card4",H.handOfCards.at(3).generateCardName()},
-                                                      {"card5",H.handOfCards.at(4).generateCardName()}};
-
                 }
               }
+              else if(to_dealer["event"] == "ante"){
+                std::cout << (to_dealer["from"]["uuid"]) << std::endl;
+                idlist.push_back(to_dealer["from"]["uuid"]);
+              }
+              else if(to_dealer["event"] == "call"){
+                int tempPot = to_dealer["total_bet"];
+                totalPot = totalPot + tempPot;
+              }
+              else if(to_dealer["event"] == "bet"){
+                int tempPot = to_dealer["total_bet"];
+                totalPot = totalPot + tempPot;
+                //totalPot = totalPot + to_dealer["total_bet"].asInt();
+                //std::cout << "total pot is" + totalPot + "end" << std::endl;
+              }
+              else if(to_dealer["event"] == "raise"){
+                int tempPot = to_dealer["total_bet"];
+                totalPot = totalPot + tempPot;
+                //totalPot = totalPot + to_dealer["total_bet"].asInt();
+              }
+
             }
-            else if(to_dealer["event"] == "ante"){
-              cout << (to_dealer["from"]["uuid"]) << endl;
-              idlist.push_back(to_dealer["from"]["uuid"]);
-            }
+            
+            to_player["total_pot"] = std::to_string(totalPot);
+            
 
 
         

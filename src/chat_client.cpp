@@ -31,6 +31,7 @@ typedef std::deque<chat_message> chat_message_queue;
 
 nlohmann::json to_dealer;
 int curr_bet; // the most recent bet amount to be 
+int tot_pot;
 Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
@@ -118,8 +119,14 @@ private:
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
 
             std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
+            if(!to_player["total_pot"].empty()){
+              totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>"); 
+            }
+            if(!to_player["current_bet"].empty()){
+              curr_bet = to_player["current_bet"];
+              currBet->set_markup("<b>" + to_string(curr_bet) + "</b>"); 
+            }
             
-
             if(!to_player["hand"][curr_player->id]["card1"].empty()){
               std::cerr << "it is not null" << std::endl;
               std::string tempCard;
@@ -136,7 +143,8 @@ private:
               cardsImage.at(3)->set_markup(tempCard);
 
               tempCard = to_player["hand"][curr_player->id]["card5"];
-              cardsImage.at(4)->set_markup(tempCard);
+              cardsImage.at(4)->set_markup(tempCard);  
+              
             }
 
             
@@ -293,7 +301,7 @@ playerWindow::playerWindow(player *p):Player(p){
 
   currBetLabel = new Gtk::Label();
   currBet = currBetLabel;
-  currBetLabel->set_markup("<b>1</b>"); 
+  currBetLabel->set_markup("<b>" + to_string(curr_bet) + "</b>"); 
   Box.pack_start(*currBetLabel);
 
   balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
@@ -399,22 +407,25 @@ playerWindow::playerWindow(player *p):Player(p){
 playerWindow::~playerWindow() {}
 
 void playerWindow::on_Start() {
-  if(Player->status = false){
+  if(Player->status == false){
     Gtk::MessageDialog dialog(*this, "Can't start without ante.");
     dialog.run();
     dialog.hide();
   }
-	to_dealer["event"] = "start";
-	to_dealer["chat"] = Player->playerName + " started the game.";
+  else{
+    to_dealer["event"] = "start";
+    to_dealer["chat"] = Player->playerName + " started the game.";
 
-	std::string t = to_dealer.dump();
+    std::string t = to_dealer.dump();
 
-	chat_message msg;
+    chat_message msg;
 
-	msg.body_length(t.size());
-	std::memcpy(msg.body(), t.c_str() , msg.body_length());
-	msg.encode_header();
-	c->write(msg);
+    msg.body_length(t.size());
+    std::memcpy(msg.body(), t.c_str() , msg.body_length());
+    msg.encode_header();
+    c->write(msg);
+  }
+	
 }
 
 void playerWindow::on_Ante(){
@@ -426,7 +437,7 @@ void playerWindow::on_Ante(){
 	else{
 		Player->status = true; //player status is true when the player has already ante.
 		to_dealer["event"] = "ante";
-		to_dealer["chat"] = Player->playerName + " put ante.";
+		to_dealer["chat"] = Player->playerName + " put ante $1.";
 
 		std::string t = to_dealer.dump();
 
@@ -454,14 +465,14 @@ void playerWindow::on_Help() {
     dialog.hide();
 }
 void playerWindow::on_Call() {
-	if(std::atoi(Amount.get_text().c_str()) == curr_bet){
+	if(std::atoi(Amount.get_text().c_str()) == curr_bet && Player->status == true) {
 		temp1 = 0;
 		temp5 = 0;
 		temp25 = 0;
 
-		to_dealer["event"] = "call ";
+		to_dealer["event"] = "call";
 		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
-		to_dealer["chat"] = Player->playerName + " called.";
+		to_dealer["chat"] = Player->playerName + " called " + Amount.get_text().c_str();
 
 		Amount.set_markup("<b>0</b>");
 
@@ -473,7 +484,14 @@ void playerWindow::on_Call() {
 		msg.encode_header();
 		c->write(msg);
 	}
-	else{
+	else if(curr_bet && Player->status == false){
+    Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+    dialog.run();
+    dialog.hide();
+
+  }
+  else
+  {
 		Gtk::MessageDialog dialog(*this, "Your call doesn't match current bet.");
 	    dialog.run();
 	    dialog.hide();
@@ -482,13 +500,72 @@ void playerWindow::on_Call() {
 
 }
 void playerWindow::on_Raise() {
-	to_dealer["event"] = "raise";
+	if(std::atoi(Amount.get_text().c_str()) > curr_bet && Player->status == true){
+    temp1 = 0;
+    temp5 = 0;
+    temp25 = 0;
+
+    to_dealer["event"] = "raise";
+    to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
+    to_dealer["chat"] = Player->playerName + " raised to $" + Amount.get_text().c_str();
+
+    Amount.set_markup("<b>0</b>");
+
+    chat_message msg;
+    std::string t = to_dealer.dump();
+
+    msg.body_length(t.size());
+    std::memcpy(msg.body(), t.c_str() , msg.body_length());
+    msg.encode_header();
+    c->write(msg);
+  }
+  else if(curr_bet && Player->status == false){
+    Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+    dialog.run();
+    dialog.hide();
+
+  }
+  else{
+    Gtk::MessageDialog dialog(*this, "Raise should be greater than current bet.");
+      dialog.run();
+      dialog.hide();
+  }
+
 }
 void playerWindow::on_Fold() {
 	to_dealer["event"] = "fold";
 }
 void playerWindow::on_Bet() {
-	to_dealer["event"] = "bet";
+	 if(curr_bet == 0 && Player->status == true){
+    temp1 = 0;
+    temp5 = 0;
+    temp25 = 0;
+
+    to_dealer["event"] = "bet";
+    to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
+    to_dealer["chat"] = Player->playerName + " bet $" + Amount.get_text().c_str();
+
+    Amount.set_markup("<b>0</b>");
+
+    chat_message msg;
+    std::string t = to_dealer.dump();
+
+    msg.body_length(t.size());
+    std::memcpy(msg.body(), t.c_str() , msg.body_length());
+    msg.encode_header();
+    c->write(msg);
+  }
+  else if(curr_bet && Player->status == false){
+    Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+    dialog.run();
+    dialog.hide();
+
+  }
+  else{
+    Gtk::MessageDialog dialog(*this, "Call current bet or raise.");
+      dialog.run();
+      dialog.hide();
+  }
 }
 void playerWindow::on_CardSwap() {
 	to_dealer["event"] = "request_cards";
@@ -624,7 +701,8 @@ int main(int argc, char* argv[])
 	}
 
 
-	curr_bet = 6;
+	curr_bet = 0;
+  to_dealer["total_bet"] = 0;
 
 
 	/*
