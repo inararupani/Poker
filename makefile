@@ -3,7 +3,7 @@ GTKLINKFLAGS=$(shell pkg-config --libs gtkmm-3.0)
 GTKCOMPILEFLAGS=$(shell pkg-config --cflags gtkmm-3.0)
 
 CXXFLAGS+= -DASIO_STANDALONE -Wall -O0 -g -std=c++11
-CPPFLAGS+= ${GTKCOMPILEFLAGS} -I./include -I./asio-1.12.2/include -I./src
+CPPFLAGS+= ${GTKCOMPILEFLAGS} -I./include -I./asio-1.12.2/include -I./src -Wno-deprecated-declarations
 LDLIBS+= -lpthread ${GTKLINKFLAGS}
 
 
@@ -15,10 +15,10 @@ asio-1.12.2:
 	tar xzf asio-1.12.2.tar.gz
 
 chat_client:./src/chat_client.cpp  ./src/player.cpp
-	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${GTKCOMPILEFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
+	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
 
 chat_server:./src/chat_server.cpp  ./src/player.cpp
-	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${GTKCOMPILEFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
+	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
 	
 clean:
 	-rm -rf asio-1.12.2

@@ -174,11 +174,11 @@ public:
     Gtk::Image PlayerAvatar;
     Gtk::Image chips;
     Gtk::Image deck;
-    Gtk::Label* Card1;
-    Gtk::Label* Card2;
-    Gtk::Label* Card3;
-    Gtk::Label* Card4;
-    Gtk::Label* Card5;
+    Gtk::Image* Card1;
+    Gtk::Image* Card2;
+    Gtk::Image* Card3;
+    Gtk::Image* Card4;
+    Gtk::Image* Card5;
     Gtk::Label Amount; // amount to bet or raise
     Gtk::Entry Chat;
     Gtk::Label* chatLabel;

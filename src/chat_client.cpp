@@ -37,7 +37,7 @@ Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
 player *curr_player = NULL;
 std::string chatBox[5];
-std::vector <Gtk::Label*> cardsImage;
+std::vector <Gtk::Image*> cardsImage;
 
 class chat_client
 {
@@ -131,19 +131,19 @@ private:
               std::cerr << "it is not null" << std::endl;
               std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card1"];  
-              cardsImage.at(0)->set_markup(tempCard);
+              cardsImage.at(0)->set("src/cards/" + tempCard + ".png");
 
-              tempCard = to_player["hand"][curr_player->id]["card2"];
-              cardsImage.at(1)->set_markup(tempCard);
+              tempCard = to_player["hand"][curr_player->id]["card2"]; 
+              cardsImage.at(1)->set("src/cards/" + tempCard + ".png");
 
-              tempCard = to_player["hand"][curr_player->id]["card3"];
-              cardsImage.at(2)->set_markup(tempCard);
+              tempCard = to_player["hand"][curr_player->id]["card3"]; 
+              cardsImage.at(2)->set("src/cards/" + tempCard + ".png");
 
-              tempCard = to_player["hand"][curr_player->id]["card4"];
-              cardsImage.at(3)->set_markup(tempCard);
+              tempCard = to_player["hand"][curr_player->id]["card4"]; 
+              cardsImage.at(3)->set("src/cards/" + tempCard + ".png");
 
-              tempCard = to_player["hand"][curr_player->id]["card5"];
-              cardsImage.at(4)->set_markup(tempCard);  
+              tempCard = to_player["hand"][curr_player->id]["card5"]; 
+              cardsImage.at(4)->set("src/cards/" + tempCard + ".png");
               
             }
 
@@ -256,34 +256,34 @@ playerWindow::playerWindow(player *p):Player(p){
   Box.set_spacing(10);
 
   cardsBox.set_spacing(10);
-  Card1 = new Gtk::Label();
+  Card1 = new Gtk::Image();
   cardsImage.push_back(Card1);
-  Card1->set_markup("blank");
-  //Card1->set_text("src/cards/blank_card.png");
+  //Card1->set_markup("blank");
+  Card1->set("src/cards/blank_card.png");
   cardsBox.pack_start(*Card1);
 
-  Card2 = new Gtk::Label();
+  Card2 = new Gtk::Image();
   cardsImage.push_back(Card2);
-  Card2->set_markup("blank");
-  //Card2->set("src/cards/blank_card.png");
+  //Card2->set_markup("blank");
+  Card2->set("src/cards/blank_card.png");
   cardsBox.pack_start(*Card2);
 
-  Card3 = new Gtk::Label();
+  Card3 = new Gtk::Image();
   cardsImage.push_back(Card3);
-  //Card3->set("src/cards/blank_card.png");
-  Card3->set_markup("blank");
+  Card3->set("src/cards/blank_card.png");
+  //Card3->set_markup("blank");
   cardsBox.pack_start(*Card3);
 
-  Card4 = new Gtk::Label();
+  Card4 = new Gtk::Image();
   cardsImage.push_back(Card4);
-  //Card4->set("src/cards/blank_card.png");
-  Card4->set_markup("blank");
+  Card4->set("src/cards/blank_card.png");
+  //Card4->set_markup("blank");
   cardsBox.pack_start(*Card4);
 
-  Card5 = new Gtk::Label();
+  Card5 = new Gtk::Image();
   cardsImage.push_back(Card5);
-  //Card5->set("src/cards/blank_card.png");
-  Card5->set_markup("blank");
+  Card5->set("src/cards/blank_card.png");
+  //Card5->set_markup("blank");
   cardsBox.pack_start(*Card5);
 
   Box.pack_start(cardsBox);
