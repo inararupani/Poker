@@ -35,7 +35,8 @@ Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
 player *curr_player = NULL;
-string chatBox[5];
+std::string chatBox[5];
+std::vector <Gtk::Label*> cardsImage;
 
 class chat_client
 {
@@ -115,18 +116,46 @@ private:
           if (!ec)
           {
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
+
+            std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
             
+
+            if(!to_player["hand"][curr_player->id]["card1"].empty()){
+              std::cerr << "it is not null" << std::endl;
+              std::string tempCard;
+              tempCard = to_player["hand"][curr_player->id]["card1"];  
+              cardsImage.at(0)->set_markup(tempCard);
+
+              tempCard = to_player["hand"][curr_player->id]["card2"];
+              cardsImage.at(1)->set_markup(tempCard);
+
+              tempCard = to_player["hand"][curr_player->id]["card3"];
+              cardsImage.at(2)->set_markup(tempCard);
+
+              tempCard = to_player["hand"][curr_player->id]["card4"];
+              cardsImage.at(3)->set_markup(tempCard);
+
+              tempCard = to_player["hand"][curr_player->id]["card5"];
+              cardsImage.at(4)->set_markup(tempCard);
+            }
+
+            
+            
+
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
             }
+
+           // cout << to_player["hand"][curr_player->id] << endl;
+
 			
             chatBox[4] = to_player["chat"];
 			
-			fromView->set_label(chatBox[0] + "\n" 
-								+ chatBox[1] + "\n"
-								+ chatBox[2] + "\n"
-								+ chatBox[3] + "\n"
-								+ chatBox[4]); 
+			      fromView->set_label(chatBox[0] + "\n" 
+					         			+ chatBox[1] + "\n"
+								        + chatBox[2] + "\n"
+								        + chatBox[3] + "\n"
+								        + chatBox[4]); 
 							
 
             std::cout.write(read_msg_.body(), read_msg_.body_length());
@@ -218,23 +247,36 @@ playerWindow::playerWindow(player *p):Player(p){
   resize(600,400);
   Box.set_spacing(10);
 
-
-
   cardsBox.set_spacing(10);
-  Card1.set("src/cards/blank_card.png");
-  cardsBox.pack_start(Card1);
+  Card1 = new Gtk::Label();
+  cardsImage.push_back(Card1);
+  Card1->set_markup("blank");
+  //Card1->set_text("src/cards/blank_card.png");
+  cardsBox.pack_start(*Card1);
 
-  Card2.set("src/cards/blank_card.png");
-  cardsBox.pack_start(Card2);
+  Card2 = new Gtk::Label();
+  cardsImage.push_back(Card2);
+  Card2->set_markup("blank");
+  //Card2->set("src/cards/blank_card.png");
+  cardsBox.pack_start(*Card2);
 
-  Card3.set("src/cards/blank_card.png");
-  cardsBox.pack_start(Card3);
+  Card3 = new Gtk::Label();
+  cardsImage.push_back(Card3);
+  //Card3->set("src/cards/blank_card.png");
+  Card3->set_markup("blank");
+  cardsBox.pack_start(*Card3);
 
-  Card4.set("src/cards/blank_card.png");
-  cardsBox.pack_start(Card4);
+  Card4 = new Gtk::Label();
+  cardsImage.push_back(Card4);
+  //Card4->set("src/cards/blank_card.png");
+  Card4->set_markup("blank");
+  cardsBox.pack_start(*Card4);
 
-  Card5.set("src/cards/blank_card.png");
-  cardsBox.pack_start(Card5);
+  Card5 = new Gtk::Label();
+  cardsImage.push_back(Card5);
+  //Card5->set("src/cards/blank_card.png");
+  Card5->set_markup("blank");
+  cardsBox.pack_start(*Card5);
 
   Box.pack_start(cardsBox);
 
@@ -496,7 +538,7 @@ void playerWindow::on_chip_1() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string your_bet_s = Amount.get_text();
+    std::string your_bet_s = Amount.get_text();
     int your_bet = std::atoi(your_bet_s.c_str());
     your_bet = your_bet + 1;
     Amount.set_markup("<b>" + to_string(your_bet) + "</b>");    
@@ -520,7 +562,7 @@ void playerWindow::on_chip_5() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string your_bet_s = Amount.get_text();
+    std::string your_bet_s = Amount.get_text();
     int your_bet = std::atoi(your_bet_s.c_str());
     your_bet = your_bet + 5;
     Amount.set_markup("<b>" + to_string(your_bet) + "</b>");   
@@ -543,7 +585,7 @@ void playerWindow::on_chip_25() {
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
     
-    string your_bet_s = Amount.get_text();
+    std::string your_bet_s = Amount.get_text();
     int your_bet = std::atoi(your_bet_s.c_str());
     your_bet = your_bet + 25;
     Amount.set_markup("<b>" + to_string(your_bet) + "</b>");    
@@ -581,7 +623,10 @@ int main(int argc, char* argv[])
 		chatBox[i] = "";
 	}
 
+
 	curr_bet = 6;
+
+
 	/*
     to_dealer["from"] = { {"uuid",} , {"name","Bud"} };
     to_dealer["event"] = "stand";        // "stand","hit","fold","raise","join","request_cards"

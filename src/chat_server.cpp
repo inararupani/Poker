@@ -165,7 +165,25 @@ private:
               }
               else{
                 gameStatus = 1;
-                std::cerr << deck->get_card().generateCardName() << std::endl;
+
+
+
+                for(int i = 0; i < idlist.size(); i++){
+                  hand H;
+
+                  for(int j = 0; j < 5; j++){
+                    H.handOfCards.push_back(deck->get_card());
+                  }
+
+                  H.sequenceHand();
+
+                  to_player["hand"][idlist.at(i)] = {{"card1",H.handOfCards.at(0).generateCardName()},
+                                                      {"card2",H.handOfCards.at(1).generateCardName()},
+                                                      {"card3",H.handOfCards.at(2).generateCardName()},
+                                                      {"card4",H.handOfCards.at(3).generateCardName()},
+                                                      {"card5",H.handOfCards.at(4).generateCardName()}};
+
+                }
               }
             }
             else if(to_dealer["event"] == "ante"){
