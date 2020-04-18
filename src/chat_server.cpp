@@ -15,6 +15,8 @@
 #include <memory>
 #include <set>
 #include <utility>
+#include <algorithm>
+#include <vector>
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "game.hpp"
@@ -38,7 +40,7 @@ typedef std::deque<chat_message> chat_message_queue;
 Deck* deck = NULL;
 
 std::vector <string> idlist;
-int gameStatus; // -1 means not started, 1 means round 1, 2 means round 2
+int gameStatus; // -1 means not started, 1 means round 1, 2 means round to swap, 3 means final round
 int currentBet;
 int totalPot;
 int turn;
@@ -171,17 +173,10 @@ private:
                 }
                 else{
                   gameStatus = 1;
-                  //if (turn >= (int)idlist.size()){
-                  	//turn = 0;
-                  //}
-                  //else{
-                  	//turn++;
-                  //}
 
 				  to_player["turn"]["name"] = playerInfo.at(idlist.at(0));	
 				  to_player["turn"]["uuid"] = idlist.at(0);	
 				  
-	
                   for(int i = 0; i < (int)idlist.size(); i++){
                     hand H;
 
@@ -203,7 +198,6 @@ private:
               else if(to_dealer["event"] == "ante"){
                 std::cout << (to_dealer["from"]["uuid"]) << std::endl;
                 idlist.push_back(to_dealer["from"]["uuid"]);
-                //playerInfo.at(std::string(to_dealer["from"]["uuid"])) = std::string(to_dealer["from"]["name"]);
                 playerInfo.insert(pair<std::string,std::string> (std::string(to_dealer["from"]["uuid"]), std::string(to_dealer["from"]["name"])));
               }
               else if(to_dealer["event"] == "call"){
@@ -211,6 +205,8 @@ private:
                 totalPot = totalPot + tempPot;
                 
                 if (turn >= (int)idlist.size() - 1){
+                    gameStatus = 2;
+                	std::cerr << "round 2" << std::endl;
                   	turn = 0;
                 }
                 else{
@@ -224,25 +220,20 @@ private:
                 int tempPot = to_dealer["total_bet"];
                 totalPot = totalPot + tempPot;
                 
-                if (turn >= (int)idlist.size() - 1){
-                  	turn = 0;
-                }
-                else{
-	                turn++;
-                }
+	            turn++;               
 
 				to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
 				to_player["turn"]["uuid"] = idlist.at(turn);
-                //totalPot = totalPot + to_dealer["total_bet"].asInt();
-                //std::cout << "total pot is" + totalPot + "end" << std::endl;
               }
               else if(to_dealer["event"] == "raise"){
                 int tempPot = to_dealer["total_bet"];
                 totalPot = totalPot + tempPot;
                 
-                
+                std::rotate(idlist.begin(), idlist.begin() + turn ,idlist.end());
                 
                 if (turn >= (int)idlist.size() - 1){
+                	gameStatus = 2;
+                	std::cerr << "round 2" << std::endl;
                   	turn = 0;
                 }
                 else{
@@ -251,17 +242,17 @@ private:
                 
                 to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
                 to_player["turn"]["uuid"] = idlist.at(turn);
-                //totalPot = totalPot + to_dealer["total_bet"].asInt();
               }
 
             }
             
             to_player["total_pot"] = std::to_string(totalPot);
             
-
+			to_player["game_round"] = std::to_string(gameStatus);
 
         
-        /*    to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 
+        	/*    
+        	to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player. 
             to_player["chat"] = to_dealer["chat"];
             to_player["dealer_comment"] = "fred has raised and received 2 new cards";
             to_player["recommended_play"] = "you should fold";
@@ -275,6 +266,7 @@ private:
             //std::cout << "to player:" << std::endl;
             //std::cout << to_player.dump(2) << std::endl;
             */
+            
             std::string t = to_player.dump();
             chat_message sending;
             if (t.size() < chat_message::max_body_length)

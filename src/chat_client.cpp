@@ -14,6 +14,7 @@
 #include <thread>
 #include <cstring>
 #include <assert.h>
+#include <vector>
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include <gtkmm.h>
