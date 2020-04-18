@@ -231,18 +231,13 @@ private:
                 
                 std::rotate(idlist.begin(), idlist.begin() + turn ,idlist.end());
                 
-                if (turn >= (int)idlist.size() - 1){
-                	gameStatus = 2;
-                	std::cerr << "round 2" << std::endl;
-                  	turn = 0;
-                }
-                else{
-	                turn++;
-                }
+    
+	            turn = 1;
+              }
                 
                 to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
                 to_player["turn"]["uuid"] = idlist.at(turn);
-              }
+              
 
             }
             

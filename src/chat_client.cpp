@@ -48,6 +48,7 @@ std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
 bool turn;
 
+
 class chat_client
 {
 public:
@@ -127,7 +128,12 @@ private:
           {
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
           	
-
+			if(!to_player["game_round"].empty()){
+				string gameStatus = to_player["game_round"];
+				std::cout << gameStatus << std::endl;
+			}
+			
+			
           	if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty()){          		
           		currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));   
           		if(std::string(to_player["turn"]["uuid"]) == curr_player->id){
@@ -184,15 +190,9 @@ private:
               
             }
 
-            
-            
-
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
             }
-
-           // cout << to_player["hand"][curr_player->id] << endl;
-
 			
             chatBox[4] = to_player["chat"];
 			
@@ -746,6 +746,7 @@ int main(int argc, char* argv[])
 	curr_bet = 0;
   	to_dealer["total_bet"] = 0;
 	turn = true;
+	//gameStatus = -1;
 
 	/*
     to_dealer["from"] = { {"uuid",} , {"name","Bud"} };
