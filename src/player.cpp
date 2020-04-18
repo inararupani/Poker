@@ -68,7 +68,7 @@ void hand::addCard(Card card) {
 }
 
 void hand::discardCard(int index) { // index = 0 is the first card in the vector
-	if(handOfCards.size() > 0 && index < handOfCards.size()){
+	if(handOfCards.size() > 0 && index < (int)handOfCards.size()){
 		handOfCards.erase(handOfCards.begin()+(index-1));	
 	}
 }

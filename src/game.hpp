@@ -184,6 +184,7 @@ public:
     Gtk::Label* chatLabel;
     Gtk::Label* currBetLabel;
     Gtk::Label* totPotLabel; 
+    Gtk::Label* currTurnLabel;
     Gtk::Label currentBet;
     Gtk::Label totalPot;
     Gtk::Label balanceLabel;

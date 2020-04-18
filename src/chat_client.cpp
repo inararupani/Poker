@@ -24,7 +24,13 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include <chrono>
+#include <thread>
+
 using asio::ip::tcp;
+
+
+
 
 typedef std::deque<chat_message> chat_message_queue;
 
@@ -35,9 +41,11 @@ int tot_pot;
 Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
+Gtk::Label *currTurn = NULL;
 player *curr_player = NULL;
 std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
+bool turn;
 
 class chat_client
 {
@@ -117,14 +125,25 @@ private:
           if (!ec)
           {
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
+          	
+
+          	if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty()){          		
+          		currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));   
+          		if(std::string(to_player["turn"]["uuid"]) == curr_player->id){
+          			turn = true;
+          		}
+          		else{
+          			turn = false;
+          		}        		
+          	}
 
             std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
             if(!to_player["total_pot"].empty()){
-              totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>"); 
+            	totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>"); 
             }
             if(!to_player["current_bet"].empty()){
-              curr_bet = to_player["current_bet"];
-              currBet->set_markup("<b>" + to_string(curr_bet) + "</b>"); 
+            	curr_bet = to_player["current_bet"];
+            	currBet->set_markup("<b>" + to_string(curr_bet) + "</b>"); 
             }
             
             if(!to_player["hand"][curr_player->id]["card1"].empty()){
@@ -132,18 +151,35 @@ private:
               std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card1"];  
               cardsImage.at(0)->set("src/cards/" + tempCard + ".png");
-
+			  //cardsImage.at(0)->set_markup(tempCard);	
+			  
+			  std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
+					
               tempCard = to_player["hand"][curr_player->id]["card2"]; 
               cardsImage.at(1)->set("src/cards/" + tempCard + ".png");
+              //cardsImage.at(1)->set_markup(tempCard);	
+              
+              std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
 
               tempCard = to_player["hand"][curr_player->id]["card3"]; 
               cardsImage.at(2)->set("src/cards/" + tempCard + ".png");
+              //cardsImage.at(2)->set_markup(tempCard);	
+              
+              std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
 
               tempCard = to_player["hand"][curr_player->id]["card4"]; 
               cardsImage.at(3)->set("src/cards/" + tempCard + ".png");
+              //cardsImage.at(3)->set_markup(tempCard);	
+              
+              std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
 
               tempCard = to_player["hand"][curr_player->id]["card5"]; 
               cardsImage.at(4)->set("src/cards/" + tempCard + ".png");
+              //cardsImage.at(4)->set_markup(tempCard);	
               
             }
 
@@ -254,7 +290,12 @@ playerWindow::playerWindow(player *p):Player(p){
   set_border_width(10);
   resize(600,400);
   Box.set_spacing(10);
-
+  
+  currTurnLabel = new Gtk::Label();
+  currTurn = currTurnLabel;
+  currTurnLabel->set_markup("Turn: ");
+  Box.pack_start(*currTurnLabel);		
+	
   cardsBox.set_spacing(10);
   Card1 = new Gtk::Image();
   cardsImage.push_back(Card1);
@@ -472,7 +513,7 @@ void playerWindow::on_Call() {
 
 		to_dealer["event"] = "call";
 		to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
-		to_dealer["chat"] = Player->playerName + " called " + Amount.get_text().c_str();
+		to_dealer["chat"] = Player->playerName + " called $" + Amount.get_text().c_str();
 
 		Amount.set_markup("<b>0</b>");
 
@@ -702,8 +743,8 @@ int main(int argc, char* argv[])
 
 
 	curr_bet = 0;
-  to_dealer["total_bet"] = 0;
-
+  	to_dealer["total_bet"] = 0;
+	turn = true;
 
 	/*
     to_dealer["from"] = { {"uuid",} , {"name","Bud"} };

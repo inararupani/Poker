@@ -37,11 +37,12 @@ typedef std::deque<chat_message> chat_message_queue;
 
 Deck* deck = NULL;
 
-vector <string> idlist;
+std::vector <string> idlist;
 int gameStatus; // -1 means not started, 1 means round 1, 2 means round 2
 int currentBet;
-
 int totalPot;
+int turn;
+std::map<std::string,std::string> playerInfo;
 
 class chat_participant
 {
@@ -160,7 +161,6 @@ private:
 
             if(to_dealer["event"] != "chat"){
               to_player["current_bet"] = to_dealer["total_bet"];
-              //to_player["total_pot"] = to_player["total_pot"] + to_player["current_bet"];
 
               if(to_dealer["event"] == "start"){
                 if(gameStatus >= 1){
@@ -171,10 +171,18 @@ private:
                 }
                 else{
                   gameStatus = 1;
+                  //if (turn >= (int)idlist.size()){
+                  	//turn = 0;
+                  //}
+                  //else{
+                  	//turn++;
+                  //}
 
-
-
-                  for(int i = 0; i < idlist.size(); i++){
+				  to_player["turn"]["name"] = playerInfo.at(idlist.at(0));	
+				  to_player["turn"]["uuid"] = idlist.at(0);	
+				  
+	
+                  for(int i = 0; i < (int)idlist.size(); i++){
                     hand H;
 
                     for(int j = 0; j < 5; j++){
@@ -195,20 +203,54 @@ private:
               else if(to_dealer["event"] == "ante"){
                 std::cout << (to_dealer["from"]["uuid"]) << std::endl;
                 idlist.push_back(to_dealer["from"]["uuid"]);
+                //playerInfo.at(std::string(to_dealer["from"]["uuid"])) = std::string(to_dealer["from"]["name"]);
+                playerInfo.insert(pair<std::string,std::string> (std::string(to_dealer["from"]["uuid"]), std::string(to_dealer["from"]["name"])));
               }
               else if(to_dealer["event"] == "call"){
                 int tempPot = to_dealer["total_bet"];
                 totalPot = totalPot + tempPot;
+                
+                if (turn >= (int)idlist.size() - 1){
+                  	turn = 0;
+                }
+                else{
+                	turn++;
+                }
+
+				to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
+				to_player["turn"]["uuid"] = idlist.at(turn);
               }
               else if(to_dealer["event"] == "bet"){
                 int tempPot = to_dealer["total_bet"];
                 totalPot = totalPot + tempPot;
+                
+                if (turn >= (int)idlist.size() - 1){
+                  	turn = 0;
+                }
+                else{
+	                turn++;
+                }
+
+				to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
+				to_player["turn"]["uuid"] = idlist.at(turn);
                 //totalPot = totalPot + to_dealer["total_bet"].asInt();
                 //std::cout << "total pot is" + totalPot + "end" << std::endl;
               }
               else if(to_dealer["event"] == "raise"){
                 int tempPot = to_dealer["total_bet"];
                 totalPot = totalPot + tempPot;
+                
+                
+                
+                if (turn >= (int)idlist.size() - 1){
+                  	turn = 0;
+                }
+                else{
+	                turn++;
+                }
+                
+                to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
+                to_player["turn"]["uuid"] = idlist.at(turn);
                 //totalPot = totalPot + to_dealer["total_bet"].asInt();
               }
 
@@ -321,6 +363,7 @@ int main(int argc, char* argv[])
   totalPot = 0;
   gameStatus = -1;
   currentBet = 0;
+  turn = 0;
 
   try
   {
