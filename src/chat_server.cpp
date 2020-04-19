@@ -44,6 +44,7 @@ int gameStatus; // -1 means not started, 1 means round 1, 2 means round to swap,
 int currentBet;
 int totalPot;
 int turn;
+int swapCount;
 std::map<std::string,std::string> playerInfo;
 
 class chat_participant
@@ -183,7 +184,8 @@ private:
                     for(int j = 0; j < 5; j++){
                       H.handOfCards.push_back(deck->get_card());
                     }
-
+					
+					
                     H.sequenceHand();
 
                     to_player["hand"][idlist.at(i)] = {{"card1",H.handOfCards.at(0).generateCardName()},
@@ -233,6 +235,29 @@ private:
                 
     
 	            turn = 1;
+              }
+              else if(to_dealer["event"] == "swap"){
+              	swapCount++;
+              	string cardSwaps = to_dealer["swap_cards"];
+              	
+              	if(atoi(cardSwaps.c_str()) == 0){
+              		std::cerr << "non-swapped" << std::endl;
+              	}
+              	else{
+              		string temp = to_dealer["from"]["uuid"];
+              		//std::cerr << temp << std::endl;
+              		for(int i = 0; i < (int)cardSwaps.length(); i++){
+              			to_player["hand"][temp]["card" + cardSwaps.substr(i,1)] = deck->get_card().generateCardName();
+              		}
+              		
+              	}
+              	
+              	
+              	if(swapCount == (int)idlist.size()){
+              		gameStatus++;
+              	}
+              
+              	
               }
                 
                 to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));

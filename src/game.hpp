@@ -61,6 +61,9 @@ public:
     string playerName;
     hand playerHand;
     bool status;
+    
+    bool turn;
+	bool swapped;
 
     //constructors
     //player();
@@ -179,6 +182,11 @@ public:
     Gtk::Image* Card3;
     Gtk::Image* Card4;
     Gtk::Image* Card5;
+    Gtk::CheckButton swap1;
+    Gtk::CheckButton swap2;
+    Gtk::CheckButton swap3;
+    Gtk::CheckButton swap4;
+    Gtk::CheckButton swap5;
     Gtk::Label Amount; // amount to bet or raise
     Gtk::Entry Chat;
     Gtk::Label* chatLabel;
@@ -206,6 +214,7 @@ public:
     Gtk::Button SitOut;
     Gtk::Button Send;
     Gtk::VBox Box;
+    Gtk::HBox checkBox;
     Gtk::HBox startBox;
     Gtk::HBox chipBox;
     Gtk::HBox actionBox;

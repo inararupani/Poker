@@ -46,7 +46,33 @@ Gtk::Label *currTurn = NULL;
 player *curr_player = NULL;
 std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
-bool turn;
+int gameStatus;
+
+
+bool is_number(const std::string& s)
+{
+    return !s.empty() && std::find_if(s.begin(), 
+        s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+}
+
+bool valid_number(std::string numstr){
+        if(numstr.length()>3){
+            return false;
+        }
+        else{
+            if(numstr.length() == 1 && atoi(numstr.c_str()) == 0){
+                return true;
+            }
+            else{
+                for(int i = 0; i < (int)numstr.length(); i++){
+                    if(atoi(numstr.substr(i,1).c_str()) > 5 || atoi(numstr.substr(i,1).c_str())  < 1 ){
+                        return false;
+                    }
+                }
+            return true;
+        }
+    }
+}  
 
 
 class chat_client
@@ -129,22 +155,23 @@ private:
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
           	
 			if(!to_player["game_round"].empty()){
-				string gameStatus = to_player["game_round"];
-				std::cout << gameStatus << std::endl;
+				string tempStatus = to_player["game_round"];
+				gameStatus = atoi(tempStatus.c_str());
+				//std::cout << gameStatus << std::endl;
 			}
 			
 			
           	if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty()){          		
           		currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));   
           		if(std::string(to_player["turn"]["uuid"]) == curr_player->id){
-          			turn = true;
+          			curr_player->turn = true;
           		}
           		else{
-          			turn = false;
+          			curr_player->turn = false;
           		}        		
           	}
 
-            std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
+            //std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
             if(!to_player["total_pot"].empty()){
             	totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>"); 
             }
@@ -154,41 +181,40 @@ private:
             }
             
             if(!to_player["hand"][curr_player->id]["card1"].empty()){
-              std::cerr << "it is not null" << std::endl;
               std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card1"];  
               cardsImage.at(0)->set("src/cards/" + tempCard + ".png");
-			  //cardsImage.at(0)->set_markup(tempCard);	
-			  
+			  //cardsImage.at(0)->set_markup(tempCard);	 
 			  std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-					
+    		}
+    		
+			if(!to_player["hand"][curr_player->id]["card2"].empty()){	
+			  std::string tempCard;	
               tempCard = to_player["hand"][curr_player->id]["card2"]; 
               cardsImage.at(1)->set("src/cards/" + tempCard + ".png");
               //cardsImage.at(1)->set_markup(tempCard);	
-              
               std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-
+			}
+			if(!to_player["hand"][curr_player->id]["card3"].empty()){	
+              std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card3"]; 
               cardsImage.at(2)->set("src/cards/" + tempCard + ".png");
               //cardsImage.at(2)->set_markup(tempCard);	
-              
               std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-
+			}
+			if(!to_player["hand"][curr_player->id]["card4"].empty()){
+              std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card4"]; 
               cardsImage.at(3)->set("src/cards/" + tempCard + ".png");
-              //cardsImage.at(3)->set_markup(tempCard);	
-              
+              //cardsImage.at(3)->set_markup(tempCard);	 
               std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    		  //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-
+			}
+			if(!to_player["hand"][curr_player->id]["card5"].empty()){
+              std::string tempCard;
               tempCard = to_player["hand"][curr_player->id]["card5"]; 
               cardsImage.at(4)->set("src/cards/" + tempCard + ".png");
-              //cardsImage.at(4)->set_markup(tempCard);	
-              
-            }
+            }  
+            
 
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
@@ -329,6 +355,18 @@ playerWindow::playerWindow(player *p):Player(p){
   cardsBox.pack_start(*Card5);
 
   Box.pack_start(cardsBox);
+  
+  checkBox.pack_start(swap1);
+  
+  checkBox.pack_start(swap2);
+  
+  checkBox.pack_start(swap3);
+  
+  checkBox.pack_start(swap4);
+  
+  checkBox.pack_start(swap5);
+  
+  Box.pack_start(checkBox);
 
   totalPot.set_markup("<b>TOTAL POT:</b>");
   Box.pack_start(totalPot);
@@ -472,7 +510,7 @@ void playerWindow::on_Start() {
 
 void playerWindow::on_Ante(){
 	if(Player->chip1 <= 0 || Player->status == true){
-		Gtk::MessageDialog dialog(*this, "You do not have enough $1 chips to ante or you have already anted.");
+	  Gtk::MessageDialog dialog(*this, "You do not have enough $1 chips to ante or you have already anted.");
 	  dialog.run();
 	  dialog.hide();
 	}
@@ -609,9 +647,68 @@ void playerWindow::on_Bet() {
       dialog.hide();
   }
 }
+
 void playerWindow::on_CardSwap() {
-	to_dealer["event"] = "request_cards";
+	if(gameStatus != 2){
+		Gtk::MessageDialog dialog(*this, "Not a swapping round.");
+    	dialog.run();
+    	dialog.hide();
+	}else{
+		if(curr_player->swapped){
+			Gtk::MessageDialog dialog(*this, "Already swapped.");
+			dialog.run();
+			dialog.hide();
+		}
+		else{
+			int swapCount = 0;
+			string tempSwap = "";
+			if(swap1.get_active()){
+				swapCount++;
+				tempSwap = tempSwap + "1";
+			}
+			if(swap2.get_active()){
+				swapCount++;
+				tempSwap = tempSwap + "2";
+			}
+			if(swap3.get_active()){
+				swapCount++;
+				tempSwap = tempSwap + "3";
+			}
+			if(swap4.get_active()){
+				swapCount++;
+				tempSwap = tempSwap + "4";
+			}
+			if(swap5.get_active()){
+				swapCount++;
+				tempSwap = tempSwap + "5";
+			}
+			if(swapCount > 3){
+				Gtk::MessageDialog dialog(*this, "Cannot do more than three swaps.");
+				dialog.run();
+				dialog.hide();
+			}else{
+
+				if(swapCount == 0){
+					tempSwap = "0";
+				}
+				curr_player->swapped = true;
+				to_dealer["event"] = "swap";
+				to_dealer["swap_cards"] = tempSwap;
+				
+			
+				chat_message msg;
+				std::string t = to_dealer.dump();
+				
+				msg.body_length(t.size());
+				std::memcpy(msg.body(), t.c_str() , msg.body_length());
+				msg.encode_header();
+				c->write(msg);
+			}
+			
+		}
+	}
 }
+
 void playerWindow::on_SitOut() {
 	to_dealer["event"] = "sit_out";
 	hide();
@@ -745,7 +842,7 @@ int main(int argc, char* argv[])
 
 	curr_bet = 0;
   	to_dealer["total_bet"] = 0;
-	turn = true;
+	//turn = true;
 	//gameStatus = -1;
 
 	/*

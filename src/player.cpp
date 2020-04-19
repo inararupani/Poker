@@ -107,6 +107,8 @@ player::player(string playerName) {
 	chip1 = 25;
 	chip5 = 10;
 	chip25 = 1;
+	swapped = false;
+	turn = false;
 }
 void player::update_hand(Card newCard) {}
 int player::request_card_swap() {
