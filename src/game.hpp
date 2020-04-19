@@ -45,7 +45,7 @@ public:
     void addCard(Card card);
     void discardCard(int index); //returns the index of the card number needs to be discard to be swapped
     void sequenceHand();//puts the hand in sequence
-    int compareHand(hand firstHand, hand secondHand); // compare two hands to decide winner for dealer and returns which holds higher priority
+    int compareHand(hand H); // returns -1 if H is better, return 1 if H is worse 
     vector <Card> getHand();
 };
 

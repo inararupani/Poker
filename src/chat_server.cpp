@@ -213,7 +213,40 @@ private:
                     gameStatus++;
                   	turn = 0;
                   	if(gameStatus >= 4){
-                  		std::cerr << "time to decide winner" << std::endl;
+                  		//std::cerr << "time to decide winner" << std::endl;
+						std::string best;
+						
+						std::map<std::string, hand>::iterator it = handInfo.begin();
+						
+
+						while (it != handInfo.end())
+						{
+							it->second.sequenceHand();
+							it++;
+						}
+						
+						it = handInfo.begin();
+						
+						while (it != handInfo.end())
+						{
+							it->second.sequenceHand();
+							for(int i = 0; i < 5; i++){
+								std::cout << it->second.handOfCards.at(i).generateCardName() + ", ";
+							}
+							std::cout << "\n" << std::endl;
+							it++;
+						}
+						
+						
+                  		
+                  		best = idlist.at(0);
+						for(int i = 1; i < (int)(idlist.size()); i++){
+							if(handInfo.at(best).compareHand(handInfo.at(idlist.at(i))) < 0){
+								best = idlist.at(i);
+							}
+						}
+						
+						to_player["winner"] = playerInfo.at(best);
 						
                   	}
                 }

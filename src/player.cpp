@@ -87,7 +87,7 @@ void hand::sequenceHand() { // puts hand in sequence based on card value, should
 }
 
 
-int hand::compareHand(hand firstHand, hand secondHand) {
+int hand::compareHand(hand H) {
 // difficult
 	return 0;
 }
