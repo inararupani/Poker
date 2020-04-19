@@ -45,7 +45,8 @@ int currentBet;
 int totalPot;
 int turn;
 int swapCount;
-std::map<std::string,std::string> playerInfo;
+std::map<std::string, std::string> playerInfo;
+std::map<std::string, hand> handInfo;
 
 class chat_participant
 {
@@ -187,6 +188,8 @@ private:
 					
 					
                     H.sequenceHand();
+                    
+                    handInfo.insert(pair<std::string, hand> (idlist.at(i), H));
 
                     to_player["hand"][idlist.at(i)] = {{"card1",H.handOfCards.at(0).generateCardName()},
                                                         {"card2",H.handOfCards.at(1).generateCardName()},
@@ -207,9 +210,12 @@ private:
                 totalPot = totalPot + tempPot;
                 
                 if (turn >= (int)idlist.size() - 1){
-                    gameStatus = 2;
-                	std::cerr << "round 2" << std::endl;
+                    gameStatus++;
                   	turn = 0;
+                  	if(gameStatus >= 4){
+                  		std::cerr << "time to decide winner" << std::endl;
+						
+                  	}
                 }
                 else{
                 	turn++;
@@ -245,16 +251,16 @@ private:
               	}
               	else{
               		string temp = to_dealer["from"]["uuid"];
-              		//std::cerr << temp << std::endl;
               		for(int i = 0; i < (int)cardSwaps.length(); i++){
-              			to_player["hand"][temp]["card" + cardSwaps.substr(i,1)] = deck->get_card().generateCardName();
+              			handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1) = deck->get_card();
+              			to_player["hand"][temp]["card" + cardSwaps.substr(i,1)] = handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1).generateCardName();
               		}
-              		
               	}
               	
-              	
               	if(swapCount == (int)idlist.size()){
+              		turn = 0;
               		gameStatus++;
+              		to_player["current_bet"] = 0;
               	}
               
               	
