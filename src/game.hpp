@@ -52,6 +52,7 @@ public:
     void sequenceHand();//puts the hand in sequence
 
     vector <Card> getHand();
+    
     bool isPair();
     bool isTwoPair();
     bool isThreeOfAKind();
@@ -208,7 +209,7 @@ public:
     Gtk::Label* currTurnLabel;
     Gtk::Label currentBet;
     Gtk::Label totalPot;
-    Gtk::Label balanceLabel;
+    Gtk::Label* balanceLabel;
     Gtk::Label yourBet;
     Gtk::Label chatHistory;
     Gtk::Button Start;
@@ -238,5 +239,6 @@ public:
 
 
 int compareHand(hand H1, hand H2);
+string getRank(hand H1);
 
 #endif

@@ -39,12 +39,13 @@ typedef std::deque<chat_message> chat_message_queue;
 
 Deck* deck = NULL;
 
-std::vector <string> idlist;
+
 int gameStatus; // -1 means not started, 1 means round 1, 2 means round to swap, 3 means final round
 int currentBet;
 int totalPot;
 int turn;
 int swapCount;
+std::vector <string> idlist;
 std::map<std::string, std::string> playerInfo;
 std::map<std::string, hand> handInfo;
 
@@ -201,8 +202,10 @@ private:
                 }
               }
               else if(to_dealer["event"] == "ante"){
+                totalPot++;
                 std::cout << (to_dealer["from"]["uuid"]) << std::endl;
                 idlist.push_back(to_dealer["from"]["uuid"]);
+                
                 playerInfo.insert(pair<std::string,std::string> (std::string(to_dealer["from"]["uuid"]), std::string(to_dealer["from"]["name"])));
               }
               else if(to_dealer["event"] == "call"){
@@ -213,7 +216,6 @@ private:
                     gameStatus++;
                   	turn = 0;
                   	if(gameStatus >= 4){
-                  		//std::cerr << "time to decide winner" << std::endl;
 						std::string best;
 						
 						std::map<std::string, hand>::iterator it = handInfo.begin();
@@ -224,38 +226,45 @@ private:
 							it->second.sequenceHand();
 							it++;
 						}
-						
-						it = handInfo.begin();
-						
-						while (it != handInfo.end())
-						{
-							it->second.sequenceHand();
-							for(int i = 0; i < 5; i++){
-								std::cout << it->second.handOfCards.at(i).generateCardName() + ", ";
-							}
-							std::cout << "\n" << std::endl;
-							it++;
-						}
-						
-						
                   		
                   		best = idlist.at(0);
 						for(int i = 1; i < (int)(idlist.size()); i++){
 							if(compareHand(handInfo.at(best), handInfo.at(idlist.at(i))) < 0){
 								best = idlist.at(i);
+								std::cout << "best hand changed" << std::endl;
 							}
 						}
 						
 						to_player["winner"] = playerInfo.at(best);
+						to_player["winner_hand"] = getRank(handInfo.at(best));
+						to_player["prize"]["amount"] = std::to_string(totalPot);
+						to_player["prize"]["uuid"] = best;
+						
+						totalPot = 0;
+						currentBet = 0;
+						gameStatus = -1;
+						swapCount = 0;
+						
+						
+						idlist.clear();
+						playerInfo.clear();
+						handInfo.clear();
+
+						
+						
+						
 						
                   	}
                 }
+                
                 else{
                 	turn++;
                 }
-
-				to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
-				to_player["turn"]["uuid"] = idlist.at(turn);
+                
+				if(gameStatus != -1){
+					to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
+					to_player["turn"]["uuid"] = idlist.at(turn);
+				}
               }
               else if(to_dealer["event"] == "bet"){
                 int tempPot = to_dealer["total_bet"];
@@ -298,10 +307,10 @@ private:
               
               	
               }
-                
-                to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
-                to_player["turn"]["uuid"] = idlist.at(turn);
-              
+                if(gameStatus != -1){
+                	to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
+                	to_player["turn"]["uuid"] = idlist.at(turn);
+              	}
 
             }
             
@@ -410,6 +419,7 @@ private:
 int main(int argc, char* argv[])
 {
   deck = new Deck();
+  deck->shuffle_deck();
   deck->shuffle_deck();
   totalPot = 0;
   gameStatus = -1;

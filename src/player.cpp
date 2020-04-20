@@ -103,6 +103,7 @@ void hand::sequenceHand() { // puts hand in sequence based on card value, should
 }
 
 
+
 bool hand::isPair(){
 
     
@@ -143,7 +144,7 @@ bool hand::isFlush()
 {
 
     
-    for (int count=0; count<3; count++)
+    for (int count=0; count<4; count++)
     {
       if(handOfCards.at(count).getSuit()!=handOfCards.at(count+1).getSuit()){
       	return false;
@@ -154,7 +155,7 @@ bool hand::isFlush()
 
 bool hand::isStraight(){
 
-    for(int count=0; count<3; count++)
+    for(int count=0; count<4; count++)
     {
         if((handOfCards.at(count).getValue()-1) != handOfCards.at(count+1).getValue()){
             return false;
@@ -188,7 +189,7 @@ bool hand::isFourOfAKind(){
 
 bool hand::isRoyalFlush(){
     	
-	for (int count=0; count<3; count++)
+	for (int count=0; count<4; count++)
     {
       if(handOfCards.at(count).getSuit()!=handOfCards.at(count+1).getSuit()){
       	return false;
@@ -235,6 +236,31 @@ void player::fold() {}
 void player::raise(int amount) {}
 string player::playerMessage() {
 	return "0";
+}
+
+string getRank(hand H1){
+	if(H1.isRoyalFlush())
+		return "a Royal Flush";
+	else if(H1.isStraight() && H1.isFlush())
+		return "a Straight Flush";
+	else if(H1.isFourOfAKind())
+		return "Four of a kind";
+	else if(H1.isFullHouse())
+		return "a Full House";
+	else if(H1.isFlush())
+		return "a Flush";
+	else if(H1.isStraight())
+		return "a Straight";
+	else if(H1.isThreeOfAKind())
+		return "three of a kind";
+	else if(H1.isTwoPair())
+		return "two pairs";
+	else if(H1.isPair())
+		return "a pair";
+	else
+		return "a high card";
+
+
 }
 
 int compareHand(hand H1, hand H2){

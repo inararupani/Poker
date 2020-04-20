@@ -24,7 +24,6 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
-
 #include <chrono>
 #include <thread>
 
@@ -43,6 +42,7 @@ Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
 Gtk::Label *currBet = NULL;
 Gtk::Label *currTurn = NULL;
+Gtk::Label *balanceLbl = NULL;
 player *curr_player = NULL;
 std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
@@ -159,14 +159,8 @@ private:
 			if(!to_player["game_round"].empty()){
 				string tempStatus = to_player["game_round"];
 				gameStatus = atoi(tempStatus.c_str());
-				//std::cout << gameStatus << std::endl;
 			}
-			
-			if(gameStatus == 4 && !to_player["winner"].empty()){ //need to make 0 later
-				std::cout << std::string(to_player["winner"]) + " is the winner." << std::endl;
-			}
-			
-			
+									
           	if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty()){          		
           		currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));   
           		if(std::string(to_player["turn"]["uuid"]) == curr_player->id){
@@ -177,7 +171,6 @@ private:
           		}        		
           	}
 
-            //std::cerr << to_player["hand"][curr_player->id]["card1"] << std::endl;
             if(!to_player["total_pot"].empty()){
             	totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>"); 
             }
@@ -222,6 +215,8 @@ private:
             }  
             
 
+			
+
             for(int i = 0; i < 4; i++){
             	chatBox[i] = chatBox[i+1];
             }
@@ -233,6 +228,32 @@ private:
 								+ chatBox[2] + "\n"
 								+ chatBox[3] + "\n"
 								+ chatBox[4]); 
+								
+			if(gameStatus == -1 && !to_player["winner"].empty()){ //need to make 0 later
+				
+				if(to_player["prize"]["uuid"] == curr_player->id){
+					curr_player->balance = curr_player->balance + atoi(std::string(to_player["prize"]["amount"]).c_str());
+					curr_player->chip1 = curr_player->chip1 + atoi(std::string(to_player["prize"]["amount"]).c_str()); 
+					balanceLbl->set_markup("Balance: " + to_string(curr_player->balance) + 
+                            "\t$1: " + to_string(curr_player->chip1) + 
+                            "\t$5: " + to_string(curr_player->chip5) + 
+                            "\t$25: " + to_string(curr_player->chip25));
+
+				}
+				
+				for(int i = 0; i < 4; i++){
+					chatBox[i] = chatBox[i+1];
+				}
+				
+				chatBox[4] = std::string(to_player["winner"]) + " is the winner with " + std::string(to_player["winner_hand"]);
+				currTurn->set_markup("Turn: None");  
+				
+				fromView->set_markup(chatBox[0] + "\n" 
+									+ chatBox[1] + "\n"
+									+ chatBox[2] + "\n"
+									+ chatBox[3] + "\n"
+									+ "<b>" + chatBox[4] + "</b>"); 
+			}					
 					
 
             std::cout.write(read_msg_.body(), read_msg_.body_length());
@@ -390,12 +411,14 @@ playerWindow::playerWindow(player *p):Player(p){
   currBetLabel->set_markup("<b>" + to_string(curr_bet) + "</b>"); 
   Box.pack_start(*currBetLabel);
 
-  balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+  balanceLabel  = new Gtk::Label();
+  balanceLbl = balanceLabel;	
+  balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
                               "\t$1: " + to_string(Player->chip1) + 
                               "\t$5: " + to_string(Player->chip5) + 
                               "\t$25: " + to_string(Player->chip25));
 
-  Box.pack_start(balanceLabel);
+  Box.pack_start(*balanceLabel);
 
   yourBet.set_markup("<b>YOUR BET</b>");
   Box.pack_start(yourBet);
@@ -536,7 +559,7 @@ void playerWindow::on_Ante(){
 
 		Player->chip1--;
 		Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
-		balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+		balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
 		                    "\t$1: " + to_string(Player->chip1) + 
 		                    "\t$5: " + to_string(Player->chip5) + 
 		                    "\t$25: " + to_string(Player->chip25));
@@ -693,13 +716,23 @@ void playerWindow::on_CardSwap() {
 				dialog.run();
 				dialog.hide();
 			}else{
-
+				int count = 0;
 				if(swapCount == 0){
 					tempSwap = "0";
+				}
+				else{
+					count = tempSwap.length();
 				}
 				curr_player->swapped = true;
 				to_dealer["event"] = "swap";
 				to_dealer["swap_cards"] = tempSwap;
+				to_dealer["chat"] = Player->playerName + " swapped " + std::to_string(count) + " card/s.";
+				
+				swap1.set_active(false);
+				swap2.set_active(false);
+				swap3.set_active(false);
+				swap4.set_active(false);
+				swap5.set_active(false);
 				
 			
 				chat_message msg;
@@ -720,7 +753,7 @@ void playerWindow::on_SitOut() {
 	hide();
 }
 void playerWindow::on_Exit() {
-  hide();
+  	hide();
 }
 
 
@@ -755,7 +788,7 @@ void playerWindow::on_chip_1() {
     temp1++;
     Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
 
-    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+    balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
                                 "\t$1: " + to_string(Player->chip1) + 
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
@@ -779,7 +812,7 @@ void playerWindow::on_chip_5() {
     temp5++;
     Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
 
-    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+    balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
                                 "\t$1: " + to_string(Player->chip1) + 
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
@@ -802,7 +835,7 @@ void playerWindow::on_chip_25() {
     temp25++;
     Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
 
-    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+    balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
                                 "\t$1: " + to_string(Player->chip1) + 
                                 "\t$5: " + to_string(Player->chip5) + 
                                 "\t$25: " + to_string(Player->chip25));
@@ -826,7 +859,7 @@ void playerWindow::on_Clear(){
 
 	Player->balance = Player->chip1 * 1 + Player->chip5 * 5 + Player->chip25 * 25;
 
-    balanceLabel.set_markup("Balance: " + to_string(Player->balance) + 
+    balanceLabel->set_markup("Balance: " + to_string(Player->balance) + 
                             "\t$1: " + to_string(Player->chip1) + 
                             "\t$5: " + to_string(Player->chip5) + 
                             "\t$25: " + to_string(Player->chip25));
@@ -848,19 +881,7 @@ int main(int argc, char* argv[])
 
 	curr_bet = 0;
   	to_dealer["total_bet"] = 0;
-	//turn = true;
-	//gameStatus = -1;
 
-	/*
-    to_dealer["from"] = { {"uuid",} , {"name","Bud"} };
-    to_dealer["event"] = "stand";        // "stand","hit","fold","raise","join","request_cards"
-    to_dealer["cards_requested"] = 3;    // optional, number of cards requested, 1 to 5
-    to_dealer["current_bet"] = 1.00;
-    to_dealer["total_bet"] = 5.00;
-    to_dealer["chat"] = std::string(line);
-    */
-
-	//clear temp1, temp5, temp25, in every button click
   try
   {
     if (argc != 3)
@@ -881,18 +902,6 @@ int main(int argc, char* argv[])
     playerNameWindow w;
     Gtk::Main::run(w);
 
-    //char line[chat_message::max_body_length + 1];
-    
-    /*
-    while (std::cin.getline(line, chat_message::max_body_length + 1))
-    {
-      chat_message msg;
-      msg.body_length(std::strlen(line));
-      std::memcpy(msg.body(), line, msg.body_length());
-      msg.encode_header();
-      c.write(msg);
-    }
-    */
     c->close();
     t.join();
   }
