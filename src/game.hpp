@@ -22,6 +22,11 @@ public:
     Card(int value, SUIT suit);
     int compareCard(Card secondCard); // compare two cards to put cards in sequence for players
     string generateCardName();
+    
+	int getValue();
+
+	SUIT getSuit();
+
 
 };
 
@@ -45,8 +50,16 @@ public:
     void addCard(Card card);
     void discardCard(int index); //returns the index of the card number needs to be discard to be swapped
     void sequenceHand();//puts the hand in sequence
-    int compareHand(hand H); // returns -1 if H is better, return 1 if H is worse 
+
     vector <Card> getHand();
+    bool isPair();
+    bool isTwoPair();
+    bool isThreeOfAKind();
+    bool isFlush();
+    bool isStraight();
+    bool isFullHouse();
+    bool isFourOfAKind();
+    bool isRoyalFlush();
 };
 
 
@@ -222,5 +235,8 @@ public:
 
     //Gtk::Grid grid;//Keeps the object in a certain way
 };
+
+
+int compareHand(hand H1, hand H2);
 
 #endif

@@ -7,6 +7,12 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
+
+
+
+
+
+
 //Card Class Functions
 Card::Card () {
 }
@@ -20,6 +26,16 @@ int Card::compareCard(Card secondCard) {
 	int diff = 0;
 	diff = this->value - secondCard.value;
 	return diff;
+}
+
+int Card::getValue(){
+    
+    return (value);
+}
+
+SUIT Card::getSuit(){
+    
+    return (suit);
 }
 
 string Card::generateCardName(){
@@ -87,10 +103,107 @@ void hand::sequenceHand() { // puts hand in sequence based on card value, should
 }
 
 
-int hand::compareHand(hand H) {
-// difficult
-	return 0;
+bool hand::isPair(){
+
+    
+    if(handOfCards.at(0).getValue() == handOfCards.at(1).getValue() || handOfCards.at(1).getValue()==handOfCards.at(2).getValue() || handOfCards.at(2).getValue()==handOfCards.at(3).getValue() ||
+       handOfCards.at(3).getValue()==handOfCards.at(4).getValue())
+        return true;
+    else
+        return false;
 }
+
+bool hand::isTwoPair(){
+
+    
+    if(handOfCards.at(0).getValue()==handOfCards.at(1).getValue() && handOfCards.at(2).getValue()==handOfCards.at(3).getValue())
+        return true;
+    else if(handOfCards.at(1).getValue()==handOfCards.at(2).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue())
+        return true;
+    else if (handOfCards.at(0).getValue()==handOfCards.at(1).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue())
+        return true;
+    else
+        return false;
+}
+
+bool hand::isThreeOfAKind(){
+
+    
+    if(handOfCards.at(0).getValue()==handOfCards.at(1).getValue() && handOfCards.at(1).getValue()==handOfCards.at(2).getValue()) 
+        return true;
+    else if(handOfCards.at(1).getValue()==handOfCards.at(2).getValue() && handOfCards.at(2).getValue()==handOfCards.at(3).getValue())
+        return true;
+    else if(handOfCards.at(2).getValue()==handOfCards.at(3).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue()) 
+        return true;
+    else
+        return false;
+}
+
+bool hand::isFlush()
+{
+
+    
+    for (int count=0; count<3; count++)
+    {
+      if(handOfCards.at(count).getSuit()!=handOfCards.at(count+1).getSuit()){
+      	return false;
+      } 
+    }
+    return true;
+}
+
+bool hand::isStraight(){
+
+    for(int count=0; count<3; count++)
+    {
+        if((handOfCards.at(count).getValue()-1) != handOfCards.at(count+1).getValue()){
+            return false;
+       	}
+    }
+    
+    return true;
+}
+
+bool hand::isFullHouse(){
+
+    
+    if(handOfCards.at(0).getValue()==handOfCards.at(1).getValue() && handOfCards.at(1).getValue()==handOfCards.at(2).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue()) 
+        return true;
+    else if(handOfCards.at(2).getValue()==handOfCards.at(3).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue() && handOfCards.at(0).getValue()==handOfCards.at(1).getValue())
+        return true;
+    else
+        return false;
+}
+
+
+bool hand::isFourOfAKind(){
+	    if(handOfCards.at(0).getValue()==handOfCards.at(1).getValue() && handOfCards.at(1).getValue()==handOfCards.at(2).getValue() && handOfCards.at(2).getValue()==handOfCards.at(3).getValue())
+	    	return true;
+	    else if (handOfCards.at(1).getValue()==handOfCards.at(2).getValue() && handOfCards.at(2).getValue()==handOfCards.at(3).getValue() && handOfCards.at(3).getValue()==handOfCards.at(4).getValue())
+	    	return true;
+		else
+			return false;
+}
+
+
+bool hand::isRoyalFlush(){
+    	
+	for (int count=0; count<3; count++)
+    {
+      if(handOfCards.at(count).getSuit()!=handOfCards.at(count+1).getSuit()){
+      	return false;
+      }
+    }   
+    
+
+    if(handOfCards.at(0).getValue() == 1 && handOfCards.at(1).getValue() == 10 && handOfCards.at(2).getValue() == 11 && handOfCards.at(3).getValue() == 12 && handOfCards.at(4).getValue() == 13){
+    	return true;
+    }
+    
+    return false;    
+   
+}
+
 
 vector <Card> hand::getHand(){
 	return handOfCards;
@@ -123,4 +236,74 @@ void player::raise(int amount) {}
 string player::playerMessage() {
 	return "0";
 }
+
+int compareHand(hand H1, hand H2){
+	int score1 = 0;
+	int score2 = 0;
+	
+	
+	if(H1.isRoyalFlush())
+		score1 = 10;
+	else if(H1.isStraight() && H1.isFlush())
+		score1 = 9;
+	else if(H1.isFourOfAKind())
+		score1 = 8;
+	else if(H1.isFullHouse())
+		score1 = 7;
+	else if(H1.isFlush())
+		score1 = 6;
+	else if(H1.isStraight())
+		score1 = 5;
+	else if(H1.isThreeOfAKind())
+		score1 = 4;
+	else if(H1.isTwoPair())
+		score1 = 3;
+	else if(H1.isPair())
+		score1 = 2;
+	else
+		score1 = 1;
+		
+	if(H2.isRoyalFlush())
+		score2 = 10;
+	else if(H2.isStraight() && H1.isFlush())
+		score2 = 9;
+	else if(H2.isFourOfAKind())
+		score2 = 8;
+	else if(H2.isFullHouse())
+		score2 = 7;
+	else if(H2.isFlush())
+		score2 = 6;
+	else if(H2.isStraight())
+		score2 = 5;
+	else if(H2.isThreeOfAKind())
+		score2 = 4;
+	else if(H2.isTwoPair())
+		score2 = 3;
+	else if(H2.isPair())
+		score2 = 2;
+	else
+		score2 = 1;
+
+	if(score1 != score2)
+		return score1 - score2;
+	
+	
+	if(H1.handOfCards.at(4).getValue() != H2.handOfCards.at(4).getValue())
+		return H1.handOfCards.at(4).getValue() - H2.handOfCards.at(4).getValue();
+		
+	if(H1.handOfCards.at(3).getValue() != H2.handOfCards.at(3).getValue())
+		return H1.handOfCards.at(3).getValue() - H2.handOfCards.at(3).getValue();
+		
+	if(H1.handOfCards.at(2).getValue() != H2.handOfCards.at(2).getValue())
+		return H1.handOfCards.at(2).getValue() - H2.handOfCards.at(2).getValue();
+		
+	if(H1.handOfCards.at(1).getValue() != H2.handOfCards.at(1).getValue())
+		return H1.handOfCards.at(1).getValue() - H2.handOfCards.at(1).getValue();
+		
+	if(H1.handOfCards.at(0).getValue() != H2.handOfCards.at(0).getValue())
+		return H1.handOfCards.at(0).getValue() - H2.handOfCards.at(0).getValue();
+	
+	return 0;
+}
+
 

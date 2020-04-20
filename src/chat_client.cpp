@@ -154,10 +154,16 @@ private:
           {
           	nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
           	
+          	
+          	
 			if(!to_player["game_round"].empty()){
 				string tempStatus = to_player["game_round"];
 				gameStatus = atoi(tempStatus.c_str());
 				//std::cout << gameStatus << std::endl;
+			}
+			
+			if(gameStatus == 4 && !to_player["winner"].empty()){ //need to make 0 later
+				std::cout << std::string(to_player["winner"]) + " is the winner." << std::endl;
 			}
 			
 			
@@ -222,12 +228,12 @@ private:
 			
             chatBox[4] = to_player["chat"];
 			
-			      fromView->set_label(chatBox[0] + "\n" 
-					         			+ chatBox[1] + "\n"
-								        + chatBox[2] + "\n"
-								        + chatBox[3] + "\n"
-								        + chatBox[4]); 
-							
+			fromView->set_label(chatBox[0] + "\n" 
+					         	+ chatBox[1] + "\n"
+								+ chatBox[2] + "\n"
+								+ chatBox[3] + "\n"
+								+ chatBox[4]); 
+					
 
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";

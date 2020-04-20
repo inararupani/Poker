@@ -241,7 +241,7 @@ private:
                   		
                   		best = idlist.at(0);
 						for(int i = 1; i < (int)(idlist.size()); i++){
-							if(handInfo.at(best).compareHand(handInfo.at(idlist.at(i))) < 0){
+							if(compareHand(handInfo.at(best), handInfo.at(idlist.at(i))) < 0){
 								best = idlist.at(i);
 							}
 						}
