@@ -1,153 +1,24 @@
 #ifndef game_h
 #define game_h
+
 #include <gtkmm.h>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_io.hpp>
+#include "player.hpp"
+#include "card.hpp"
+#include "hand.hpp"
+#include "deck.hpp"
 
 using namespace std;
 
-typedef enum {D,H,C,S} SUIT;
-class Card
+
+class playerNameWindow: public Gtk::Window
 {
-public:
-    int value;
-    SUIT suit;
-
-    Card();
-    Card(int value, SUIT suit);
-    int compareCard(Card secondCard); // compare two cards to put cards in sequence for players
-    string generateCardName();
-    
-	int getValue();
-
-	SUIT getSuit();
-
-
-};
-
-class Deck{
-public:
-    vector <Card> deckOfCards;
-
-    Deck(); // initialize deck of 52 cards
-
-    void shuffle_deck(); // shuffles the vector of initially 52 cards using using pre-defined function random_shuffle()
-    Card get_card(); //gets the card needs to be distributed or swapped during the game
-
-};
-
-class hand{
-public:
-    vector <Card> handOfCards;
-
-    hand(); // initailly set all five cards to NULL, before dealer deals
-
-    void addCard(Card card);
-    void discardCard(int index); //returns the index of the card number needs to be discard to be swapped
-    void sequenceHand();//puts the hand in sequence
-
-    vector <Card> getHand();
-    
-    bool isPair();
-    bool isTwoPair();
-    bool isThreeOfAKind();
-    bool isFlush();
-    bool isStraight();
-    bool isFullHouse();
-    bool isFourOfAKind();
-    bool isRoyalFlush();
-};
-
-
-class player{
-public:
-    string id;
-    int balance;
-    int chip1;
-    int chip5;
-    int chip25;
-
-    string playerName;
-    hand playerHand;
-    bool status;
-    
-    bool turn;
-	bool swapped;
-
-    //constructors
-    //player();
-    player(string PlayerName);
-    //player(string PlayerName, bool status); //Used for spectators
-
-    int get_id();
-    int get_balance();
-    bool get_status();
-    //number of $1 chips
-    int set_chip1();
-    int get_chip1();
-    //number of $5 chips
-    int set_chip5();
-    int get_chip5();
-    //number of $25 chips
-    int set_chip25();
-    int get_chip25();
-    hand get_playerHand(); //gets the player hands
-
-    void update_hand(Card newCard); // updates hand when receives card from the dealer
-    int request_card_swap(); // returns number of cards to be swapped, discards unwanted cards from hand
-
-    void placeBet(int amount);
-    void check();
-    void call();
-    void sitOut(); //automatically folds the next round (next round the player will be sitting outside)
-    void fold();
-    void raise(int amount);
-    string playerMessage();
-
-};
-
-class dealer{
-public:
-    int playerCount;
-    Deck deck;
-    vector <player> players;
-    int activePlayer;
-    int roundNum;
-    int potAmount;
-    bool GameOn; //0- False, 1- true - determines if the game is on or not.
-
-    dealer();
-    virtual ~dealer();
-
-    void get_gameOn(); //gets the status of game
-    void set_gameOn(); //sets the status of game.
-    int get_activePlayer(); //get number of active players
-    void StartGame();
-    void set_pot(int potAmount);
-    int get_pot(int potAmount);
-    int get_totalBalance(player p); //gets how much balance a player have
-    int set_totalBalance(player p); //update the amount distributed to a player after winning a round
-    void deal();
-    void swap(int swapCount);
-    int generateID(player p);
-    void updatePot(int amount);
-    player winner();
-    void awardPot();
-    string dealerMessage();
-};
-
-
-class playerNameWindow: public Gtk::Window{
 public:
     string playerName;
 
     playerNameWindow();
-    virtual ~playerNameWindow();
 
 protected:
     void on_OK(); // get player's name from entry, opens playerWindow
@@ -158,14 +29,14 @@ protected:
     Gtk::VBox Box;
 };
 
-class playerWindow: public Gtk::Window{
+class playerWindow: public Gtk::Window
+{
 public:
     int temp1, temp5, temp25;
     player *Player;
     string chatMessage;
 
     playerWindow(player *p);
-    virtual ~playerWindow();
 
     //Signal handlers
     void on_Start();
@@ -186,10 +57,6 @@ public:
     void on_Clear();
 
 
-
-    Gtk::Image DealerAvatar;
-    Gtk::Image PlayerAvatar;
-    Gtk::Image chips;
     Gtk::Image deck;
     Gtk::Image* Card1;
     Gtk::Image* Card2;
@@ -201,11 +68,11 @@ public:
     Gtk::CheckButton swap3;
     Gtk::CheckButton swap4;
     Gtk::CheckButton swap5;
-    Gtk::Label Amount; // amount to bet or raise
+    Gtk::Label Amount;
     Gtk::Entry Chat;
     Gtk::Label* chatLabel;
     Gtk::Label* currBetLabel;
-    Gtk::Label* totPotLabel; 
+    Gtk::Label* totPotLabel;
     Gtk::Label* currTurnLabel;
     Gtk::Label currentBet;
     Gtk::Label totalPot;
@@ -234,7 +101,6 @@ public:
     Gtk::HBox actionBox;
     Gtk::HBox cardsBox;
 
-    //Gtk::Grid grid;//Keeps the object in a certain way
 };
 
 

@@ -124,324 +124,324 @@ struct position_t
 
 #if !defined(JSON_HEDLEY_VERSION) || (JSON_HEDLEY_VERSION < 11)
 #if defined(JSON_HEDLEY_VERSION)
-    #undef JSON_HEDLEY_VERSION
+#undef JSON_HEDLEY_VERSION
 #endif
 #define JSON_HEDLEY_VERSION 11
 
 #if defined(JSON_HEDLEY_STRINGIFY_EX)
-    #undef JSON_HEDLEY_STRINGIFY_EX
+#undef JSON_HEDLEY_STRINGIFY_EX
 #endif
 #define JSON_HEDLEY_STRINGIFY_EX(x) #x
 
 #if defined(JSON_HEDLEY_STRINGIFY)
-    #undef JSON_HEDLEY_STRINGIFY
+#undef JSON_HEDLEY_STRINGIFY
 #endif
 #define JSON_HEDLEY_STRINGIFY(x) JSON_HEDLEY_STRINGIFY_EX(x)
 
 #if defined(JSON_HEDLEY_CONCAT_EX)
-    #undef JSON_HEDLEY_CONCAT_EX
+#undef JSON_HEDLEY_CONCAT_EX
 #endif
 #define JSON_HEDLEY_CONCAT_EX(a,b) a##b
 
 #if defined(JSON_HEDLEY_CONCAT)
-    #undef JSON_HEDLEY_CONCAT
+#undef JSON_HEDLEY_CONCAT
 #endif
 #define JSON_HEDLEY_CONCAT(a,b) JSON_HEDLEY_CONCAT_EX(a,b)
 
 #if defined(JSON_HEDLEY_VERSION_ENCODE)
-    #undef JSON_HEDLEY_VERSION_ENCODE
+#undef JSON_HEDLEY_VERSION_ENCODE
 #endif
 #define JSON_HEDLEY_VERSION_ENCODE(major,minor,revision) (((major) * 1000000) + ((minor) * 1000) + (revision))
 
 #if defined(JSON_HEDLEY_VERSION_DECODE_MAJOR)
-    #undef JSON_HEDLEY_VERSION_DECODE_MAJOR
+#undef JSON_HEDLEY_VERSION_DECODE_MAJOR
 #endif
 #define JSON_HEDLEY_VERSION_DECODE_MAJOR(version) ((version) / 1000000)
 
 #if defined(JSON_HEDLEY_VERSION_DECODE_MINOR)
-    #undef JSON_HEDLEY_VERSION_DECODE_MINOR
+#undef JSON_HEDLEY_VERSION_DECODE_MINOR
 #endif
 #define JSON_HEDLEY_VERSION_DECODE_MINOR(version) (((version) % 1000000) / 1000)
 
 #if defined(JSON_HEDLEY_VERSION_DECODE_REVISION)
-    #undef JSON_HEDLEY_VERSION_DECODE_REVISION
+#undef JSON_HEDLEY_VERSION_DECODE_REVISION
 #endif
 #define JSON_HEDLEY_VERSION_DECODE_REVISION(version) ((version) % 1000)
 
 #if defined(JSON_HEDLEY_GNUC_VERSION)
-    #undef JSON_HEDLEY_GNUC_VERSION
+#undef JSON_HEDLEY_GNUC_VERSION
 #endif
 #if defined(__GNUC__) && defined(__GNUC_PATCHLEVEL__)
-    #define JSON_HEDLEY_GNUC_VERSION JSON_HEDLEY_VERSION_ENCODE(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#define JSON_HEDLEY_GNUC_VERSION JSON_HEDLEY_VERSION_ENCODE(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
 #elif defined(__GNUC__)
-    #define JSON_HEDLEY_GNUC_VERSION JSON_HEDLEY_VERSION_ENCODE(__GNUC__, __GNUC_MINOR__, 0)
+#define JSON_HEDLEY_GNUC_VERSION JSON_HEDLEY_VERSION_ENCODE(__GNUC__, __GNUC_MINOR__, 0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_VERSION_CHECK)
-    #undef JSON_HEDLEY_GNUC_VERSION_CHECK
+#undef JSON_HEDLEY_GNUC_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_GNUC_VERSION)
-    #define JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_GNUC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_GNUC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_MSVC_VERSION)
-    #undef JSON_HEDLEY_MSVC_VERSION
+#undef JSON_HEDLEY_MSVC_VERSION
 #endif
 #if defined(_MSC_FULL_VER) && (_MSC_FULL_VER >= 140000000)
-    #define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_FULL_VER / 10000000, (_MSC_FULL_VER % 10000000) / 100000, (_MSC_FULL_VER % 100000) / 100)
+#define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_FULL_VER / 10000000, (_MSC_FULL_VER % 10000000) / 100000, (_MSC_FULL_VER % 100000) / 100)
 #elif defined(_MSC_FULL_VER)
-    #define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_FULL_VER / 1000000, (_MSC_FULL_VER % 1000000) / 10000, (_MSC_FULL_VER % 10000) / 10)
+#define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_FULL_VER / 1000000, (_MSC_FULL_VER % 1000000) / 10000, (_MSC_FULL_VER % 10000) / 10)
 #elif defined(_MSC_VER)
-    #define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_VER / 100, _MSC_VER % 100, 0)
+#define JSON_HEDLEY_MSVC_VERSION JSON_HEDLEY_VERSION_ENCODE(_MSC_VER / 100, _MSC_VER % 100, 0)
 #endif
 
 #if defined(JSON_HEDLEY_MSVC_VERSION_CHECK)
-    #undef JSON_HEDLEY_MSVC_VERSION_CHECK
+#undef JSON_HEDLEY_MSVC_VERSION_CHECK
 #endif
 #if !defined(_MSC_VER)
-    #define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (0)
 #elif defined(_MSC_VER) && (_MSC_VER >= 1400)
-    #define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_FULL_VER >= ((major * 10000000) + (minor * 100000) + (patch)))
+#define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_FULL_VER >= ((major * 10000000) + (minor * 100000) + (patch)))
 #elif defined(_MSC_VER) && (_MSC_VER >= 1200)
-    #define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_FULL_VER >= ((major * 1000000) + (minor * 10000) + (patch)))
+#define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_FULL_VER >= ((major * 1000000) + (minor * 10000) + (patch)))
 #else
-    #define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_VER >= ((major * 100) + (minor)))
+#define JSON_HEDLEY_MSVC_VERSION_CHECK(major,minor,patch) (_MSC_VER >= ((major * 100) + (minor)))
 #endif
 
 #if defined(JSON_HEDLEY_INTEL_VERSION)
-    #undef JSON_HEDLEY_INTEL_VERSION
+#undef JSON_HEDLEY_INTEL_VERSION
 #endif
 #if defined(__INTEL_COMPILER) && defined(__INTEL_COMPILER_UPDATE)
-    #define JSON_HEDLEY_INTEL_VERSION JSON_HEDLEY_VERSION_ENCODE(__INTEL_COMPILER / 100, __INTEL_COMPILER % 100, __INTEL_COMPILER_UPDATE)
+#define JSON_HEDLEY_INTEL_VERSION JSON_HEDLEY_VERSION_ENCODE(__INTEL_COMPILER / 100, __INTEL_COMPILER % 100, __INTEL_COMPILER_UPDATE)
 #elif defined(__INTEL_COMPILER)
-    #define JSON_HEDLEY_INTEL_VERSION JSON_HEDLEY_VERSION_ENCODE(__INTEL_COMPILER / 100, __INTEL_COMPILER % 100, 0)
+#define JSON_HEDLEY_INTEL_VERSION JSON_HEDLEY_VERSION_ENCODE(__INTEL_COMPILER / 100, __INTEL_COMPILER % 100, 0)
 #endif
 
 #if defined(JSON_HEDLEY_INTEL_VERSION_CHECK)
-    #undef JSON_HEDLEY_INTEL_VERSION_CHECK
+#undef JSON_HEDLEY_INTEL_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_INTEL_VERSION)
-    #define JSON_HEDLEY_INTEL_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_INTEL_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_INTEL_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_INTEL_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_INTEL_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_INTEL_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_PGI_VERSION)
-    #undef JSON_HEDLEY_PGI_VERSION
+#undef JSON_HEDLEY_PGI_VERSION
 #endif
 #if defined(__PGI) && defined(__PGIC__) && defined(__PGIC_MINOR__) && defined(__PGIC_PATCHLEVEL__)
-    #define JSON_HEDLEY_PGI_VERSION JSON_HEDLEY_VERSION_ENCODE(__PGIC__, __PGIC_MINOR__, __PGIC_PATCHLEVEL__)
+#define JSON_HEDLEY_PGI_VERSION JSON_HEDLEY_VERSION_ENCODE(__PGIC__, __PGIC_MINOR__, __PGIC_PATCHLEVEL__)
 #endif
 
 #if defined(JSON_HEDLEY_PGI_VERSION_CHECK)
-    #undef JSON_HEDLEY_PGI_VERSION_CHECK
+#undef JSON_HEDLEY_PGI_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_PGI_VERSION)
-    #define JSON_HEDLEY_PGI_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_PGI_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_PGI_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_PGI_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_PGI_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_PGI_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_SUNPRO_VERSION)
-    #undef JSON_HEDLEY_SUNPRO_VERSION
+#undef JSON_HEDLEY_SUNPRO_VERSION
 #endif
 #if defined(__SUNPRO_C) && (__SUNPRO_C > 0x1000)
-    #define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((((__SUNPRO_C >> 16) & 0xf) * 10) + ((__SUNPRO_C >> 12) & 0xf), (((__SUNPRO_C >> 8) & 0xf) * 10) + ((__SUNPRO_C >> 4) & 0xf), (__SUNPRO_C & 0xf) * 10)
+#define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((((__SUNPRO_C >> 16) & 0xf) * 10) + ((__SUNPRO_C >> 12) & 0xf), (((__SUNPRO_C >> 8) & 0xf) * 10) + ((__SUNPRO_C >> 4) & 0xf), (__SUNPRO_C & 0xf) * 10)
 #elif defined(__SUNPRO_C)
-    #define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((__SUNPRO_C >> 8) & 0xf, (__SUNPRO_C >> 4) & 0xf, (__SUNPRO_C) & 0xf)
+#define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((__SUNPRO_C >> 8) & 0xf, (__SUNPRO_C >> 4) & 0xf, (__SUNPRO_C) & 0xf)
 #elif defined(__SUNPRO_CC) && (__SUNPRO_CC > 0x1000)
-    #define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((((__SUNPRO_CC >> 16) & 0xf) * 10) + ((__SUNPRO_CC >> 12) & 0xf), (((__SUNPRO_CC >> 8) & 0xf) * 10) + ((__SUNPRO_CC >> 4) & 0xf), (__SUNPRO_CC & 0xf) * 10)
+#define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((((__SUNPRO_CC >> 16) & 0xf) * 10) + ((__SUNPRO_CC >> 12) & 0xf), (((__SUNPRO_CC >> 8) & 0xf) * 10) + ((__SUNPRO_CC >> 4) & 0xf), (__SUNPRO_CC & 0xf) * 10)
 #elif defined(__SUNPRO_CC)
-    #define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((__SUNPRO_CC >> 8) & 0xf, (__SUNPRO_CC >> 4) & 0xf, (__SUNPRO_CC) & 0xf)
+#define JSON_HEDLEY_SUNPRO_VERSION JSON_HEDLEY_VERSION_ENCODE((__SUNPRO_CC >> 8) & 0xf, (__SUNPRO_CC >> 4) & 0xf, (__SUNPRO_CC) & 0xf)
 #endif
 
 #if defined(JSON_HEDLEY_SUNPRO_VERSION_CHECK)
-    #undef JSON_HEDLEY_SUNPRO_VERSION_CHECK
+#undef JSON_HEDLEY_SUNPRO_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_SUNPRO_VERSION)
-    #define JSON_HEDLEY_SUNPRO_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_SUNPRO_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_SUNPRO_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_SUNPRO_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_SUNPRO_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_SUNPRO_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_EMSCRIPTEN_VERSION)
-    #undef JSON_HEDLEY_EMSCRIPTEN_VERSION
+#undef JSON_HEDLEY_EMSCRIPTEN_VERSION
 #endif
 #if defined(__EMSCRIPTEN__)
-    #define JSON_HEDLEY_EMSCRIPTEN_VERSION JSON_HEDLEY_VERSION_ENCODE(__EMSCRIPTEN_major__, __EMSCRIPTEN_minor__, __EMSCRIPTEN_tiny__)
+#define JSON_HEDLEY_EMSCRIPTEN_VERSION JSON_HEDLEY_VERSION_ENCODE(__EMSCRIPTEN_major__, __EMSCRIPTEN_minor__, __EMSCRIPTEN_tiny__)
 #endif
 
 #if defined(JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK)
-    #undef JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK
+#undef JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_EMSCRIPTEN_VERSION)
-    #define JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_EMSCRIPTEN_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_EMSCRIPTEN_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_EMSCRIPTEN_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_ARM_VERSION)
-    #undef JSON_HEDLEY_ARM_VERSION
+#undef JSON_HEDLEY_ARM_VERSION
 #endif
 #if defined(__CC_ARM) && defined(__ARMCOMPILER_VERSION)
-    #define JSON_HEDLEY_ARM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ARMCOMPILER_VERSION / 1000000, (__ARMCOMPILER_VERSION % 1000000) / 10000, (__ARMCOMPILER_VERSION % 10000) / 100)
+#define JSON_HEDLEY_ARM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ARMCOMPILER_VERSION / 1000000, (__ARMCOMPILER_VERSION % 1000000) / 10000, (__ARMCOMPILER_VERSION % 10000) / 100)
 #elif defined(__CC_ARM) && defined(__ARMCC_VERSION)
-    #define JSON_HEDLEY_ARM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ARMCC_VERSION / 1000000, (__ARMCC_VERSION % 1000000) / 10000, (__ARMCC_VERSION % 10000) / 100)
+#define JSON_HEDLEY_ARM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ARMCC_VERSION / 1000000, (__ARMCC_VERSION % 1000000) / 10000, (__ARMCC_VERSION % 10000) / 100)
 #endif
 
 #if defined(JSON_HEDLEY_ARM_VERSION_CHECK)
-    #undef JSON_HEDLEY_ARM_VERSION_CHECK
+#undef JSON_HEDLEY_ARM_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_ARM_VERSION)
-    #define JSON_HEDLEY_ARM_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_ARM_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_ARM_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_ARM_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_ARM_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_ARM_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_IBM_VERSION)
-    #undef JSON_HEDLEY_IBM_VERSION
+#undef JSON_HEDLEY_IBM_VERSION
 #endif
 #if defined(__ibmxl__)
-    #define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ibmxl_version__, __ibmxl_release__, __ibmxl_modification__)
+#define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__ibmxl_version__, __ibmxl_release__, __ibmxl_modification__)
 #elif defined(__xlC__) && defined(__xlC_ver__)
-    #define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__xlC__ >> 8, __xlC__ & 0xff, (__xlC_ver__ >> 8) & 0xff)
+#define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__xlC__ >> 8, __xlC__ & 0xff, (__xlC_ver__ >> 8) & 0xff)
 #elif defined(__xlC__)
-    #define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__xlC__ >> 8, __xlC__ & 0xff, 0)
+#define JSON_HEDLEY_IBM_VERSION JSON_HEDLEY_VERSION_ENCODE(__xlC__ >> 8, __xlC__ & 0xff, 0)
 #endif
 
 #if defined(JSON_HEDLEY_IBM_VERSION_CHECK)
-    #undef JSON_HEDLEY_IBM_VERSION_CHECK
+#undef JSON_HEDLEY_IBM_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_IBM_VERSION)
-    #define JSON_HEDLEY_IBM_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_IBM_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_IBM_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_IBM_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_IBM_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_IBM_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_TI_VERSION)
-    #undef JSON_HEDLEY_TI_VERSION
+#undef JSON_HEDLEY_TI_VERSION
 #endif
 #if defined(__TI_COMPILER_VERSION__)
-    #define JSON_HEDLEY_TI_VERSION JSON_HEDLEY_VERSION_ENCODE(__TI_COMPILER_VERSION__ / 1000000, (__TI_COMPILER_VERSION__ % 1000000) / 1000, (__TI_COMPILER_VERSION__ % 1000))
+#define JSON_HEDLEY_TI_VERSION JSON_HEDLEY_VERSION_ENCODE(__TI_COMPILER_VERSION__ / 1000000, (__TI_COMPILER_VERSION__ % 1000000) / 1000, (__TI_COMPILER_VERSION__ % 1000))
 #endif
 
 #if defined(JSON_HEDLEY_TI_VERSION_CHECK)
-    #undef JSON_HEDLEY_TI_VERSION_CHECK
+#undef JSON_HEDLEY_TI_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_TI_VERSION)
-    #define JSON_HEDLEY_TI_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_TI_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_TI_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_TI_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_TI_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_TI_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_CRAY_VERSION)
-    #undef JSON_HEDLEY_CRAY_VERSION
+#undef JSON_HEDLEY_CRAY_VERSION
 #endif
 #if defined(_CRAYC)
-    #if defined(_RELEASE_PATCHLEVEL)
-        #define JSON_HEDLEY_CRAY_VERSION JSON_HEDLEY_VERSION_ENCODE(_RELEASE_MAJOR, _RELEASE_MINOR, _RELEASE_PATCHLEVEL)
-    #else
-        #define JSON_HEDLEY_CRAY_VERSION JSON_HEDLEY_VERSION_ENCODE(_RELEASE_MAJOR, _RELEASE_MINOR, 0)
-    #endif
+#if defined(_RELEASE_PATCHLEVEL)
+#define JSON_HEDLEY_CRAY_VERSION JSON_HEDLEY_VERSION_ENCODE(_RELEASE_MAJOR, _RELEASE_MINOR, _RELEASE_PATCHLEVEL)
+#else
+#define JSON_HEDLEY_CRAY_VERSION JSON_HEDLEY_VERSION_ENCODE(_RELEASE_MAJOR, _RELEASE_MINOR, 0)
+#endif
 #endif
 
 #if defined(JSON_HEDLEY_CRAY_VERSION_CHECK)
-    #undef JSON_HEDLEY_CRAY_VERSION_CHECK
+#undef JSON_HEDLEY_CRAY_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_CRAY_VERSION)
-    #define JSON_HEDLEY_CRAY_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_CRAY_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_CRAY_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_CRAY_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_CRAY_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_CRAY_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_IAR_VERSION)
-    #undef JSON_HEDLEY_IAR_VERSION
+#undef JSON_HEDLEY_IAR_VERSION
 #endif
 #if defined(__IAR_SYSTEMS_ICC__)
-    #if __VER__ > 1000
-        #define JSON_HEDLEY_IAR_VERSION JSON_HEDLEY_VERSION_ENCODE((__VER__ / 1000000), ((__VER__ / 1000) % 1000), (__VER__ % 1000))
-    #else
-        #define JSON_HEDLEY_IAR_VERSION JSON_HEDLEY_VERSION_ENCODE(VER / 100, __VER__ % 100, 0)
-    #endif
+#if __VER__ > 1000
+#define JSON_HEDLEY_IAR_VERSION JSON_HEDLEY_VERSION_ENCODE((__VER__ / 1000000), ((__VER__ / 1000) % 1000), (__VER__ % 1000))
+#else
+#define JSON_HEDLEY_IAR_VERSION JSON_HEDLEY_VERSION_ENCODE(VER / 100, __VER__ % 100, 0)
+#endif
 #endif
 
 #if defined(JSON_HEDLEY_IAR_VERSION_CHECK)
-    #undef JSON_HEDLEY_IAR_VERSION_CHECK
+#undef JSON_HEDLEY_IAR_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_IAR_VERSION)
-    #define JSON_HEDLEY_IAR_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_IAR_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_IAR_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_IAR_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_IAR_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_IAR_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_TINYC_VERSION)
-    #undef JSON_HEDLEY_TINYC_VERSION
+#undef JSON_HEDLEY_TINYC_VERSION
 #endif
 #if defined(__TINYC__)
-    #define JSON_HEDLEY_TINYC_VERSION JSON_HEDLEY_VERSION_ENCODE(__TINYC__ / 1000, (__TINYC__ / 100) % 10, __TINYC__ % 100)
+#define JSON_HEDLEY_TINYC_VERSION JSON_HEDLEY_VERSION_ENCODE(__TINYC__ / 1000, (__TINYC__ / 100) % 10, __TINYC__ % 100)
 #endif
 
 #if defined(JSON_HEDLEY_TINYC_VERSION_CHECK)
-    #undef JSON_HEDLEY_TINYC_VERSION_CHECK
+#undef JSON_HEDLEY_TINYC_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_TINYC_VERSION)
-    #define JSON_HEDLEY_TINYC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_TINYC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_TINYC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_TINYC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_TINYC_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_TINYC_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_DMC_VERSION)
-    #undef JSON_HEDLEY_DMC_VERSION
+#undef JSON_HEDLEY_DMC_VERSION
 #endif
 #if defined(__DMC__)
-    #define JSON_HEDLEY_DMC_VERSION JSON_HEDLEY_VERSION_ENCODE(__DMC__ >> 8, (__DMC__ >> 4) & 0xf, __DMC__ & 0xf)
+#define JSON_HEDLEY_DMC_VERSION JSON_HEDLEY_VERSION_ENCODE(__DMC__ >> 8, (__DMC__ >> 4) & 0xf, __DMC__ & 0xf)
 #endif
 
 #if defined(JSON_HEDLEY_DMC_VERSION_CHECK)
-    #undef JSON_HEDLEY_DMC_VERSION_CHECK
+#undef JSON_HEDLEY_DMC_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_DMC_VERSION)
-    #define JSON_HEDLEY_DMC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_DMC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_DMC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_DMC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_DMC_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_DMC_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_COMPCERT_VERSION)
-    #undef JSON_HEDLEY_COMPCERT_VERSION
+#undef JSON_HEDLEY_COMPCERT_VERSION
 #endif
 #if defined(__COMPCERT_VERSION__)
-    #define JSON_HEDLEY_COMPCERT_VERSION JSON_HEDLEY_VERSION_ENCODE(__COMPCERT_VERSION__ / 10000, (__COMPCERT_VERSION__ / 100) % 100, __COMPCERT_VERSION__ % 100)
+#define JSON_HEDLEY_COMPCERT_VERSION JSON_HEDLEY_VERSION_ENCODE(__COMPCERT_VERSION__ / 10000, (__COMPCERT_VERSION__ / 100) % 100, __COMPCERT_VERSION__ % 100)
 #endif
 
 #if defined(JSON_HEDLEY_COMPCERT_VERSION_CHECK)
-    #undef JSON_HEDLEY_COMPCERT_VERSION_CHECK
+#undef JSON_HEDLEY_COMPCERT_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_COMPCERT_VERSION)
-    #define JSON_HEDLEY_COMPCERT_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_COMPCERT_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_COMPCERT_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_COMPCERT_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_COMPCERT_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_COMPCERT_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_PELLES_VERSION)
-    #undef JSON_HEDLEY_PELLES_VERSION
+#undef JSON_HEDLEY_PELLES_VERSION
 #endif
 #if defined(__POCC__)
-    #define JSON_HEDLEY_PELLES_VERSION JSON_HEDLEY_VERSION_ENCODE(__POCC__ / 100, __POCC__ % 100, 0)
+#define JSON_HEDLEY_PELLES_VERSION JSON_HEDLEY_VERSION_ENCODE(__POCC__ / 100, __POCC__ % 100, 0)
 #endif
 
 #if defined(JSON_HEDLEY_PELLES_VERSION_CHECK)
-    #undef JSON_HEDLEY_PELLES_VERSION_CHECK
+#undef JSON_HEDLEY_PELLES_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_PELLES_VERSION)
-    #define JSON_HEDLEY_PELLES_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_PELLES_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_PELLES_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_PELLES_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_PELLES_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_PELLES_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_VERSION)
-    #undef JSON_HEDLEY_GCC_VERSION
+#undef JSON_HEDLEY_GCC_VERSION
 #endif
 #if \
     defined(JSON_HEDLEY_GNUC_VERSION) && \
@@ -451,228 +451,228 @@ struct position_t
     !defined(JSON_HEDLEY_ARM_VERSION) && \
     !defined(JSON_HEDLEY_TI_VERSION) && \
     !defined(__COMPCERT__)
-    #define JSON_HEDLEY_GCC_VERSION JSON_HEDLEY_GNUC_VERSION
+#define JSON_HEDLEY_GCC_VERSION JSON_HEDLEY_GNUC_VERSION
 #endif
 
 #if defined(JSON_HEDLEY_GCC_VERSION_CHECK)
-    #undef JSON_HEDLEY_GCC_VERSION_CHECK
+#undef JSON_HEDLEY_GCC_VERSION_CHECK
 #endif
 #if defined(JSON_HEDLEY_GCC_VERSION)
-    #define JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_GCC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
+#define JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch) (JSON_HEDLEY_GCC_VERSION >= JSON_HEDLEY_VERSION_ENCODE(major, minor, patch))
 #else
-    #define JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch) (0)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_ATTRIBUTE)
-    #undef JSON_HEDLEY_HAS_ATTRIBUTE
+#undef JSON_HEDLEY_HAS_ATTRIBUTE
 #endif
 #if defined(__has_attribute)
-    #define JSON_HEDLEY_HAS_ATTRIBUTE(attribute) __has_attribute(attribute)
+#define JSON_HEDLEY_HAS_ATTRIBUTE(attribute) __has_attribute(attribute)
 #else
-    #define JSON_HEDLEY_HAS_ATTRIBUTE(attribute) (0)
+#define JSON_HEDLEY_HAS_ATTRIBUTE(attribute) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_ATTRIBUTE)
-    #undef JSON_HEDLEY_GNUC_HAS_ATTRIBUTE
+#undef JSON_HEDLEY_GNUC_HAS_ATTRIBUTE
 #endif
 #if defined(__has_attribute)
-    #define JSON_HEDLEY_GNUC_HAS_ATTRIBUTE(attribute,major,minor,patch) __has_attribute(attribute)
+#define JSON_HEDLEY_GNUC_HAS_ATTRIBUTE(attribute,major,minor,patch) __has_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_ATTRIBUTE)
-    #undef JSON_HEDLEY_GCC_HAS_ATTRIBUTE
+#undef JSON_HEDLEY_GCC_HAS_ATTRIBUTE
 #endif
 #if defined(__has_attribute)
-    #define JSON_HEDLEY_GCC_HAS_ATTRIBUTE(attribute,major,minor,patch) __has_attribute(attribute)
+#define JSON_HEDLEY_GCC_HAS_ATTRIBUTE(attribute,major,minor,patch) __has_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GCC_HAS_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_CPP_ATTRIBUTE)
-    #undef JSON_HEDLEY_HAS_CPP_ATTRIBUTE
+#undef JSON_HEDLEY_HAS_CPP_ATTRIBUTE
 #endif
 #if \
     defined(__has_cpp_attribute) && \
     defined(__cplusplus) && \
     (!defined(JSON_HEDLEY_SUNPRO_VERSION) || JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,15,0))
-    #define JSON_HEDLEY_HAS_CPP_ATTRIBUTE(attribute) __has_cpp_attribute(attribute)
+#define JSON_HEDLEY_HAS_CPP_ATTRIBUTE(attribute) __has_cpp_attribute(attribute)
 #else
-    #define JSON_HEDLEY_HAS_CPP_ATTRIBUTE(attribute) (0)
+#define JSON_HEDLEY_HAS_CPP_ATTRIBUTE(attribute) (0)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS)
-    #undef JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS
+#undef JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS
 #endif
 #if !defined(__cplusplus) || !defined(__has_cpp_attribute)
-    #define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) (0)
+#define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) (0)
 #elif \
     !defined(JSON_HEDLEY_PGI_VERSION) && \
     (!defined(JSON_HEDLEY_SUNPRO_VERSION) || JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,15,0)) && \
     (!defined(JSON_HEDLEY_MSVC_VERSION) || JSON_HEDLEY_MSVC_VERSION_CHECK(19,20,0))
-    #define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) JSON_HEDLEY_HAS_CPP_ATTRIBUTE(ns::attribute)
+#define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) JSON_HEDLEY_HAS_CPP_ATTRIBUTE(ns::attribute)
 #else
-    #define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) (0)
+#define JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(ns,attribute) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE)
-    #undef JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE
+#undef JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE
 #endif
 #if defined(__has_cpp_attribute) && defined(__cplusplus)
-    #define JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) __has_cpp_attribute(attribute)
+#define JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) __has_cpp_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE)
-    #undef JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE
+#undef JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE
 #endif
 #if defined(__has_cpp_attribute) && defined(__cplusplus)
-    #define JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) __has_cpp_attribute(attribute)
+#define JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) __has_cpp_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_CPP_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_BUILTIN)
-    #undef JSON_HEDLEY_HAS_BUILTIN
+#undef JSON_HEDLEY_HAS_BUILTIN
 #endif
 #if defined(__has_builtin)
-    #define JSON_HEDLEY_HAS_BUILTIN(builtin) __has_builtin(builtin)
+#define JSON_HEDLEY_HAS_BUILTIN(builtin) __has_builtin(builtin)
 #else
-    #define JSON_HEDLEY_HAS_BUILTIN(builtin) (0)
+#define JSON_HEDLEY_HAS_BUILTIN(builtin) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_BUILTIN)
-    #undef JSON_HEDLEY_GNUC_HAS_BUILTIN
+#undef JSON_HEDLEY_GNUC_HAS_BUILTIN
 #endif
 #if defined(__has_builtin)
-    #define JSON_HEDLEY_GNUC_HAS_BUILTIN(builtin,major,minor,patch) __has_builtin(builtin)
+#define JSON_HEDLEY_GNUC_HAS_BUILTIN(builtin,major,minor,patch) __has_builtin(builtin)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_BUILTIN(builtin,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_BUILTIN(builtin,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_BUILTIN)
-    #undef JSON_HEDLEY_GCC_HAS_BUILTIN
+#undef JSON_HEDLEY_GCC_HAS_BUILTIN
 #endif
 #if defined(__has_builtin)
-    #define JSON_HEDLEY_GCC_HAS_BUILTIN(builtin,major,minor,patch) __has_builtin(builtin)
+#define JSON_HEDLEY_GCC_HAS_BUILTIN(builtin,major,minor,patch) __has_builtin(builtin)
 #else
-    #define JSON_HEDLEY_GCC_HAS_BUILTIN(builtin,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_BUILTIN(builtin,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_FEATURE)
-    #undef JSON_HEDLEY_HAS_FEATURE
+#undef JSON_HEDLEY_HAS_FEATURE
 #endif
 #if defined(__has_feature)
-    #define JSON_HEDLEY_HAS_FEATURE(feature) __has_feature(feature)
+#define JSON_HEDLEY_HAS_FEATURE(feature) __has_feature(feature)
 #else
-    #define JSON_HEDLEY_HAS_FEATURE(feature) (0)
+#define JSON_HEDLEY_HAS_FEATURE(feature) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_FEATURE)
-    #undef JSON_HEDLEY_GNUC_HAS_FEATURE
+#undef JSON_HEDLEY_GNUC_HAS_FEATURE
 #endif
 #if defined(__has_feature)
-    #define JSON_HEDLEY_GNUC_HAS_FEATURE(feature,major,minor,patch) __has_feature(feature)
+#define JSON_HEDLEY_GNUC_HAS_FEATURE(feature,major,minor,patch) __has_feature(feature)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_FEATURE(feature,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_FEATURE(feature,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_FEATURE)
-    #undef JSON_HEDLEY_GCC_HAS_FEATURE
+#undef JSON_HEDLEY_GCC_HAS_FEATURE
 #endif
 #if defined(__has_feature)
-    #define JSON_HEDLEY_GCC_HAS_FEATURE(feature,major,minor,patch) __has_feature(feature)
+#define JSON_HEDLEY_GCC_HAS_FEATURE(feature,major,minor,patch) __has_feature(feature)
 #else
-    #define JSON_HEDLEY_GCC_HAS_FEATURE(feature,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_FEATURE(feature,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_EXTENSION)
-    #undef JSON_HEDLEY_HAS_EXTENSION
+#undef JSON_HEDLEY_HAS_EXTENSION
 #endif
 #if defined(__has_extension)
-    #define JSON_HEDLEY_HAS_EXTENSION(extension) __has_extension(extension)
+#define JSON_HEDLEY_HAS_EXTENSION(extension) __has_extension(extension)
 #else
-    #define JSON_HEDLEY_HAS_EXTENSION(extension) (0)
+#define JSON_HEDLEY_HAS_EXTENSION(extension) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_EXTENSION)
-    #undef JSON_HEDLEY_GNUC_HAS_EXTENSION
+#undef JSON_HEDLEY_GNUC_HAS_EXTENSION
 #endif
 #if defined(__has_extension)
-    #define JSON_HEDLEY_GNUC_HAS_EXTENSION(extension,major,minor,patch) __has_extension(extension)
+#define JSON_HEDLEY_GNUC_HAS_EXTENSION(extension,major,minor,patch) __has_extension(extension)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_EXTENSION(extension,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_EXTENSION(extension,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_EXTENSION)
-    #undef JSON_HEDLEY_GCC_HAS_EXTENSION
+#undef JSON_HEDLEY_GCC_HAS_EXTENSION
 #endif
 #if defined(__has_extension)
-    #define JSON_HEDLEY_GCC_HAS_EXTENSION(extension,major,minor,patch) __has_extension(extension)
+#define JSON_HEDLEY_GCC_HAS_EXTENSION(extension,major,minor,patch) __has_extension(extension)
 #else
-    #define JSON_HEDLEY_GCC_HAS_EXTENSION(extension,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_EXTENSION(extension,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE)
-    #undef JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE
+#undef JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE
 #endif
 #if defined(__has_declspec_attribute)
-    #define JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE(attribute) __has_declspec_attribute(attribute)
+#define JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE(attribute) __has_declspec_attribute(attribute)
 #else
-    #define JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE(attribute) (0)
+#define JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE(attribute) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE)
-    #undef JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE
+#undef JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE
 #endif
 #if defined(__has_declspec_attribute)
-    #define JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) __has_declspec_attribute(attribute)
+#define JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) __has_declspec_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE)
-    #undef JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE
+#undef JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE
 #endif
 #if defined(__has_declspec_attribute)
-    #define JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) __has_declspec_attribute(attribute)
+#define JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) __has_declspec_attribute(attribute)
 #else
-    #define JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_DECLSPEC_ATTRIBUTE(attribute,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_HAS_WARNING)
-    #undef JSON_HEDLEY_HAS_WARNING
+#undef JSON_HEDLEY_HAS_WARNING
 #endif
 #if defined(__has_warning)
-    #define JSON_HEDLEY_HAS_WARNING(warning) __has_warning(warning)
+#define JSON_HEDLEY_HAS_WARNING(warning) __has_warning(warning)
 #else
-    #define JSON_HEDLEY_HAS_WARNING(warning) (0)
+#define JSON_HEDLEY_HAS_WARNING(warning) (0)
 #endif
 
 #if defined(JSON_HEDLEY_GNUC_HAS_WARNING)
-    #undef JSON_HEDLEY_GNUC_HAS_WARNING
+#undef JSON_HEDLEY_GNUC_HAS_WARNING
 #endif
 #if defined(__has_warning)
-    #define JSON_HEDLEY_GNUC_HAS_WARNING(warning,major,minor,patch) __has_warning(warning)
+#define JSON_HEDLEY_GNUC_HAS_WARNING(warning,major,minor,patch) __has_warning(warning)
 #else
-    #define JSON_HEDLEY_GNUC_HAS_WARNING(warning,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GNUC_HAS_WARNING(warning,major,minor,patch) JSON_HEDLEY_GNUC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_GCC_HAS_WARNING)
-    #undef JSON_HEDLEY_GCC_HAS_WARNING
+#undef JSON_HEDLEY_GCC_HAS_WARNING
 #endif
 #if defined(__has_warning)
-    #define JSON_HEDLEY_GCC_HAS_WARNING(warning,major,minor,patch) __has_warning(warning)
+#define JSON_HEDLEY_GCC_HAS_WARNING(warning,major,minor,patch) __has_warning(warning)
 #else
-    #define JSON_HEDLEY_GCC_HAS_WARNING(warning,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_HAS_WARNING(warning,major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 /* JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_ is for
    HEDLEY INTERNAL USE ONLY.  API subject to change without notice. */
 #if defined(JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_)
-    #undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_
+#undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_
 #endif
 #if defined(__cplusplus) && JSON_HEDLEY_HAS_WARNING("-Wc++98-compat")
 #  define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_(xpr) \
@@ -697,136 +697,136 @@ struct position_t
     JSON_HEDLEY_TINYC_VERSION_CHECK(0,9,17) || \
     JSON_HEDLEY_SUNPRO_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_IBM_VERSION_CHECK(10,1,0) && defined(__C99_PRAGMA_OPERATOR))
-    #define JSON_HEDLEY_PRAGMA(value) _Pragma(#value)
+#define JSON_HEDLEY_PRAGMA(value) _Pragma(#value)
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(15,0,0)
-    #define JSON_HEDLEY_PRAGMA(value) __pragma(value)
+#define JSON_HEDLEY_PRAGMA(value) __pragma(value)
 #else
-    #define JSON_HEDLEY_PRAGMA(value)
+#define JSON_HEDLEY_PRAGMA(value)
 #endif
 
 #if defined(JSON_HEDLEY_DIAGNOSTIC_PUSH)
-    #undef JSON_HEDLEY_DIAGNOSTIC_PUSH
+#undef JSON_HEDLEY_DIAGNOSTIC_PUSH
 #endif
 #if defined(JSON_HEDLEY_DIAGNOSTIC_POP)
-    #undef JSON_HEDLEY_DIAGNOSTIC_POP
+#undef JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 #if defined(__clang__)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("clang diagnostic pop")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("clang diagnostic pop")
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("warning(push)")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("warning(pop)")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("warning(push)")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("warning(pop)")
 #elif JSON_HEDLEY_GCC_VERSION_CHECK(4,6,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("GCC diagnostic push")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("GCC diagnostic pop")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("GCC diagnostic push")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("GCC diagnostic pop")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(15,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH __pragma(warning(push))
-    #define JSON_HEDLEY_DIAGNOSTIC_POP __pragma(warning(pop))
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH __pragma(warning(push))
+#define JSON_HEDLEY_DIAGNOSTIC_POP __pragma(warning(pop))
 #elif JSON_HEDLEY_ARM_VERSION_CHECK(5,6,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("push")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("pop")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("push")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("pop")
 #elif JSON_HEDLEY_TI_VERSION_CHECK(8,1,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("diag_push")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("diag_pop")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("diag_push")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("diag_pop")
 #elif JSON_HEDLEY_PELLES_VERSION_CHECK(2,90,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("warning(push)")
-    #define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("warning(pop)")
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH _Pragma("warning(push)")
+#define JSON_HEDLEY_DIAGNOSTIC_POP _Pragma("warning(pop)")
 #else
-    #define JSON_HEDLEY_DIAGNOSTIC_PUSH
-    #define JSON_HEDLEY_DIAGNOSTIC_POP
+#define JSON_HEDLEY_DIAGNOSTIC_PUSH
+#define JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED)
-    #undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED
+#undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wdeprecated-declarations")
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("warning(disable:1478 1786)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("warning(disable:1478 1786)")
 #elif JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress 1215,1444")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress 1215,1444")
 #elif JSON_HEDLEY_GCC_VERSION_CHECK(4,3,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(15,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED __pragma(warning(disable:4996))
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED __pragma(warning(disable:4996))
 #elif JSON_HEDLEY_TI_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress 1291,1718")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress 1291,1718")
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,13,0) && !defined(__cplusplus)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("error_messages(off,E_DEPRECATED_ATT,E_DEPRECATED_ATT_MESS)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("error_messages(off,E_DEPRECATED_ATT,E_DEPRECATED_ATT_MESS)")
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,13,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("error_messages(off,symdeprecated,symdeprecated2)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("error_messages(off,symdeprecated,symdeprecated2)")
 #elif JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress=Pe1444,Pe1215")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("diag_suppress=Pe1444,Pe1215")
 #elif JSON_HEDLEY_PELLES_VERSION_CHECK(2,90,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("warn(disable:2241)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED _Pragma("warn(disable:2241)")
 #else
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_DEPRECATED
 #endif
 
 #if defined(JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS)
-    #undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS
+#undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wunknown-pragmas")
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("clang diagnostic ignored \"-Wunknown-pragmas\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("clang diagnostic ignored \"-Wunknown-pragmas\"")
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("warning(disable:161)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("warning(disable:161)")
 #elif JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress 1675")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress 1675")
 #elif JSON_HEDLEY_GCC_VERSION_CHECK(4,3,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("GCC diagnostic ignored \"-Wunknown-pragmas\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("GCC diagnostic ignored \"-Wunknown-pragmas\"")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(15,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS __pragma(warning(disable:4068))
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS __pragma(warning(disable:4068))
 #elif JSON_HEDLEY_TI_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress 163")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress 163")
 #elif JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress=Pe161")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS _Pragma("diag_suppress=Pe161")
 #else
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_PRAGMAS
 #endif
 
 #if defined(JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES)
-    #undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES
+#undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wunknown-attributes")
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("clang diagnostic ignored \"-Wunknown-attributes\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("clang diagnostic ignored \"-Wunknown-attributes\"")
 #elif JSON_HEDLEY_GCC_VERSION_CHECK(4,6,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(17,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("warning(disable:1292)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("warning(disable:1292)")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(19,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES __pragma(warning(disable:5030))
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES __pragma(warning(disable:5030))
 #elif JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("diag_suppress 1097")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("diag_suppress 1097")
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,14,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("error_messages(off,attrskipunsup)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("error_messages(off,attrskipunsup)")
 #elif JSON_HEDLEY_TI_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("diag_suppress 1173")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES _Pragma("diag_suppress 1173")
 #else
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_UNKNOWN_CPP_ATTRIBUTES
 #endif
 
 #if defined(JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL)
-    #undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL
+#undef JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wcast-qual")
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("clang diagnostic ignored \"-Wcast-qual\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("clang diagnostic ignored \"-Wcast-qual\"")
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("warning(disable:2203 2331)")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("warning(disable:2203 2331)")
 #elif JSON_HEDLEY_GCC_VERSION_CHECK(3,0,0)
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("GCC diagnostic ignored \"-Wcast-qual\"")
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL _Pragma("GCC diagnostic ignored \"-Wcast-qual\"")
 #else
-    #define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL
+#define JSON_HEDLEY_DIAGNOSTIC_DISABLE_CAST_QUAL
 #endif
 
 #if defined(JSON_HEDLEY_DEPRECATED)
-    #undef JSON_HEDLEY_DEPRECATED
+#undef JSON_HEDLEY_DEPRECATED
 #endif
 #if defined(JSON_HEDLEY_DEPRECATED_FOR)
-    #undef JSON_HEDLEY_DEPRECATED_FOR
+#undef JSON_HEDLEY_DEPRECATED_FOR
 #endif
 #if defined(__cplusplus) && (__cplusplus >= 201402L)
-    #define JSON_HEDLEY_DEPRECATED(since) JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[deprecated("Since " #since)]])
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[deprecated("Since " #since "; use " #replacement)]])
+#define JSON_HEDLEY_DEPRECATED(since) JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[deprecated("Since " #since)]])
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[deprecated("Since " #since "; use " #replacement)]])
 #elif \
     JSON_HEDLEY_HAS_EXTENSION(attribute_deprecated_with_message) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,5,0) || \
@@ -835,49 +835,49 @@ struct position_t
     JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,13,0) || \
     JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,3,0)
-    #define JSON_HEDLEY_DEPRECATED(since) __attribute__((__deprecated__("Since " #since)))
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __attribute__((__deprecated__("Since " #since "; use " #replacement)))
+#define JSON_HEDLEY_DEPRECATED(since) __attribute__((__deprecated__("Since " #since)))
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __attribute__((__deprecated__("Since " #since "; use " #replacement)))
 #elif \
     JSON_HEDLEY_HAS_ATTRIBUTE(deprecated) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,1,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(4,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_DEPRECATED(since) __attribute__((__deprecated__))
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __attribute__((__deprecated__))
+#define JSON_HEDLEY_DEPRECATED(since) __attribute__((__deprecated__))
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __attribute__((__deprecated__))
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(14,0,0)
-    #define JSON_HEDLEY_DEPRECATED(since) __declspec(deprecated("Since " # since))
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __declspec(deprecated("Since " #since "; use " #replacement))
+#define JSON_HEDLEY_DEPRECATED(since) __declspec(deprecated("Since " # since))
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __declspec(deprecated("Since " #since "; use " #replacement))
 #elif \
     JSON_HEDLEY_MSVC_VERSION_CHECK(13,10,0) || \
     JSON_HEDLEY_PELLES_VERSION_CHECK(6,50,0)
-    #define JSON_HEDLEY_DEPRECATED(since) __declspec(deprecated)
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __declspec(deprecated)
+#define JSON_HEDLEY_DEPRECATED(since) __declspec(deprecated)
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) __declspec(deprecated)
 #elif JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_DEPRECATED(since) _Pragma("deprecated")
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) _Pragma("deprecated")
+#define JSON_HEDLEY_DEPRECATED(since) _Pragma("deprecated")
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement) _Pragma("deprecated")
 #else
-    #define JSON_HEDLEY_DEPRECATED(since)
-    #define JSON_HEDLEY_DEPRECATED_FOR(since, replacement)
+#define JSON_HEDLEY_DEPRECATED(since)
+#define JSON_HEDLEY_DEPRECATED_FOR(since, replacement)
 #endif
 
 #if defined(JSON_HEDLEY_UNAVAILABLE)
-    #undef JSON_HEDLEY_UNAVAILABLE
+#undef JSON_HEDLEY_UNAVAILABLE
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(warning) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,3,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_UNAVAILABLE(available_since) __attribute__((__warning__("Not available until " #available_since)))
+#define JSON_HEDLEY_UNAVAILABLE(available_since) __attribute__((__warning__("Not available until " #available_since)))
 #else
-    #define JSON_HEDLEY_UNAVAILABLE(available_since)
+#define JSON_HEDLEY_UNAVAILABLE(available_since)
 #endif
 
 #if defined(JSON_HEDLEY_WARN_UNUSED_RESULT)
-    #undef JSON_HEDLEY_WARN_UNUSED_RESULT
+#undef JSON_HEDLEY_WARN_UNUSED_RESULT
 #endif
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
-    #define JSON_HEDLEY_WARN_UNUSED_RESULT JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[nodiscard]])
+#define JSON_HEDLEY_WARN_UNUSED_RESULT JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[nodiscard]])
 #elif \
     JSON_HEDLEY_HAS_ATTRIBUTE(warn_unused_result) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,4,0) || \
@@ -886,37 +886,37 @@ struct position_t
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__)) || \
     (JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,15,0) && defined(__cplusplus)) || \
     JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_WARN_UNUSED_RESULT __attribute__((__warn_unused_result__))
+#define JSON_HEDLEY_WARN_UNUSED_RESULT __attribute__((__warn_unused_result__))
 #elif defined(_Check_return_) /* SAL */
-    #define JSON_HEDLEY_WARN_UNUSED_RESULT _Check_return_
+#define JSON_HEDLEY_WARN_UNUSED_RESULT _Check_return_
 #else
-    #define JSON_HEDLEY_WARN_UNUSED_RESULT
+#define JSON_HEDLEY_WARN_UNUSED_RESULT
 #endif
 
 #if defined(JSON_HEDLEY_SENTINEL)
-    #undef JSON_HEDLEY_SENTINEL
+#undef JSON_HEDLEY_SENTINEL
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(sentinel) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,0,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(5,4,0)
-    #define JSON_HEDLEY_SENTINEL(position) __attribute__((__sentinel__(position)))
+#define JSON_HEDLEY_SENTINEL(position) __attribute__((__sentinel__(position)))
 #else
-    #define JSON_HEDLEY_SENTINEL(position)
+#define JSON_HEDLEY_SENTINEL(position)
 #endif
 
 #if defined(JSON_HEDLEY_NO_RETURN)
-    #undef JSON_HEDLEY_NO_RETURN
+#undef JSON_HEDLEY_NO_RETURN
 #endif
 #if JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_NO_RETURN __noreturn
+#define JSON_HEDLEY_NO_RETURN __noreturn
 #elif JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_NO_RETURN __attribute__((__noreturn__))
+#define JSON_HEDLEY_NO_RETURN __attribute__((__noreturn__))
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
-    #define JSON_HEDLEY_NO_RETURN _Noreturn
+#define JSON_HEDLEY_NO_RETURN _Noreturn
 #elif defined(__cplusplus) && (__cplusplus >= 201103L)
-    #define JSON_HEDLEY_NO_RETURN JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[noreturn]])
+#define JSON_HEDLEY_NO_RETURN JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[noreturn]])
 #elif \
     JSON_HEDLEY_HAS_ATTRIBUTE(noreturn) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,2,0) || \
@@ -925,121 +925,121 @@ struct position_t
     JSON_HEDLEY_IBM_VERSION_CHECK(10,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(18,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(17,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_NO_RETURN __attribute__((__noreturn__))
+#define JSON_HEDLEY_NO_RETURN __attribute__((__noreturn__))
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,10,0)
-    #define JSON_HEDLEY_NO_RETURN _Pragma("does_not_return")
+#define JSON_HEDLEY_NO_RETURN _Pragma("does_not_return")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(13,10,0)
-    #define JSON_HEDLEY_NO_RETURN __declspec(noreturn)
+#define JSON_HEDLEY_NO_RETURN __declspec(noreturn)
 #elif JSON_HEDLEY_TI_VERSION_CHECK(6,0,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_NO_RETURN _Pragma("FUNC_NEVER_RETURNS;")
+#define JSON_HEDLEY_NO_RETURN _Pragma("FUNC_NEVER_RETURNS;")
 #elif JSON_HEDLEY_COMPCERT_VERSION_CHECK(3,2,0)
-    #define JSON_HEDLEY_NO_RETURN __attribute((noreturn))
+#define JSON_HEDLEY_NO_RETURN __attribute((noreturn))
 #elif JSON_HEDLEY_PELLES_VERSION_CHECK(9,0,0)
-    #define JSON_HEDLEY_NO_RETURN __declspec(noreturn)
+#define JSON_HEDLEY_NO_RETURN __declspec(noreturn)
 #else
-    #define JSON_HEDLEY_NO_RETURN
+#define JSON_HEDLEY_NO_RETURN
 #endif
 
 #if defined(JSON_HEDLEY_NO_ESCAPE)
-    #undef JSON_HEDLEY_NO_ESCAPE
+#undef JSON_HEDLEY_NO_ESCAPE
 #endif
 #if JSON_HEDLEY_HAS_ATTRIBUTE(noescape)
-    #define JSON_HEDLEY_NO_ESCAPE __attribute__((__noescape__))
+#define JSON_HEDLEY_NO_ESCAPE __attribute__((__noescape__))
 #else
-    #define JSON_HEDLEY_NO_ESCAPE
+#define JSON_HEDLEY_NO_ESCAPE
 #endif
 
 #if defined(JSON_HEDLEY_UNREACHABLE)
-    #undef JSON_HEDLEY_UNREACHABLE
+#undef JSON_HEDLEY_UNREACHABLE
 #endif
 #if defined(JSON_HEDLEY_UNREACHABLE_RETURN)
-    #undef JSON_HEDLEY_UNREACHABLE_RETURN
+#undef JSON_HEDLEY_UNREACHABLE_RETURN
 #endif
 #if \
     (JSON_HEDLEY_HAS_BUILTIN(__builtin_unreachable) && (!defined(JSON_HEDLEY_ARM_VERSION))) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,5,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0) || \
     JSON_HEDLEY_IBM_VERSION_CHECK(13,1,5)
-    #define JSON_HEDLEY_UNREACHABLE() __builtin_unreachable()
+#define JSON_HEDLEY_UNREACHABLE() __builtin_unreachable()
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(13,10,0)
-    #define JSON_HEDLEY_UNREACHABLE() __assume(0)
+#define JSON_HEDLEY_UNREACHABLE() __assume(0)
 #elif JSON_HEDLEY_TI_VERSION_CHECK(6,0,0)
-    #if defined(__cplusplus)
-        #define JSON_HEDLEY_UNREACHABLE() std::_nassert(0)
-    #else
-        #define JSON_HEDLEY_UNREACHABLE() _nassert(0)
-    #endif
-    #define JSON_HEDLEY_UNREACHABLE_RETURN(value) return value
-#elif defined(EXIT_FAILURE)
-    #define JSON_HEDLEY_UNREACHABLE() abort()
+#if defined(__cplusplus)
+#define JSON_HEDLEY_UNREACHABLE() std::_nassert(0)
 #else
-    #define JSON_HEDLEY_UNREACHABLE()
-    #define JSON_HEDLEY_UNREACHABLE_RETURN(value) return value
+#define JSON_HEDLEY_UNREACHABLE() _nassert(0)
+#endif
+#define JSON_HEDLEY_UNREACHABLE_RETURN(value) return value
+#elif defined(EXIT_FAILURE)
+#define JSON_HEDLEY_UNREACHABLE() abort()
+#else
+#define JSON_HEDLEY_UNREACHABLE()
+#define JSON_HEDLEY_UNREACHABLE_RETURN(value) return value
 #endif
 #if !defined(JSON_HEDLEY_UNREACHABLE_RETURN)
-    #define JSON_HEDLEY_UNREACHABLE_RETURN(value) JSON_HEDLEY_UNREACHABLE()
+#define JSON_HEDLEY_UNREACHABLE_RETURN(value) JSON_HEDLEY_UNREACHABLE()
 #endif
 
 #if defined(JSON_HEDLEY_ASSUME)
-    #undef JSON_HEDLEY_ASSUME
+#undef JSON_HEDLEY_ASSUME
 #endif
 #if \
     JSON_HEDLEY_MSVC_VERSION_CHECK(13,10,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_ASSUME(expr) __assume(expr)
+#define JSON_HEDLEY_ASSUME(expr) __assume(expr)
 #elif JSON_HEDLEY_HAS_BUILTIN(__builtin_assume)
-    #define JSON_HEDLEY_ASSUME(expr) __builtin_assume(expr)
+#define JSON_HEDLEY_ASSUME(expr) __builtin_assume(expr)
 #elif JSON_HEDLEY_TI_VERSION_CHECK(6,0,0)
-    #if defined(__cplusplus)
-        #define JSON_HEDLEY_ASSUME(expr) std::_nassert(expr)
-    #else
-        #define JSON_HEDLEY_ASSUME(expr) _nassert(expr)
-    #endif
+#if defined(__cplusplus)
+#define JSON_HEDLEY_ASSUME(expr) std::_nassert(expr)
+#else
+#define JSON_HEDLEY_ASSUME(expr) _nassert(expr)
+#endif
 #elif \
     (JSON_HEDLEY_HAS_BUILTIN(__builtin_unreachable) && !defined(JSON_HEDLEY_ARM_VERSION)) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,5,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0) || \
     JSON_HEDLEY_IBM_VERSION_CHECK(13,1,5)
-    #define JSON_HEDLEY_ASSUME(expr) ((void) ((expr) ? 1 : (__builtin_unreachable(), 1)))
+#define JSON_HEDLEY_ASSUME(expr) ((void) ((expr) ? 1 : (__builtin_unreachable(), 1)))
 #else
-    #define JSON_HEDLEY_ASSUME(expr) ((void) (expr))
+#define JSON_HEDLEY_ASSUME(expr) ((void) (expr))
 #endif
 
 JSON_HEDLEY_DIAGNOSTIC_PUSH
 #if JSON_HEDLEY_HAS_WARNING("-Wpedantic")
-    #pragma clang diagnostic ignored "-Wpedantic"
+#pragma clang diagnostic ignored "-Wpedantic"
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wc++98-compat-pedantic") && defined(__cplusplus)
-    #pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
 #endif
 #if JSON_HEDLEY_GCC_HAS_WARNING("-Wvariadic-macros",4,0,0)
-    #if defined(__clang__)
-        #pragma clang diagnostic ignored "-Wvariadic-macros"
-    #elif defined(JSON_HEDLEY_GCC_VERSION)
-        #pragma GCC diagnostic ignored "-Wvariadic-macros"
-    #endif
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wvariadic-macros"
+#elif defined(JSON_HEDLEY_GCC_VERSION)
+#pragma GCC diagnostic ignored "-Wvariadic-macros"
+#endif
 #endif
 #if defined(JSON_HEDLEY_NON_NULL)
-    #undef JSON_HEDLEY_NON_NULL
+#undef JSON_HEDLEY_NON_NULL
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(nonnull) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,3,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(4,1,0)
-    #define JSON_HEDLEY_NON_NULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
+#define JSON_HEDLEY_NON_NULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
 #else
-    #define JSON_HEDLEY_NON_NULL(...)
+#define JSON_HEDLEY_NON_NULL(...)
 #endif
 JSON_HEDLEY_DIAGNOSTIC_POP
 
 #if defined(JSON_HEDLEY_PRINTF_FORMAT)
-    #undef JSON_HEDLEY_PRINTF_FORMAT
+#undef JSON_HEDLEY_PRINTF_FORMAT
 #endif
 #if defined(__MINGW32__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && !defined(__USE_MINGW_ANSI_STDIO)
-    #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(ms_printf, string_idx, first_to_check)))
+#define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(ms_printf, string_idx, first_to_check)))
 #elif defined(__MINGW32__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && defined(__USE_MINGW_ANSI_STDIO)
-    #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(gnu_printf, string_idx, first_to_check)))
+#define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(gnu_printf, string_idx, first_to_check)))
 #elif \
     JSON_HEDLEY_HAS_ATTRIBUTE(format) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,1,0) || \
@@ -1048,39 +1048,39 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_IBM_VERSION_CHECK(10,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(__printf__, string_idx, first_to_check)))
+#define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(__printf__, string_idx, first_to_check)))
 #elif JSON_HEDLEY_PELLES_VERSION_CHECK(6,0,0)
-    #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __declspec(vaformat(printf,string_idx,first_to_check))
+#define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __declspec(vaformat(printf,string_idx,first_to_check))
 #else
-    #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check)
+#define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check)
 #endif
 
 #if defined(JSON_HEDLEY_CONSTEXPR)
-    #undef JSON_HEDLEY_CONSTEXPR
+#undef JSON_HEDLEY_CONSTEXPR
 #endif
 #if defined(__cplusplus)
-    #if __cplusplus >= 201103L
-        #define JSON_HEDLEY_CONSTEXPR JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_(constexpr)
-    #endif
+#if __cplusplus >= 201103L
+#define JSON_HEDLEY_CONSTEXPR JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_(constexpr)
+#endif
 #endif
 #if !defined(JSON_HEDLEY_CONSTEXPR)
-    #define JSON_HEDLEY_CONSTEXPR
+#define JSON_HEDLEY_CONSTEXPR
 #endif
 
 #if defined(JSON_HEDLEY_PREDICT)
-    #undef JSON_HEDLEY_PREDICT
+#undef JSON_HEDLEY_PREDICT
 #endif
 #if defined(JSON_HEDLEY_LIKELY)
-    #undef JSON_HEDLEY_LIKELY
+#undef JSON_HEDLEY_LIKELY
 #endif
 #if defined(JSON_HEDLEY_UNLIKELY)
-    #undef JSON_HEDLEY_UNLIKELY
+#undef JSON_HEDLEY_UNLIKELY
 #endif
 #if defined(JSON_HEDLEY_UNPREDICTABLE)
-    #undef JSON_HEDLEY_UNPREDICTABLE
+#undef JSON_HEDLEY_UNPREDICTABLE
 #endif
 #if JSON_HEDLEY_HAS_BUILTIN(__builtin_unpredictable)
-    #define JSON_HEDLEY_UNPREDICTABLE(expr) __builtin_unpredictable(!!(expr))
+#define JSON_HEDLEY_UNPREDICTABLE(expr) __builtin_unpredictable(!!(expr))
 #endif
 #if \
   JSON_HEDLEY_HAS_BUILTIN(__builtin_expect_with_probability) || \
@@ -1091,7 +1091,7 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #  define JSON_HEDLEY_LIKELY(expr) __builtin_expect(!!(expr), 1)
 #  define JSON_HEDLEY_UNLIKELY(expr) __builtin_expect(!!(expr), 0)
 #if !defined(JSON_HEDLEY_BUILTIN_UNPREDICTABLE)
-    #define JSON_HEDLEY_BUILTIN_UNPREDICTABLE(expr) __builtin_expect_with_probability(!!(expr), 1, 0.5)
+#define JSON_HEDLEY_BUILTIN_UNPREDICTABLE(expr) __builtin_expect_with_probability(!!(expr), 1, 0.5)
 #endif
 #elif \
   JSON_HEDLEY_HAS_BUILTIN(__builtin_expect) || \
@@ -1124,11 +1124,11 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #  define JSON_HEDLEY_UNLIKELY(expr) (!!(expr))
 #endif
 #if !defined(JSON_HEDLEY_UNPREDICTABLE)
-    #define JSON_HEDLEY_UNPREDICTABLE(expr) JSON_HEDLEY_PREDICT(expr, 1, 0.5)
+#define JSON_HEDLEY_UNPREDICTABLE(expr) JSON_HEDLEY_PREDICT(expr, 1, 0.5)
 #endif
 
 #if defined(JSON_HEDLEY_MALLOC)
-    #undef JSON_HEDLEY_MALLOC
+#undef JSON_HEDLEY_MALLOC
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(malloc) || \
@@ -1139,17 +1139,17 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_IBM_VERSION_CHECK(12,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_MALLOC __attribute__((__malloc__))
+#define JSON_HEDLEY_MALLOC __attribute__((__malloc__))
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,10,0)
-    #define JSON_HEDLEY_MALLOC _Pragma("returns_new_memory")
+#define JSON_HEDLEY_MALLOC _Pragma("returns_new_memory")
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(14, 0, 0)
-    #define JSON_HEDLEY_MALLOC __declspec(restrict)
+#define JSON_HEDLEY_MALLOC __declspec(restrict)
 #else
-    #define JSON_HEDLEY_MALLOC
+#define JSON_HEDLEY_MALLOC
 #endif
 
 #if defined(JSON_HEDLEY_PURE)
-    #undef JSON_HEDLEY_PURE
+#undef JSON_HEDLEY_PURE
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(pure) || \
@@ -1161,17 +1161,17 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__)) || \
     JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_PURE __attribute__((__pure__))
+#define JSON_HEDLEY_PURE __attribute__((__pure__))
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,10,0)
-    #define JSON_HEDLEY_PURE _Pragma("does_not_write_global_data")
+#define JSON_HEDLEY_PURE _Pragma("does_not_write_global_data")
 #elif JSON_HEDLEY_TI_VERSION_CHECK(6,0,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_PURE _Pragma("FUNC_IS_PURE;")
+#define JSON_HEDLEY_PURE _Pragma("FUNC_IS_PURE;")
 #else
-    #define JSON_HEDLEY_PURE
+#define JSON_HEDLEY_PURE
 #endif
 
 #if defined(JSON_HEDLEY_CONST)
-    #undef JSON_HEDLEY_CONST
+#undef JSON_HEDLEY_CONST
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(const) || \
@@ -1183,19 +1183,19 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__)) || \
     JSON_HEDLEY_PGI_VERSION_CHECK(17,10,0)
-    #define JSON_HEDLEY_CONST __attribute__((__const__))
+#define JSON_HEDLEY_CONST __attribute__((__const__))
 #elif \
     JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,10,0)
-    #define JSON_HEDLEY_CONST _Pragma("no_side_effect")
+#define JSON_HEDLEY_CONST _Pragma("no_side_effect")
 #else
-    #define JSON_HEDLEY_CONST JSON_HEDLEY_PURE
+#define JSON_HEDLEY_CONST JSON_HEDLEY_PURE
 #endif
 
 #if defined(JSON_HEDLEY_RESTRICT)
-    #undef JSON_HEDLEY_RESTRICT
+#undef JSON_HEDLEY_RESTRICT
 #endif
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && !defined(__cplusplus)
-    #define JSON_HEDLEY_RESTRICT restrict
+#define JSON_HEDLEY_RESTRICT restrict
 #elif \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,1,0) || \
     JSON_HEDLEY_MSVC_VERSION_CHECK(14,0,0) || \
@@ -1207,35 +1207,35 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     (JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,14,0) && defined(__cplusplus)) || \
     JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0) || \
     defined(__clang__)
-    #define JSON_HEDLEY_RESTRICT __restrict
+#define JSON_HEDLEY_RESTRICT __restrict
 #elif JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,3,0) && !defined(__cplusplus)
-    #define JSON_HEDLEY_RESTRICT _Restrict
+#define JSON_HEDLEY_RESTRICT _Restrict
 #else
-    #define JSON_HEDLEY_RESTRICT
+#define JSON_HEDLEY_RESTRICT
 #endif
 
 #if defined(JSON_HEDLEY_INLINE)
-    #undef JSON_HEDLEY_INLINE
+#undef JSON_HEDLEY_INLINE
 #endif
 #if \
     (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || \
     (defined(__cplusplus) && (__cplusplus >= 199711L))
-    #define JSON_HEDLEY_INLINE inline
+#define JSON_HEDLEY_INLINE inline
 #elif \
     defined(JSON_HEDLEY_GCC_VERSION) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(6,2,0)
-    #define JSON_HEDLEY_INLINE __inline__
+#define JSON_HEDLEY_INLINE __inline__
 #elif \
     JSON_HEDLEY_MSVC_VERSION_CHECK(12,0,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(4,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_INLINE __inline
+#define JSON_HEDLEY_INLINE __inline
 #else
-    #define JSON_HEDLEY_INLINE
+#define JSON_HEDLEY_INLINE
 #endif
 
 #if defined(JSON_HEDLEY_ALWAYS_INLINE)
-    #undef JSON_HEDLEY_ALWAYS_INLINE
+#undef JSON_HEDLEY_ALWAYS_INLINE
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(always_inline) || \
@@ -1246,19 +1246,19 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_IBM_VERSION_CHECK(10,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_ALWAYS_INLINE __attribute__((__always_inline__)) JSON_HEDLEY_INLINE
+#define JSON_HEDLEY_ALWAYS_INLINE __attribute__((__always_inline__)) JSON_HEDLEY_INLINE
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(12,0,0)
-    #define JSON_HEDLEY_ALWAYS_INLINE __forceinline
+#define JSON_HEDLEY_ALWAYS_INLINE __forceinline
 #elif JSON_HEDLEY_TI_VERSION_CHECK(7,0,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_ALWAYS_INLINE _Pragma("FUNC_ALWAYS_INLINE;")
+#define JSON_HEDLEY_ALWAYS_INLINE _Pragma("FUNC_ALWAYS_INLINE;")
 #elif JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_ALWAYS_INLINE _Pragma("inline=forced")
+#define JSON_HEDLEY_ALWAYS_INLINE _Pragma("inline=forced")
 #else
-    #define JSON_HEDLEY_ALWAYS_INLINE JSON_HEDLEY_INLINE
+#define JSON_HEDLEY_ALWAYS_INLINE JSON_HEDLEY_INLINE
 #endif
 
 #if defined(JSON_HEDLEY_NEVER_INLINE)
-    #undef JSON_HEDLEY_NEVER_INLINE
+#undef JSON_HEDLEY_NEVER_INLINE
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(noinline) || \
@@ -1269,38 +1269,38 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_IBM_VERSION_CHECK(10,1,0) || \
     JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
     (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-    #define JSON_HEDLEY_NEVER_INLINE __attribute__((__noinline__))
+#define JSON_HEDLEY_NEVER_INLINE __attribute__((__noinline__))
 #elif JSON_HEDLEY_MSVC_VERSION_CHECK(13,10,0)
-    #define JSON_HEDLEY_NEVER_INLINE __declspec(noinline)
+#define JSON_HEDLEY_NEVER_INLINE __declspec(noinline)
 #elif JSON_HEDLEY_PGI_VERSION_CHECK(10,2,0)
-    #define JSON_HEDLEY_NEVER_INLINE _Pragma("noinline")
+#define JSON_HEDLEY_NEVER_INLINE _Pragma("noinline")
 #elif JSON_HEDLEY_TI_VERSION_CHECK(6,0,0) && defined(__cplusplus)
-    #define JSON_HEDLEY_NEVER_INLINE _Pragma("FUNC_CANNOT_INLINE;")
+#define JSON_HEDLEY_NEVER_INLINE _Pragma("FUNC_CANNOT_INLINE;")
 #elif JSON_HEDLEY_IAR_VERSION_CHECK(8,0,0)
-    #define JSON_HEDLEY_NEVER_INLINE _Pragma("inline=never")
+#define JSON_HEDLEY_NEVER_INLINE _Pragma("inline=never")
 #elif JSON_HEDLEY_COMPCERT_VERSION_CHECK(3,2,0)
-    #define JSON_HEDLEY_NEVER_INLINE __attribute((noinline))
+#define JSON_HEDLEY_NEVER_INLINE __attribute((noinline))
 #elif JSON_HEDLEY_PELLES_VERSION_CHECK(9,0,0)
-    #define JSON_HEDLEY_NEVER_INLINE __declspec(noinline)
+#define JSON_HEDLEY_NEVER_INLINE __declspec(noinline)
 #else
-    #define JSON_HEDLEY_NEVER_INLINE
+#define JSON_HEDLEY_NEVER_INLINE
 #endif
 
 #if defined(JSON_HEDLEY_PRIVATE)
-    #undef JSON_HEDLEY_PRIVATE
+#undef JSON_HEDLEY_PRIVATE
 #endif
 #if defined(JSON_HEDLEY_PUBLIC)
-    #undef JSON_HEDLEY_PUBLIC
+#undef JSON_HEDLEY_PUBLIC
 #endif
 #if defined(JSON_HEDLEY_IMPORT)
-    #undef JSON_HEDLEY_IMPORT
+#undef JSON_HEDLEY_IMPORT
 #endif
 #if defined(_WIN32) || defined(__CYGWIN__)
-    #define JSON_HEDLEY_PRIVATE
-    #define JSON_HEDLEY_PUBLIC   __declspec(dllexport)
-    #define JSON_HEDLEY_IMPORT   __declspec(dllimport)
+#define JSON_HEDLEY_PRIVATE
+#define JSON_HEDLEY_PUBLIC   __declspec(dllexport)
+#define JSON_HEDLEY_IMPORT   __declspec(dllimport)
 #else
-    #if \
+#if \
         JSON_HEDLEY_HAS_ATTRIBUTE(visibility) || \
         JSON_HEDLEY_GCC_VERSION_CHECK(3,3,0) || \
         JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,11,0) || \
@@ -1309,61 +1309,61 @@ JSON_HEDLEY_DIAGNOSTIC_POP
         JSON_HEDLEY_IBM_VERSION_CHECK(13,1,0) || \
         JSON_HEDLEY_TI_VERSION_CHECK(8,0,0) || \
         (JSON_HEDLEY_TI_VERSION_CHECK(7,3,0) && defined(__TI_EABI__) && defined(__TI_GNU_ATTRIBUTE_SUPPORT__))
-        #define JSON_HEDLEY_PRIVATE __attribute__((__visibility__("hidden")))
-        #define JSON_HEDLEY_PUBLIC  __attribute__((__visibility__("default")))
-    #else
-        #define JSON_HEDLEY_PRIVATE
-        #define JSON_HEDLEY_PUBLIC
-    #endif
-    #define JSON_HEDLEY_IMPORT    extern
+#define JSON_HEDLEY_PRIVATE __attribute__((__visibility__("hidden")))
+#define JSON_HEDLEY_PUBLIC  __attribute__((__visibility__("default")))
+#else
+#define JSON_HEDLEY_PRIVATE
+#define JSON_HEDLEY_PUBLIC
+#endif
+#define JSON_HEDLEY_IMPORT    extern
 #endif
 
 #if defined(JSON_HEDLEY_NO_THROW)
-    #undef JSON_HEDLEY_NO_THROW
+#undef JSON_HEDLEY_NO_THROW
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(nothrow) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(3,3,0) || \
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0)
-    #define JSON_HEDLEY_NO_THROW __attribute__((__nothrow__))
+#define JSON_HEDLEY_NO_THROW __attribute__((__nothrow__))
 #elif \
     JSON_HEDLEY_MSVC_VERSION_CHECK(13,1,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(4,1,0)
-    #define JSON_HEDLEY_NO_THROW __declspec(nothrow)
+#define JSON_HEDLEY_NO_THROW __declspec(nothrow)
 #else
-    #define JSON_HEDLEY_NO_THROW
+#define JSON_HEDLEY_NO_THROW
 #endif
 
 #if defined(JSON_HEDLEY_FALL_THROUGH)
-    #undef JSON_HEDLEY_FALL_THROUGH
+#undef JSON_HEDLEY_FALL_THROUGH
 #endif
 #if JSON_HEDLEY_GNUC_HAS_ATTRIBUTE(fallthrough,7,0,0) && !defined(JSON_HEDLEY_PGI_VERSION)
-    #define JSON_HEDLEY_FALL_THROUGH __attribute__((__fallthrough__))
+#define JSON_HEDLEY_FALL_THROUGH __attribute__((__fallthrough__))
 #elif JSON_HEDLEY_HAS_CPP_ATTRIBUTE_NS(clang,fallthrough)
-    #define JSON_HEDLEY_FALL_THROUGH JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[clang::fallthrough]])
+#define JSON_HEDLEY_FALL_THROUGH JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[clang::fallthrough]])
 #elif JSON_HEDLEY_HAS_CPP_ATTRIBUTE(fallthrough)
-    #define JSON_HEDLEY_FALL_THROUGH JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[fallthrough]])
+#define JSON_HEDLEY_FALL_THROUGH JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_([[fallthrough]])
 #elif defined(__fallthrough) /* SAL */
-    #define JSON_HEDLEY_FALL_THROUGH __fallthrough
+#define JSON_HEDLEY_FALL_THROUGH __fallthrough
 #else
-    #define JSON_HEDLEY_FALL_THROUGH
+#define JSON_HEDLEY_FALL_THROUGH
 #endif
 
 #if defined(JSON_HEDLEY_RETURNS_NON_NULL)
-    #undef JSON_HEDLEY_RETURNS_NON_NULL
+#undef JSON_HEDLEY_RETURNS_NON_NULL
 #endif
 #if \
     JSON_HEDLEY_HAS_ATTRIBUTE(returns_nonnull) || \
     JSON_HEDLEY_GCC_VERSION_CHECK(4,9,0)
-    #define JSON_HEDLEY_RETURNS_NON_NULL __attribute__((__returns_nonnull__))
+#define JSON_HEDLEY_RETURNS_NON_NULL __attribute__((__returns_nonnull__))
 #elif defined(_Ret_notnull_) /* SAL */
-    #define JSON_HEDLEY_RETURNS_NON_NULL _Ret_notnull_
+#define JSON_HEDLEY_RETURNS_NON_NULL _Ret_notnull_
 #else
-    #define JSON_HEDLEY_RETURNS_NON_NULL
+#define JSON_HEDLEY_RETURNS_NON_NULL
 #endif
 
 #if defined(JSON_HEDLEY_ARRAY_PARAM)
-    #undef JSON_HEDLEY_ARRAY_PARAM
+#undef JSON_HEDLEY_ARRAY_PARAM
 #endif
 #if \
     defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && \
@@ -1371,21 +1371,21 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     !defined(__cplusplus) && \
     !defined(JSON_HEDLEY_PGI_VERSION) && \
     !defined(JSON_HEDLEY_TINYC_VERSION)
-    #define JSON_HEDLEY_ARRAY_PARAM(name) (name)
+#define JSON_HEDLEY_ARRAY_PARAM(name) (name)
 #else
-    #define JSON_HEDLEY_ARRAY_PARAM(name)
+#define JSON_HEDLEY_ARRAY_PARAM(name)
 #endif
 
 #if defined(JSON_HEDLEY_IS_CONSTANT)
-    #undef JSON_HEDLEY_IS_CONSTANT
+#undef JSON_HEDLEY_IS_CONSTANT
 #endif
 #if defined(JSON_HEDLEY_REQUIRE_CONSTEXPR)
-    #undef JSON_HEDLEY_REQUIRE_CONSTEXPR
+#undef JSON_HEDLEY_REQUIRE_CONSTEXPR
 #endif
 /* JSON_HEDLEY_IS_CONSTEXPR_ is for
    HEDLEY INTERNAL USE ONLY.  API subject to change without notice. */
 #if defined(JSON_HEDLEY_IS_CONSTEXPR_)
-    #undef JSON_HEDLEY_IS_CONSTEXPR_
+#undef JSON_HEDLEY_IS_CONSTEXPR_
 #endif
 #if \
     JSON_HEDLEY_HAS_BUILTIN(__builtin_constant_p) || \
@@ -1397,7 +1397,7 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     JSON_HEDLEY_TI_VERSION_CHECK(6,1,0) || \
     (JSON_HEDLEY_SUNPRO_VERSION_CHECK(5,10,0) && !defined(__cplusplus)) || \
     JSON_HEDLEY_CRAY_VERSION_CHECK(8,1,0)
-    #define JSON_HEDLEY_IS_CONSTANT(expr) __builtin_constant_p(expr)
+#define JSON_HEDLEY_IS_CONSTANT(expr) __builtin_constant_p(expr)
 #endif
 #if !defined(__cplusplus)
 #  if \
@@ -1409,10 +1409,10 @@ JSON_HEDLEY_DIAGNOSTIC_POP
        JSON_HEDLEY_ARM_VERSION_CHECK(5,4,0) || \
        JSON_HEDLEY_TINYC_VERSION_CHECK(0,9,24)
 #if defined(__INTPTR_TYPE__)
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0)), int*)
+#define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0)), int*)
 #else
-    #include <stdint.h>
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((intptr_t) ((expr) * 0)) : (int*) 0)), int*)
+#include <stdint.h>
+#define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((intptr_t) ((expr) * 0)) : (int*) 0)), int*)
 #endif
 #  elif \
        (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L) && !defined(JSON_HEDLEY_SUNPRO_VERSION) && !defined(JSON_HEDLEY_PGI_VERSION)) || \
@@ -1422,10 +1422,10 @@ JSON_HEDLEY_DIAGNOSTIC_POP
        JSON_HEDLEY_IBM_VERSION_CHECK(12,1,0) || \
        JSON_HEDLEY_ARM_VERSION_CHECK(5,3,0)
 #if defined(__INTPTR_TYPE__)
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0), int*: 1, void*: 0)
+#define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0), int*: 1, void*: 0)
 #else
-    #include <stdint.h>
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((intptr_t) * 0) : (int*) 0), int*: 1, void*: 0)
+#include <stdint.h>
+#define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((intptr_t) * 0) : (int*) 0), int*: 1, void*: 0)
 #endif
 #  elif \
        defined(JSON_HEDLEY_GCC_VERSION) || \
@@ -1445,38 +1445,38 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #  endif
 #endif
 #if defined(JSON_HEDLEY_IS_CONSTEXPR_)
-    #if !defined(JSON_HEDLEY_IS_CONSTANT)
-        #define JSON_HEDLEY_IS_CONSTANT(expr) JSON_HEDLEY_IS_CONSTEXPR_(expr)
-    #endif
-    #define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (JSON_HEDLEY_IS_CONSTEXPR_(expr) ? (expr) : (-1))
+#if !defined(JSON_HEDLEY_IS_CONSTANT)
+#define JSON_HEDLEY_IS_CONSTANT(expr) JSON_HEDLEY_IS_CONSTEXPR_(expr)
+#endif
+#define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (JSON_HEDLEY_IS_CONSTEXPR_(expr) ? (expr) : (-1))
 #else
-    #if !defined(JSON_HEDLEY_IS_CONSTANT)
-        #define JSON_HEDLEY_IS_CONSTANT(expr) (0)
-    #endif
-    #define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (expr)
+#if !defined(JSON_HEDLEY_IS_CONSTANT)
+#define JSON_HEDLEY_IS_CONSTANT(expr) (0)
+#endif
+#define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (expr)
 #endif
 
 #if defined(JSON_HEDLEY_BEGIN_C_DECLS)
-    #undef JSON_HEDLEY_BEGIN_C_DECLS
+#undef JSON_HEDLEY_BEGIN_C_DECLS
 #endif
 #if defined(JSON_HEDLEY_END_C_DECLS)
-    #undef JSON_HEDLEY_END_C_DECLS
+#undef JSON_HEDLEY_END_C_DECLS
 #endif
 #if defined(JSON_HEDLEY_C_DECL)
-    #undef JSON_HEDLEY_C_DECL
+#undef JSON_HEDLEY_C_DECL
 #endif
 #if defined(__cplusplus)
-    #define JSON_HEDLEY_BEGIN_C_DECLS extern "C" {
-    #define JSON_HEDLEY_END_C_DECLS }
-    #define JSON_HEDLEY_C_DECL extern "C"
+#define JSON_HEDLEY_BEGIN_C_DECLS extern "C" {
+#define JSON_HEDLEY_END_C_DECLS }
+#define JSON_HEDLEY_C_DECL extern "C"
 #else
-    #define JSON_HEDLEY_BEGIN_C_DECLS
-    #define JSON_HEDLEY_END_C_DECLS
-    #define JSON_HEDLEY_C_DECL
+#define JSON_HEDLEY_BEGIN_C_DECLS
+#define JSON_HEDLEY_END_C_DECLS
+#define JSON_HEDLEY_C_DECL
 #endif
 
 #if defined(JSON_HEDLEY_STATIC_ASSERT)
-    #undef JSON_HEDLEY_STATIC_ASSERT
+#undef JSON_HEDLEY_STATIC_ASSERT
 #endif
 #if \
   !defined(__cplusplus) && ( \
@@ -1497,7 +1497,7 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_CONST_CAST)
-    #undef JSON_HEDLEY_CONST_CAST
+#undef JSON_HEDLEY_CONST_CAST
 #endif
 #if defined(__cplusplus)
 #  define JSON_HEDLEY_CONST_CAST(T, expr) (const_cast<T>(expr))
@@ -1516,51 +1516,51 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_REINTERPRET_CAST)
-    #undef JSON_HEDLEY_REINTERPRET_CAST
+#undef JSON_HEDLEY_REINTERPRET_CAST
 #endif
 #if defined(__cplusplus)
-    #define JSON_HEDLEY_REINTERPRET_CAST(T, expr) (reinterpret_cast<T>(expr))
+#define JSON_HEDLEY_REINTERPRET_CAST(T, expr) (reinterpret_cast<T>(expr))
 #else
-    #define JSON_HEDLEY_REINTERPRET_CAST(T, expr) (*((T*) &(expr)))
+#define JSON_HEDLEY_REINTERPRET_CAST(T, expr) (*((T*) &(expr)))
 #endif
 
 #if defined(JSON_HEDLEY_STATIC_CAST)
-    #undef JSON_HEDLEY_STATIC_CAST
+#undef JSON_HEDLEY_STATIC_CAST
 #endif
 #if defined(__cplusplus)
-    #define JSON_HEDLEY_STATIC_CAST(T, expr) (static_cast<T>(expr))
+#define JSON_HEDLEY_STATIC_CAST(T, expr) (static_cast<T>(expr))
 #else
-    #define JSON_HEDLEY_STATIC_CAST(T, expr) ((T) (expr))
+#define JSON_HEDLEY_STATIC_CAST(T, expr) ((T) (expr))
 #endif
 
 #if defined(JSON_HEDLEY_CPP_CAST)
-    #undef JSON_HEDLEY_CPP_CAST
+#undef JSON_HEDLEY_CPP_CAST
 #endif
 #if defined(__cplusplus)
-    #define JSON_HEDLEY_CPP_CAST(T, expr) static_cast<T>(expr)
+#define JSON_HEDLEY_CPP_CAST(T, expr) static_cast<T>(expr)
 #else
-    #define JSON_HEDLEY_CPP_CAST(T, expr) (expr)
+#define JSON_HEDLEY_CPP_CAST(T, expr) (expr)
 #endif
 
 #if defined(JSON_HEDLEY_NULL)
-    #undef JSON_HEDLEY_NULL
+#undef JSON_HEDLEY_NULL
 #endif
 #if defined(__cplusplus)
-    #if __cplusplus >= 201103L
-        #define JSON_HEDLEY_NULL JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_(nullptr)
-    #elif defined(NULL)
-        #define JSON_HEDLEY_NULL NULL
-    #else
-        #define JSON_HEDLEY_NULL JSON_HEDLEY_STATIC_CAST(void*, 0)
-    #endif
+#if __cplusplus >= 201103L
+#define JSON_HEDLEY_NULL JSON_HEDLEY_DIAGNOSTIC_DISABLE_CPP98_COMPAT_WRAP_(nullptr)
 #elif defined(NULL)
-    #define JSON_HEDLEY_NULL NULL
+#define JSON_HEDLEY_NULL NULL
 #else
-    #define JSON_HEDLEY_NULL ((void*) 0)
+#define JSON_HEDLEY_NULL JSON_HEDLEY_STATIC_CAST(void*, 0)
+#endif
+#elif defined(NULL)
+#define JSON_HEDLEY_NULL NULL
+#else
+#define JSON_HEDLEY_NULL ((void*) 0)
 #endif
 
 #if defined(JSON_HEDLEY_MESSAGE)
-    #undef JSON_HEDLEY_MESSAGE
+#undef JSON_HEDLEY_MESSAGE
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wunknown-pragmas")
 #  define JSON_HEDLEY_MESSAGE(msg) \
@@ -1583,7 +1583,7 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_WARNING)
-    #undef JSON_HEDLEY_WARNING
+#undef JSON_HEDLEY_WARNING
 #endif
 #if JSON_HEDLEY_HAS_WARNING("-Wunknown-pragmas")
 #  define JSON_HEDLEY_WARNING(msg) \
@@ -1602,10 +1602,10 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_REQUIRE)
-    #undef JSON_HEDLEY_REQUIRE
+#undef JSON_HEDLEY_REQUIRE
 #endif
 #if defined(JSON_HEDLEY_REQUIRE_MSG)
-    #undef JSON_HEDLEY_REQUIRE_MSG
+#undef JSON_HEDLEY_REQUIRE_MSG
 #endif
 #if JSON_HEDLEY_HAS_ATTRIBUTE(diagnose_if)
 #  if JSON_HEDLEY_HAS_WARNING("-Wgcc-compat")
@@ -1629,14 +1629,14 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_FLAGS)
-    #undef JSON_HEDLEY_FLAGS
+#undef JSON_HEDLEY_FLAGS
 #endif
 #if JSON_HEDLEY_HAS_ATTRIBUTE(flag_enum)
-    #define JSON_HEDLEY_FLAGS __attribute__((__flag_enum__))
+#define JSON_HEDLEY_FLAGS __attribute__((__flag_enum__))
 #endif
 
 #if defined(JSON_HEDLEY_FLAGS_CAST)
-    #undef JSON_HEDLEY_FLAGS_CAST
+#undef JSON_HEDLEY_FLAGS_CAST
 #endif
 #if JSON_HEDLEY_INTEL_VERSION_CHECK(19,0,0)
 #  define JSON_HEDLEY_FLAGS_CAST(T, expr) (__extension__ ({ \
@@ -1650,57 +1650,57 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #endif
 
 #if defined(JSON_HEDLEY_EMPTY_BASES)
-    #undef JSON_HEDLEY_EMPTY_BASES
+#undef JSON_HEDLEY_EMPTY_BASES
 #endif
 #if JSON_HEDLEY_MSVC_VERSION_CHECK(19,0,23918) && !JSON_HEDLEY_MSVC_VERSION_CHECK(20,0,0)
-    #define JSON_HEDLEY_EMPTY_BASES __declspec(empty_bases)
+#define JSON_HEDLEY_EMPTY_BASES __declspec(empty_bases)
 #else
-    #define JSON_HEDLEY_EMPTY_BASES
+#define JSON_HEDLEY_EMPTY_BASES
 #endif
 
 /* Remaining macros are deprecated. */
 
 #if defined(JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK)
-    #undef JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK
+#undef JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK
 #endif
 #if defined(__clang__)
-    #define JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK(major,minor,patch) (0)
+#define JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK(major,minor,patch) (0)
 #else
-    #define JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK(major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
+#define JSON_HEDLEY_GCC_NOT_CLANG_VERSION_CHECK(major,minor,patch) JSON_HEDLEY_GCC_VERSION_CHECK(major,minor,patch)
 #endif
 
 #if defined(JSON_HEDLEY_CLANG_HAS_ATTRIBUTE)
-    #undef JSON_HEDLEY_CLANG_HAS_ATTRIBUTE
+#undef JSON_HEDLEY_CLANG_HAS_ATTRIBUTE
 #endif
 #define JSON_HEDLEY_CLANG_HAS_ATTRIBUTE(attribute) JSON_HEDLEY_HAS_ATTRIBUTE(attribute)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_CPP_ATTRIBUTE)
-    #undef JSON_HEDLEY_CLANG_HAS_CPP_ATTRIBUTE
+#undef JSON_HEDLEY_CLANG_HAS_CPP_ATTRIBUTE
 #endif
 #define JSON_HEDLEY_CLANG_HAS_CPP_ATTRIBUTE(attribute) JSON_HEDLEY_HAS_CPP_ATTRIBUTE(attribute)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_BUILTIN)
-    #undef JSON_HEDLEY_CLANG_HAS_BUILTIN
+#undef JSON_HEDLEY_CLANG_HAS_BUILTIN
 #endif
 #define JSON_HEDLEY_CLANG_HAS_BUILTIN(builtin) JSON_HEDLEY_HAS_BUILTIN(builtin)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_FEATURE)
-    #undef JSON_HEDLEY_CLANG_HAS_FEATURE
+#undef JSON_HEDLEY_CLANG_HAS_FEATURE
 #endif
 #define JSON_HEDLEY_CLANG_HAS_FEATURE(feature) JSON_HEDLEY_HAS_FEATURE(feature)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_EXTENSION)
-    #undef JSON_HEDLEY_CLANG_HAS_EXTENSION
+#undef JSON_HEDLEY_CLANG_HAS_EXTENSION
 #endif
 #define JSON_HEDLEY_CLANG_HAS_EXTENSION(extension) JSON_HEDLEY_HAS_EXTENSION(extension)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_DECLSPEC_DECLSPEC_ATTRIBUTE)
-    #undef JSON_HEDLEY_CLANG_HAS_DECLSPEC_DECLSPEC_ATTRIBUTE
+#undef JSON_HEDLEY_CLANG_HAS_DECLSPEC_DECLSPEC_ATTRIBUTE
 #endif
 #define JSON_HEDLEY_CLANG_HAS_DECLSPEC_ATTRIBUTE(attribute) JSON_HEDLEY_HAS_DECLSPEC_ATTRIBUTE(attribute)
 
 #if defined(JSON_HEDLEY_CLANG_HAS_WARNING)
-    #undef JSON_HEDLEY_CLANG_HAS_WARNING
+#undef JSON_HEDLEY_CLANG_HAS_WARNING
 #endif
 #define JSON_HEDLEY_CLANG_HAS_WARNING(warning) JSON_HEDLEY_HAS_WARNING(warning)
 
@@ -1712,69 +1712,69 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 
 // exclude unsupported compilers
 #if !defined(JSON_SKIP_UNSUPPORTED_COMPILER_CHECK)
-    #if defined(__clang__)
-        #if (__clang_major__ * 10000 + __clang_minor__ * 100 + __clang_patchlevel__) < 30400
-            #error "unsupported Clang version - see https://github.com/nlohmann/json#supported-compilers"
-        #endif
-    #elif defined(__GNUC__) && !(defined(__ICC) || defined(__INTEL_COMPILER))
-        #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) < 40800
-            #error "unsupported GCC version - see https://github.com/nlohmann/json#supported-compilers"
-        #endif
-    #endif
+#if defined(__clang__)
+#if (__clang_major__ * 10000 + __clang_minor__ * 100 + __clang_patchlevel__) < 30400
+#error "unsupported Clang version - see https://github.com/nlohmann/json#supported-compilers"
+#endif
+#elif defined(__GNUC__) && !(defined(__ICC) || defined(__INTEL_COMPILER))
+#if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) < 40800
+#error "unsupported GCC version - see https://github.com/nlohmann/json#supported-compilers"
+#endif
+#endif
 #endif
 
 // C++ language standard detection
 #if (defined(__cplusplus) && __cplusplus >= 201703L) || (defined(_HAS_CXX17) && _HAS_CXX17 == 1) // fix for issue #464
-    #define JSON_HAS_CPP_17
-    #define JSON_HAS_CPP_14
+#define JSON_HAS_CPP_17
+#define JSON_HAS_CPP_14
 #elif (defined(__cplusplus) && __cplusplus >= 201402L) || (defined(_HAS_CXX14) && _HAS_CXX14 == 1)
-    #define JSON_HAS_CPP_14
+#define JSON_HAS_CPP_14
 #endif
 
 // disable float-equal warnings on GCC/clang
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wfloat-equal"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
 
 // disable documentation warnings on clang
 #if defined(__clang__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wdocumentation"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdocumentation"
 #endif
 
 // allow to disable exceptions
 #if (defined(__cpp_exceptions) || defined(__EXCEPTIONS) || defined(_CPPUNWIND)) && !defined(JSON_NOEXCEPTION)
-    #define JSON_THROW(exception) throw exception
-    #define JSON_TRY try
-    #define JSON_CATCH(exception) catch(exception)
-    #define JSON_INTERNAL_CATCH(exception) catch(exception)
+#define JSON_THROW(exception) throw exception
+#define JSON_TRY try
+#define JSON_CATCH(exception) catch(exception)
+#define JSON_INTERNAL_CATCH(exception) catch(exception)
 #else
-    #include <cstdlib>
-    #define JSON_THROW(exception) std::abort()
-    #define JSON_TRY if(true)
-    #define JSON_CATCH(exception) if(false)
-    #define JSON_INTERNAL_CATCH(exception) if(false)
+#include <cstdlib>
+#define JSON_THROW(exception) std::abort()
+#define JSON_TRY if(true)
+#define JSON_CATCH(exception) if(false)
+#define JSON_INTERNAL_CATCH(exception) if(false)
 #endif
 
 // override exception macros
 #if defined(JSON_THROW_USER)
-    #undef JSON_THROW
-    #define JSON_THROW JSON_THROW_USER
+#undef JSON_THROW
+#define JSON_THROW JSON_THROW_USER
 #endif
 #if defined(JSON_TRY_USER)
-    #undef JSON_TRY
-    #define JSON_TRY JSON_TRY_USER
+#undef JSON_TRY
+#define JSON_TRY JSON_TRY_USER
 #endif
 #if defined(JSON_CATCH_USER)
-    #undef JSON_CATCH
-    #define JSON_CATCH JSON_CATCH_USER
-    #undef JSON_INTERNAL_CATCH
-    #define JSON_INTERNAL_CATCH JSON_CATCH_USER
+#undef JSON_CATCH
+#define JSON_CATCH JSON_CATCH_USER
+#undef JSON_INTERNAL_CATCH
+#define JSON_INTERNAL_CATCH JSON_CATCH_USER
 #endif
 #if defined(JSON_INTERNAL_CATCH_USER)
-    #undef JSON_INTERNAL_CATCH
-    #define JSON_INTERNAL_CATCH JSON_INTERNAL_CATCH_USER
+#undef JSON_INTERNAL_CATCH
+#define JSON_INTERNAL_CATCH JSON_INTERNAL_CATCH_USER
 #endif
 
 /*!
@@ -1863,7 +1863,7 @@ caught.,exception}
 */
 class exception : public std::exception
 {
-  public:
+public:
     /// returns the explanatory string
     JSON_HEDLEY_RETURNS_NON_NULL
     const char* what() const noexcept override
@@ -1874,7 +1874,7 @@ class exception : public std::exception
     /// the id of the exception
     const int id;
 
-  protected:
+protected:
     JSON_HEDLEY_NON_NULL(3)
     exception(int id_, const char* what_arg) : id(id_), m(what_arg) {}
 
@@ -1883,7 +1883,7 @@ class exception : public std::exception
         return "[json.exception." + ename + "." + std::to_string(id_) + "] ";
     }
 
-  private:
+private:
     /// an exception object as storage for error messages
     std::runtime_error m;
 };
@@ -1934,7 +1934,7 @@ caught.,parse_error}
 */
 class parse_error : public exception
 {
-  public:
+public:
     /*!
     @brief create a parse error exception
     @param[in] id_       the id of the exception
@@ -1970,7 +1970,7 @@ class parse_error : public exception
     */
     const std::size_t byte;
 
-  private:
+private:
     parse_error(int id_, std::size_t byte_, const char* what_arg)
         : exception(id_, what_arg), byte(byte_) {}
 
@@ -2020,14 +2020,14 @@ caught.,invalid_iterator}
 */
 class invalid_iterator : public exception
 {
-  public:
+public:
     static invalid_iterator create(int id_, const std::string& what_arg)
     {
         std::string w = exception::name("invalid_iterator", id_) + what_arg;
         return invalid_iterator(id_, w.c_str());
     }
 
-  private:
+private:
     JSON_HEDLEY_NON_NULL(3)
     invalid_iterator(int id_, const char* what_arg)
         : exception(id_, what_arg) {}
@@ -2074,14 +2074,14 @@ caught.,type_error}
 */
 class type_error : public exception
 {
-  public:
+public:
     static type_error create(int id_, const std::string& what_arg)
     {
         std::string w = exception::name("type_error", id_) + what_arg;
         return type_error(id_, w.c_str());
     }
 
-  private:
+private:
     JSON_HEDLEY_NON_NULL(3)
     type_error(int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
@@ -2121,14 +2121,14 @@ caught.,out_of_range}
 */
 class out_of_range : public exception
 {
-  public:
+public:
     static out_of_range create(int id_, const std::string& what_arg)
     {
         std::string w = exception::name("out_of_range", id_) + what_arg;
         return out_of_range(id_, w.c_str());
     }
 
-  private:
+private:
     JSON_HEDLEY_NON_NULL(3)
     out_of_range(int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
@@ -2159,14 +2159,14 @@ caught.,other_error}
 */
 class other_error : public exception
 {
-  public:
+public:
     static other_error create(int id_, const std::string& what_arg)
     {
         std::string w = exception::name("other_error", id_) + what_arg;
         return other_error(id_, w.c_str());
     }
 
-  private:
+private:
     JSON_HEDLEY_NON_NULL(3)
     other_error(int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
@@ -2571,10 +2571,10 @@ struct is_iterator_traits : std::false_type {};
 template <typename T>
 struct is_iterator_traits<iterator_traits<T>>
 {
-  private:
+private:
     using traits = iterator_traits<T>;
 
-  public:
+public:
     static constexpr auto value =
         is_detected<value_type_t, traits>::value &&
         is_detected<difference_type_t, traits>::value &&
@@ -2913,24 +2913,24 @@ void get_arithmetic_value(const BasicJsonType& j, ArithmeticType& val)
 {
     switch (static_cast<value_t>(j))
     {
-        case value_t::number_unsigned:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_unsigned_t*>());
-            break;
-        }
-        case value_t::number_integer:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_integer_t*>());
-            break;
-        }
-        case value_t::number_float:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_float_t*>());
-            break;
-        }
+    case value_t::number_unsigned:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_unsigned_t*>());
+        break;
+    }
+    case value_t::number_integer:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_integer_t*>());
+        break;
+    }
+    case value_t::number_float:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_float_t*>());
+        break;
+    }
 
-        default:
-            JSON_THROW(type_error::create(302, "type must be number, but is " + std::string(j.type_name())));
+    default:
+        JSON_THROW(type_error::create(302, "type must be number, but is " + std::string(j.type_name())));
     }
 }
 
@@ -3154,29 +3154,29 @@ void from_json(const BasicJsonType& j, ArithmeticType& val)
 {
     switch (static_cast<value_t>(j))
     {
-        case value_t::number_unsigned:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_unsigned_t*>());
-            break;
-        }
-        case value_t::number_integer:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_integer_t*>());
-            break;
-        }
-        case value_t::number_float:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_float_t*>());
-            break;
-        }
-        case value_t::boolean:
-        {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::boolean_t*>());
-            break;
-        }
+    case value_t::number_unsigned:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_unsigned_t*>());
+        break;
+    }
+    case value_t::number_integer:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_integer_t*>());
+        break;
+    }
+    case value_t::number_float:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::number_float_t*>());
+        break;
+    }
+    case value_t::boolean:
+    {
+        val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::boolean_t*>());
+        break;
+    }
 
-        default:
-            JSON_THROW(type_error::create(302, "type must be number, but is " + std::string(j.type_name())));
+    default:
+        JSON_THROW(type_error::create(302, "type must be number, but is " + std::string(j.type_name())));
     }
 }
 
@@ -3296,7 +3296,7 @@ void int_to_string( string_type& target, std::size_t value )
 }
 template <typename IteratorType> class iteration_proxy_value
 {
-  public:
+public:
     using difference_type = std::ptrdiff_t;
     using value_type = iteration_proxy_value;
     using pointer = value_type * ;
@@ -3304,7 +3304,7 @@ template <typename IteratorType> class iteration_proxy_value
     using iterator_category = std::input_iterator_tag;
     using string_type = typename std::remove_cv< typename std::remove_reference<decltype( std::declval<IteratorType>().key() ) >::type >::type;
 
-  private:
+private:
     /// the iterator
     IteratorType anchor;
     /// an index for arrays (used to create key names)
@@ -3316,7 +3316,7 @@ template <typename IteratorType> class iteration_proxy_value
     /// an empty string (to return a reference for primitive values)
     const string_type empty_str = "";
 
-  public:
+public:
     explicit iteration_proxy_value(IteratorType it) noexcept : anchor(it) {}
 
     /// dereference operator (needed for range-based for)
@@ -3353,24 +3353,24 @@ template <typename IteratorType> class iteration_proxy_value
 
         switch (anchor.m_object->type())
         {
-            // use integer array index as key
-            case value_t::array:
+        // use integer array index as key
+        case value_t::array:
+        {
+            if (array_index != array_index_last)
             {
-                if (array_index != array_index_last)
-                {
-                    int_to_string( array_index_str, array_index );
-                    array_index_last = array_index;
-                }
-                return array_index_str;
+                int_to_string( array_index_str, array_index );
+                array_index_last = array_index;
             }
+            return array_index_str;
+        }
 
-            // use key from the object
-            case value_t::object:
-                return anchor.key();
+        // use key from the object
+        case value_t::object:
+            return anchor.key();
 
-            // use an empty key for all primitive types
-            default:
-                return empty_str;
+        // use an empty key for all primitive types
+        default:
+            return empty_str;
         }
     }
 
@@ -3384,11 +3384,11 @@ template <typename IteratorType> class iteration_proxy_value
 /// proxy class for the items() function
 template<typename IteratorType> class iteration_proxy
 {
-  private:
+private:
     /// the container to iterate
     typename IteratorType::reference container;
 
-  public:
+public:
     /// construct iteration proxy from a container
     explicit iteration_proxy(typename IteratorType::reference cont) noexcept
         : container(cont) {}
@@ -3431,9 +3431,9 @@ auto get(const nlohmann::detail::iteration_proxy_value<IteratorType>& i) -> decl
 namespace std
 {
 #if defined(__clang__)
-    // Fix: https://github.com/nlohmann/json/issues/1401
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wmismatched-tags"
+// Fix: https://github.com/nlohmann/json/issues/1401
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmismatched-tags"
 #endif
 template <typename IteratorType>
 class tuple_size<::nlohmann::detail::iteration_proxy_value<IteratorType>>
@@ -3442,13 +3442,13 @@ class tuple_size<::nlohmann::detail::iteration_proxy_value<IteratorType>>
 template <std::size_t N, typename IteratorType>
 class tuple_element<N, ::nlohmann::detail::iteration_proxy_value<IteratorType >>
 {
-  public:
+public:
     using type = decltype(
                      get<N>(std::declval <
                             ::nlohmann::detail::iteration_proxy_value<IteratorType >> ()));
 };
 #if defined(__clang__)
-    #pragma clang diagnostic pop
+#pragma clang diagnostic pop
 #endif
 } // namespace std
 
@@ -3917,7 +3917,7 @@ Input adapter for stdio file access. This adapter read only 1 byte and do not us
 */
 class file_input_adapter : public input_adapter_protocol
 {
-  public:
+public:
     JSON_HEDLEY_NON_NULL(2)
     explicit file_input_adapter(std::FILE* f)  noexcept
         : m_file(f)
@@ -3935,7 +3935,7 @@ class file_input_adapter : public input_adapter_protocol
         return std::fgetc(m_file);
     }
 
-  private:
+private:
     /// the file pointer to read from
     std::FILE* m_file;
 };
@@ -3952,7 +3952,7 @@ subsequent call for input from the std::istream.
 */
 class input_stream_adapter : public input_adapter_protocol
 {
-  public:
+public:
     ~input_stream_adapter() override
     {
         // clear stream flags; we use underlying streambuf I/O, do not
@@ -3984,7 +3984,7 @@ class input_stream_adapter : public input_adapter_protocol
         return res;
     }
 
-  private:
+private:
     /// the associated input stream
     std::istream& is;
     std::streambuf& sb;
@@ -3993,7 +3993,7 @@ class input_stream_adapter : public input_adapter_protocol
 /// input adapter for buffer input
 class input_buffer_adapter : public input_adapter_protocol
 {
-  public:
+public:
     input_buffer_adapter(const char* b, const std::size_t l) noexcept
         : cursor(b), limit(b == nullptr ? nullptr : (b + l))
     {}
@@ -4016,7 +4016,7 @@ class input_buffer_adapter : public input_adapter_protocol
         return std::char_traits<char>::eof();
     }
 
-  private:
+private:
     /// pointer to the current character
     const char* cursor;
     /// pointer past the last character
@@ -4150,7 +4150,7 @@ struct wide_string_input_helper<WideStringType, 2>
 template<typename WideStringType>
 class wide_string_input_adapter : public input_adapter_protocol
 {
-  public:
+public:
     explicit wide_string_input_adapter(const WideStringType& w) noexcept
         : str(w)
     {}
@@ -4172,7 +4172,7 @@ class wide_string_input_adapter : public input_adapter_protocol
         return utf8_bytes[utf8_bytes_index++];
     }
 
-  private:
+private:
     template<size_t T>
     void fill_buffer()
     {
@@ -4196,7 +4196,7 @@ class wide_string_input_adapter : public input_adapter_protocol
 
 class input_adapter
 {
-  public:
+public:
     // native support
     JSON_HEDLEY_NON_NULL(2)
     input_adapter(std::FILE* file)
@@ -4297,7 +4297,7 @@ class input_adapter
         return ia;
     }
 
-  private:
+private:
     /// the actual adapter
     input_adapter_t ia = nullptr;
 };
@@ -4453,7 +4453,7 @@ constructor contains the parsed value.
 template<typename BasicJsonType>
 class json_sax_dom_parser
 {
-  public:
+public:
     using number_integer_t = typename BasicJsonType::number_integer_t;
     using number_unsigned_t = typename BasicJsonType::number_unsigned_t;
     using number_float_t = typename BasicJsonType::number_float_t;
@@ -4565,20 +4565,20 @@ class json_sax_dom_parser
             // determine the proper exception type from the id
             switch ((ex.id / 100) % 100)
             {
-                case 1:
-                    JSON_THROW(*static_cast<const detail::parse_error*>(&ex));
-                case 4:
-                    JSON_THROW(*static_cast<const detail::out_of_range*>(&ex));
-                // LCOV_EXCL_START
-                case 2:
-                    JSON_THROW(*static_cast<const detail::invalid_iterator*>(&ex));
-                case 3:
-                    JSON_THROW(*static_cast<const detail::type_error*>(&ex));
-                case 5:
-                    JSON_THROW(*static_cast<const detail::other_error*>(&ex));
-                default:
-                    assert(false);
-                    // LCOV_EXCL_STOP
+            case 1:
+                JSON_THROW(*static_cast<const detail::parse_error*>(&ex));
+            case 4:
+                JSON_THROW(*static_cast<const detail::out_of_range*>(&ex));
+            // LCOV_EXCL_START
+            case 2:
+                JSON_THROW(*static_cast<const detail::invalid_iterator*>(&ex));
+            case 3:
+                JSON_THROW(*static_cast<const detail::type_error*>(&ex));
+            case 5:
+                JSON_THROW(*static_cast<const detail::other_error*>(&ex));
+            default:
+                assert(false);
+                // LCOV_EXCL_STOP
             }
         }
         return false;
@@ -4589,7 +4589,7 @@ class json_sax_dom_parser
         return errored;
     }
 
-  private:
+private:
     /*!
     @invariant If the ref stack is empty, then the passed value will be the new
                root.
@@ -4635,7 +4635,7 @@ class json_sax_dom_parser
 template<typename BasicJsonType>
 class json_sax_dom_callback_parser
 {
-  public:
+public:
     using number_integer_t = typename BasicJsonType::number_integer_t;
     using number_unsigned_t = typename BasicJsonType::number_unsigned_t;
     using number_float_t = typename BasicJsonType::number_float_t;
@@ -4812,20 +4812,20 @@ class json_sax_dom_callback_parser
             // determine the proper exception type from the id
             switch ((ex.id / 100) % 100)
             {
-                case 1:
-                    JSON_THROW(*static_cast<const detail::parse_error*>(&ex));
-                case 4:
-                    JSON_THROW(*static_cast<const detail::out_of_range*>(&ex));
-                // LCOV_EXCL_START
-                case 2:
-                    JSON_THROW(*static_cast<const detail::invalid_iterator*>(&ex));
-                case 3:
-                    JSON_THROW(*static_cast<const detail::type_error*>(&ex));
-                case 5:
-                    JSON_THROW(*static_cast<const detail::other_error*>(&ex));
-                default:
-                    assert(false);
-                    // LCOV_EXCL_STOP
+            case 1:
+                JSON_THROW(*static_cast<const detail::parse_error*>(&ex));
+            case 4:
+                JSON_THROW(*static_cast<const detail::out_of_range*>(&ex));
+            // LCOV_EXCL_START
+            case 2:
+                JSON_THROW(*static_cast<const detail::invalid_iterator*>(&ex));
+            case 3:
+                JSON_THROW(*static_cast<const detail::type_error*>(&ex));
+            case 5:
+                JSON_THROW(*static_cast<const detail::other_error*>(&ex));
+            default:
+                assert(false);
+                // LCOV_EXCL_STOP
             }
         }
         return false;
@@ -4836,7 +4836,7 @@ class json_sax_dom_callback_parser
         return errored;
     }
 
-  private:
+private:
     /*!
     @param[in] v  value to add to the JSON value we build during parsing
     @param[in] skip_callback  whether we should skip calling the callback
@@ -4939,7 +4939,7 @@ class json_sax_dom_callback_parser
 template<typename BasicJsonType>
 class json_sax_acceptor
 {
-  public:
+public:
     using number_integer_t = typename BasicJsonType::number_integer_t;
     using number_unsigned_t = typename BasicJsonType::number_unsigned_t;
     using number_float_t = typename BasicJsonType::number_float_t;
@@ -5076,7 +5076,7 @@ using parse_error_function_t = decltype(std::declval<T&>().parse_error(
 template <typename SAX, typename BasicJsonType>
 struct is_sax
 {
-  private:
+private:
     static_assert(is_basic_json<BasicJsonType>::value,
                   "BasicJsonType must be of type basic_json<...>");
 
@@ -5086,7 +5086,7 @@ struct is_sax
     using string_t = typename BasicJsonType::string_t;
     using exception_t = typename BasicJsonType::exception;
 
-  public:
+public:
     static constexpr bool value =
         is_detected_exact<bool, null_function_t, SAX>::value &&
         is_detected_exact<bool, boolean_function_t, SAX>::value &&
@@ -5108,7 +5108,7 @@ struct is_sax
 template <typename SAX, typename BasicJsonType>
 struct is_sax_static_asserts
 {
-  private:
+private:
     static_assert(is_basic_json<BasicJsonType>::value,
                   "BasicJsonType must be of type basic_json<...>");
 
@@ -5118,7 +5118,7 @@ struct is_sax_static_asserts
     using string_t = typename BasicJsonType::string_t;
     using exception_t = typename BasicJsonType::exception;
 
-  public:
+public:
     static_assert(is_detected_exact<bool, null_function_t, SAX>::value,
                   "Missing/invalid function: bool null()");
     static_assert(is_detected_exact<bool, boolean_function_t, SAX>::value,
@@ -5180,7 +5180,7 @@ class binary_reader
     using string_t = typename BasicJsonType::string_t;
     using json_sax_t = SAX;
 
-  public:
+public:
     /*!
     @brief create a binary reader
 
@@ -5216,24 +5216,24 @@ class binary_reader
 
         switch (format)
         {
-            case input_format_t::bson:
-                result = parse_bson_internal();
-                break;
+        case input_format_t::bson:
+            result = parse_bson_internal();
+            break;
 
-            case input_format_t::cbor:
-                result = parse_cbor_internal();
-                break;
+        case input_format_t::cbor:
+            result = parse_cbor_internal();
+            break;
 
-            case input_format_t::msgpack:
-                result = parse_msgpack_internal();
-                break;
+        case input_format_t::msgpack:
+            result = parse_msgpack_internal();
+            break;
 
-            case input_format_t::ubjson:
-                result = parse_ubjson_internal();
-                break;
+        case input_format_t::ubjson:
+            result = parse_ubjson_internal();
+            break;
 
-            default:            // LCOV_EXCL_LINE
-                assert(false);  // LCOV_EXCL_LINE
+        default:            // LCOV_EXCL_LINE
+            assert(false);  // LCOV_EXCL_LINE
         }
 
         // strict mode: next byte must be EOF
@@ -5270,7 +5270,7 @@ class binary_reader
         return *reinterpret_cast<char*>(&num) == 1;
     }
 
-  private:
+private:
     //////////
     // BSON //
     //////////
@@ -5362,57 +5362,57 @@ class binary_reader
     {
         switch (element_type)
         {
-            case 0x01: // double
-            {
-                double number;
-                return get_number<double, true>(input_format_t::bson, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
+        case 0x01: // double
+        {
+            double number;
+            return get_number<double, true>(input_format_t::bson, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
 
-            case 0x02: // string
-            {
-                std::int32_t len;
-                string_t value;
-                return get_number<std::int32_t, true>(input_format_t::bson, len) and get_bson_string(len, value) and sax->string(value);
-            }
+        case 0x02: // string
+        {
+            std::int32_t len;
+            string_t value;
+            return get_number<std::int32_t, true>(input_format_t::bson, len) and get_bson_string(len, value) and sax->string(value);
+        }
 
-            case 0x03: // object
-            {
-                return parse_bson_internal();
-            }
+        case 0x03: // object
+        {
+            return parse_bson_internal();
+        }
 
-            case 0x04: // array
-            {
-                return parse_bson_array();
-            }
+        case 0x04: // array
+        {
+            return parse_bson_array();
+        }
 
-            case 0x08: // boolean
-            {
-                return sax->boolean(get() != 0);
-            }
+        case 0x08: // boolean
+        {
+            return sax->boolean(get() != 0);
+        }
 
-            case 0x0A: // null
-            {
-                return sax->null();
-            }
+        case 0x0A: // null
+        {
+            return sax->null();
+        }
 
-            case 0x10: // int32
-            {
-                std::int32_t value;
-                return get_number<std::int32_t, true>(input_format_t::bson, value) and sax->number_integer(value);
-            }
+        case 0x10: // int32
+        {
+            std::int32_t value;
+            return get_number<std::int32_t, true>(input_format_t::bson, value) and sax->number_integer(value);
+        }
 
-            case 0x12: // int64
-            {
-                std::int64_t value;
-                return get_number<std::int64_t, true>(input_format_t::bson, value) and sax->number_integer(value);
-            }
+        case 0x12: // int64
+        {
+            std::int64_t value;
+            return get_number<std::int64_t, true>(input_format_t::bson, value) and sax->number_integer(value);
+        }
 
-            default: // anything else not supported (yet)
-            {
-                std::array<char, 3> cr{{}};
-                (std::snprintf)(cr.data(), cr.size(), "%.2hhX", static_cast<unsigned char>(element_type));
-                return sax->parse_error(element_type_parse_position, std::string(cr.data()), parse_error::create(114, element_type_parse_position, "Unsupported BSON record type 0x" + std::string(cr.data())));
-            }
+        default: // anything else not supported (yet)
+        {
+            std::array<char, 3> cr{{}};
+            (std::snprintf)(cr.data(), cr.size(), "%.2hhX", static_cast<unsigned char>(element_type));
+            return sax->parse_error(element_type_parse_position, std::string(cr.data()), parse_error::create(114, element_type_parse_position, "Unsupported BSON record type 0x" + std::string(cr.data())));
+        }
         }
     }
 
@@ -5498,330 +5498,330 @@ class binary_reader
     {
         switch (get_char ? get() : current)
         {
-            // EOF
-            case std::char_traits<char>::eof():
-                return unexpect_eof(input_format_t::cbor, "value");
+        // EOF
+        case std::char_traits<char>::eof():
+            return unexpect_eof(input_format_t::cbor, "value");
 
-            // Integer 0x00..0x17 (0..23)
-            case 0x00:
-            case 0x01:
-            case 0x02:
-            case 0x03:
-            case 0x04:
-            case 0x05:
-            case 0x06:
-            case 0x07:
-            case 0x08:
-            case 0x09:
-            case 0x0A:
-            case 0x0B:
-            case 0x0C:
-            case 0x0D:
-            case 0x0E:
-            case 0x0F:
-            case 0x10:
-            case 0x11:
-            case 0x12:
-            case 0x13:
-            case 0x14:
-            case 0x15:
-            case 0x16:
-            case 0x17:
-                return sax->number_unsigned(static_cast<number_unsigned_t>(current));
+        // Integer 0x00..0x17 (0..23)
+        case 0x00:
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x04:
+        case 0x05:
+        case 0x06:
+        case 0x07:
+        case 0x08:
+        case 0x09:
+        case 0x0A:
+        case 0x0B:
+        case 0x0C:
+        case 0x0D:
+        case 0x0E:
+        case 0x0F:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+            return sax->number_unsigned(static_cast<number_unsigned_t>(current));
 
-            case 0x18: // Unsigned integer (one-byte uint8_t follows)
+        case 0x18: // Unsigned integer (one-byte uint8_t follows)
+        {
+            std::uint8_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
+        }
+
+        case 0x19: // Unsigned integer (two-byte uint16_t follows)
+        {
+            std::uint16_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
+        }
+
+        case 0x1A: // Unsigned integer (four-byte uint32_t follows)
+        {
+            std::uint32_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
+        }
+
+        case 0x1B: // Unsigned integer (eight-byte uint64_t follows)
+        {
+            std::uint64_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
+        }
+
+        // Negative integer -1-0x00..-1-0x17 (-1..-24)
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+        case 0x30:
+        case 0x31:
+        case 0x32:
+        case 0x33:
+        case 0x34:
+        case 0x35:
+        case 0x36:
+        case 0x37:
+            return sax->number_integer(static_cast<std::int8_t>(0x20 - 1 - current));
+
+        case 0x38: // Negative integer (one-byte uint8_t follows)
+        {
+            std::uint8_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
+        }
+
+        case 0x39: // Negative integer -1-n (two-byte uint16_t follows)
+        {
+            std::uint16_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
+        }
+
+        case 0x3A: // Negative integer -1-n (four-byte uint32_t follows)
+        {
+            std::uint32_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
+        }
+
+        case 0x3B: // Negative integer -1-n (eight-byte uint64_t follows)
+        {
+            std::uint64_t number;
+            return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1)
+                    - static_cast<number_integer_t>(number));
+        }
+
+        // UTF-8 string (0x00..0x17 bytes follow)
+        case 0x60:
+        case 0x61:
+        case 0x62:
+        case 0x63:
+        case 0x64:
+        case 0x65:
+        case 0x66:
+        case 0x67:
+        case 0x68:
+        case 0x69:
+        case 0x6A:
+        case 0x6B:
+        case 0x6C:
+        case 0x6D:
+        case 0x6E:
+        case 0x6F:
+        case 0x70:
+        case 0x71:
+        case 0x72:
+        case 0x73:
+        case 0x74:
+        case 0x75:
+        case 0x76:
+        case 0x77:
+        case 0x78: // UTF-8 string (one-byte uint8_t for n follows)
+        case 0x79: // UTF-8 string (two-byte uint16_t for n follow)
+        case 0x7A: // UTF-8 string (four-byte uint32_t for n follow)
+        case 0x7B: // UTF-8 string (eight-byte uint64_t for n follow)
+        case 0x7F: // UTF-8 string (indefinite length)
+        {
+            string_t s;
+            return get_cbor_string(s) and sax->string(s);
+        }
+
+        // array (0x00..0x17 data items follow)
+        case 0x80:
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x85:
+        case 0x86:
+        case 0x87:
+        case 0x88:
+        case 0x89:
+        case 0x8A:
+        case 0x8B:
+        case 0x8C:
+        case 0x8D:
+        case 0x8E:
+        case 0x8F:
+        case 0x90:
+        case 0x91:
+        case 0x92:
+        case 0x93:
+        case 0x94:
+        case 0x95:
+        case 0x96:
+        case 0x97:
+            return get_cbor_array(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x1Fu));
+
+        case 0x98: // array (one-byte uint8_t for n follows)
+        {
+            std::uint8_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
+        }
+
+        case 0x99: // array (two-byte uint16_t for n follow)
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
+        }
+
+        case 0x9A: // array (four-byte uint32_t for n follow)
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
+        }
+
+        case 0x9B: // array (eight-byte uint64_t for n follow)
+        {
+            std::uint64_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
+        }
+
+        case 0x9F: // array (indefinite length)
+            return get_cbor_array(std::size_t(-1));
+
+        // map (0x00..0x17 pairs of data items follow)
+        case 0xA0:
+        case 0xA1:
+        case 0xA2:
+        case 0xA3:
+        case 0xA4:
+        case 0xA5:
+        case 0xA6:
+        case 0xA7:
+        case 0xA8:
+        case 0xA9:
+        case 0xAA:
+        case 0xAB:
+        case 0xAC:
+        case 0xAD:
+        case 0xAE:
+        case 0xAF:
+        case 0xB0:
+        case 0xB1:
+        case 0xB2:
+        case 0xB3:
+        case 0xB4:
+        case 0xB5:
+        case 0xB6:
+        case 0xB7:
+            return get_cbor_object(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x1Fu));
+
+        case 0xB8: // map (one-byte uint8_t for n follows)
+        {
+            std::uint8_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
+        }
+
+        case 0xB9: // map (two-byte uint16_t for n follow)
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
+        }
+
+        case 0xBA: // map (four-byte uint32_t for n follow)
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
+        }
+
+        case 0xBB: // map (eight-byte uint64_t for n follow)
+        {
+            std::uint64_t len;
+            return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
+        }
+
+        case 0xBF: // map (indefinite length)
+            return get_cbor_object(std::size_t(-1));
+
+        case 0xF4: // false
+            return sax->boolean(false);
+
+        case 0xF5: // true
+            return sax->boolean(true);
+
+        case 0xF6: // null
+            return sax->null();
+
+        case 0xF9: // Half-Precision Float (two-byte IEEE 754)
+        {
+            const int byte1_raw = get();
+            if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::cbor, "number")))
             {
-                std::uint8_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
+                return false;
+            }
+            const int byte2_raw = get();
+            if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::cbor, "number")))
+            {
+                return false;
             }
 
-            case 0x19: // Unsigned integer (two-byte uint16_t follows)
+            const auto byte1 = static_cast<unsigned char>(byte1_raw);
+            const auto byte2 = static_cast<unsigned char>(byte2_raw);
+
+            // code from RFC 7049, Appendix D, Figure 3:
+            // As half-precision floating-point numbers were only added
+            // to IEEE 754 in 2008, today's programming platforms often
+            // still only have limited support for them. It is very
+            // easy to include at least decoding support for them even
+            // without such support. An example of a small decoder for
+            // half-precision floating-point numbers in the C language
+            // is shown in Fig. 3.
+            const auto half = static_cast<unsigned int>((byte1 << 8u) + byte2);
+            const double val = [&half]
             {
-                std::uint16_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
-            }
-
-            case 0x1A: // Unsigned integer (four-byte uint32_t follows)
-            {
-                std::uint32_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
-            }
-
-            case 0x1B: // Unsigned integer (eight-byte uint64_t follows)
-            {
-                std::uint64_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_unsigned(number);
-            }
-
-            // Negative integer -1-0x00..-1-0x17 (-1..-24)
-            case 0x20:
-            case 0x21:
-            case 0x22:
-            case 0x23:
-            case 0x24:
-            case 0x25:
-            case 0x26:
-            case 0x27:
-            case 0x28:
-            case 0x29:
-            case 0x2A:
-            case 0x2B:
-            case 0x2C:
-            case 0x2D:
-            case 0x2E:
-            case 0x2F:
-            case 0x30:
-            case 0x31:
-            case 0x32:
-            case 0x33:
-            case 0x34:
-            case 0x35:
-            case 0x36:
-            case 0x37:
-                return sax->number_integer(static_cast<std::int8_t>(0x20 - 1 - current));
-
-            case 0x38: // Negative integer (one-byte uint8_t follows)
-            {
-                std::uint8_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
-            }
-
-            case 0x39: // Negative integer -1-n (two-byte uint16_t follows)
-            {
-                std::uint16_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
-            }
-
-            case 0x3A: // Negative integer -1-n (four-byte uint32_t follows)
-            {
-                std::uint32_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1) - number);
-            }
-
-            case 0x3B: // Negative integer -1-n (eight-byte uint64_t follows)
-            {
-                std::uint64_t number;
-                return get_number(input_format_t::cbor, number) and sax->number_integer(static_cast<number_integer_t>(-1)
-                        - static_cast<number_integer_t>(number));
-            }
-
-            // UTF-8 string (0x00..0x17 bytes follow)
-            case 0x60:
-            case 0x61:
-            case 0x62:
-            case 0x63:
-            case 0x64:
-            case 0x65:
-            case 0x66:
-            case 0x67:
-            case 0x68:
-            case 0x69:
-            case 0x6A:
-            case 0x6B:
-            case 0x6C:
-            case 0x6D:
-            case 0x6E:
-            case 0x6F:
-            case 0x70:
-            case 0x71:
-            case 0x72:
-            case 0x73:
-            case 0x74:
-            case 0x75:
-            case 0x76:
-            case 0x77:
-            case 0x78: // UTF-8 string (one-byte uint8_t for n follows)
-            case 0x79: // UTF-8 string (two-byte uint16_t for n follow)
-            case 0x7A: // UTF-8 string (four-byte uint32_t for n follow)
-            case 0x7B: // UTF-8 string (eight-byte uint64_t for n follow)
-            case 0x7F: // UTF-8 string (indefinite length)
-            {
-                string_t s;
-                return get_cbor_string(s) and sax->string(s);
-            }
-
-            // array (0x00..0x17 data items follow)
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x85:
-            case 0x86:
-            case 0x87:
-            case 0x88:
-            case 0x89:
-            case 0x8A:
-            case 0x8B:
-            case 0x8C:
-            case 0x8D:
-            case 0x8E:
-            case 0x8F:
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-            case 0x95:
-            case 0x96:
-            case 0x97:
-                return get_cbor_array(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x1Fu));
-
-            case 0x98: // array (one-byte uint8_t for n follows)
-            {
-                std::uint8_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
-            }
-
-            case 0x99: // array (two-byte uint16_t for n follow)
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
-            }
-
-            case 0x9A: // array (four-byte uint32_t for n follow)
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
-            }
-
-            case 0x9B: // array (eight-byte uint64_t for n follow)
-            {
-                std::uint64_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_array(static_cast<std::size_t>(len));
-            }
-
-            case 0x9F: // array (indefinite length)
-                return get_cbor_array(std::size_t(-1));
-
-            // map (0x00..0x17 pairs of data items follow)
-            case 0xA0:
-            case 0xA1:
-            case 0xA2:
-            case 0xA3:
-            case 0xA4:
-            case 0xA5:
-            case 0xA6:
-            case 0xA7:
-            case 0xA8:
-            case 0xA9:
-            case 0xAA:
-            case 0xAB:
-            case 0xAC:
-            case 0xAD:
-            case 0xAE:
-            case 0xAF:
-            case 0xB0:
-            case 0xB1:
-            case 0xB2:
-            case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
-            case 0xB7:
-                return get_cbor_object(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x1Fu));
-
-            case 0xB8: // map (one-byte uint8_t for n follows)
-            {
-                std::uint8_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
-            }
-
-            case 0xB9: // map (two-byte uint16_t for n follow)
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
-            }
-
-            case 0xBA: // map (four-byte uint32_t for n follow)
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
-            }
-
-            case 0xBB: // map (eight-byte uint64_t for n follow)
-            {
-                std::uint64_t len;
-                return get_number(input_format_t::cbor, len) and get_cbor_object(static_cast<std::size_t>(len));
-            }
-
-            case 0xBF: // map (indefinite length)
-                return get_cbor_object(std::size_t(-1));
-
-            case 0xF4: // false
-                return sax->boolean(false);
-
-            case 0xF5: // true
-                return sax->boolean(true);
-
-            case 0xF6: // null
-                return sax->null();
-
-            case 0xF9: // Half-Precision Float (two-byte IEEE 754)
-            {
-                const int byte1_raw = get();
-                if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::cbor, "number")))
+                const int exp = (half >> 10u) & 0x1Fu;
+                const unsigned int mant = half & 0x3FFu;
+                assert(0 <= exp and exp <= 32);
+                assert(mant <= 1024);
+                switch (exp)
                 {
-                    return false;
+                case 0:
+                    return std::ldexp(mant, -24);
+                case 31:
+                    return (mant == 0)
+                    ? std::numeric_limits<double>::infinity()
+                    : std::numeric_limits<double>::quiet_NaN();
+                default:
+                    return std::ldexp(mant + 1024, exp - 25);
                 }
-                const int byte2_raw = get();
-                if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::cbor, "number")))
-                {
-                    return false;
-                }
+            }();
+            return sax->number_float((half & 0x8000u) != 0
+                                     ? static_cast<number_float_t>(-val)
+                                     : static_cast<number_float_t>(val), "");
+        }
 
-                const auto byte1 = static_cast<unsigned char>(byte1_raw);
-                const auto byte2 = static_cast<unsigned char>(byte2_raw);
+        case 0xFA: // Single-Precision Float (four-byte IEEE 754)
+        {
+            float number;
+            return get_number(input_format_t::cbor, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
 
-                // code from RFC 7049, Appendix D, Figure 3:
-                // As half-precision floating-point numbers were only added
-                // to IEEE 754 in 2008, today's programming platforms often
-                // still only have limited support for them. It is very
-                // easy to include at least decoding support for them even
-                // without such support. An example of a small decoder for
-                // half-precision floating-point numbers in the C language
-                // is shown in Fig. 3.
-                const auto half = static_cast<unsigned int>((byte1 << 8u) + byte2);
-                const double val = [&half]
-                {
-                    const int exp = (half >> 10u) & 0x1Fu;
-                    const unsigned int mant = half & 0x3FFu;
-                    assert(0 <= exp and exp <= 32);
-                    assert(mant <= 1024);
-                    switch (exp)
-                    {
-                        case 0:
-                            return std::ldexp(mant, -24);
-                        case 31:
-                            return (mant == 0)
-                            ? std::numeric_limits<double>::infinity()
-                            : std::numeric_limits<double>::quiet_NaN();
-                        default:
-                            return std::ldexp(mant + 1024, exp - 25);
-                    }
-                }();
-                return sax->number_float((half & 0x8000u) != 0
-                                         ? static_cast<number_float_t>(-val)
-                                         : static_cast<number_float_t>(val), "");
-            }
+        case 0xFB: // Double-Precision Float (eight-byte IEEE 754)
+        {
+            double number;
+            return get_number(input_format_t::cbor, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
 
-            case 0xFA: // Single-Precision Float (four-byte IEEE 754)
-            {
-                float number;
-                return get_number(input_format_t::cbor, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
-
-            case 0xFB: // Double-Precision Float (eight-byte IEEE 754)
-            {
-                double number;
-                return get_number(input_format_t::cbor, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
-
-            default: // anything else (0xFF is handled inside the other types)
-            {
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::cbor, "invalid byte: 0x" + last_token, "value")));
-            }
+        default: // anything else (0xFF is handled inside the other types)
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::cbor, "invalid byte: 0x" + last_token, "value")));
+        }
         }
     }
 
@@ -5845,78 +5845,78 @@ class binary_reader
 
         switch (current)
         {
-            // UTF-8 string (0x00..0x17 bytes follow)
-            case 0x60:
-            case 0x61:
-            case 0x62:
-            case 0x63:
-            case 0x64:
-            case 0x65:
-            case 0x66:
-            case 0x67:
-            case 0x68:
-            case 0x69:
-            case 0x6A:
-            case 0x6B:
-            case 0x6C:
-            case 0x6D:
-            case 0x6E:
-            case 0x6F:
-            case 0x70:
-            case 0x71:
-            case 0x72:
-            case 0x73:
-            case 0x74:
-            case 0x75:
-            case 0x76:
-            case 0x77:
-            {
-                return get_string(input_format_t::cbor, static_cast<unsigned int>(current) & 0x1Fu, result);
-            }
+        // UTF-8 string (0x00..0x17 bytes follow)
+        case 0x60:
+        case 0x61:
+        case 0x62:
+        case 0x63:
+        case 0x64:
+        case 0x65:
+        case 0x66:
+        case 0x67:
+        case 0x68:
+        case 0x69:
+        case 0x6A:
+        case 0x6B:
+        case 0x6C:
+        case 0x6D:
+        case 0x6E:
+        case 0x6F:
+        case 0x70:
+        case 0x71:
+        case 0x72:
+        case 0x73:
+        case 0x74:
+        case 0x75:
+        case 0x76:
+        case 0x77:
+        {
+            return get_string(input_format_t::cbor, static_cast<unsigned int>(current) & 0x1Fu, result);
+        }
 
-            case 0x78: // UTF-8 string (one-byte uint8_t for n follows)
-            {
-                std::uint8_t len;
-                return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
-            }
+        case 0x78: // UTF-8 string (one-byte uint8_t for n follows)
+        {
+            std::uint8_t len;
+            return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
+        }
 
-            case 0x79: // UTF-8 string (two-byte uint16_t for n follow)
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
-            }
+        case 0x79: // UTF-8 string (two-byte uint16_t for n follow)
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
+        }
 
-            case 0x7A: // UTF-8 string (four-byte uint32_t for n follow)
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
-            }
+        case 0x7A: // UTF-8 string (four-byte uint32_t for n follow)
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
+        }
 
-            case 0x7B: // UTF-8 string (eight-byte uint64_t for n follow)
-            {
-                std::uint64_t len;
-                return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
-            }
+        case 0x7B: // UTF-8 string (eight-byte uint64_t for n follow)
+        {
+            std::uint64_t len;
+            return get_number(input_format_t::cbor, len) and get_string(input_format_t::cbor, len, result);
+        }
 
-            case 0x7F: // UTF-8 string (indefinite length)
+        case 0x7F: // UTF-8 string (indefinite length)
+        {
+            while (get() != 0xFF)
             {
-                while (get() != 0xFF)
+                string_t chunk;
+                if (not get_cbor_string(chunk))
                 {
-                    string_t chunk;
-                    if (not get_cbor_string(chunk))
-                    {
-                        return false;
-                    }
-                    result.append(chunk);
+                    return false;
                 }
-                return true;
+                result.append(chunk);
             }
+            return true;
+        }
 
-            default:
-            {
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::cbor, "expected length specification (0x60-0x7B) or indefinite string type (0x7F); last byte: 0x" + last_token, "string")));
-            }
+        default:
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::cbor, "expected length specification (0x60-0x7B) or indefinite string type (0x7F); last byte: 0x" + last_token, "string")));
+        }
         }
     }
 
@@ -6017,353 +6017,353 @@ class binary_reader
     {
         switch (get())
         {
-            // EOF
-            case std::char_traits<char>::eof():
-                return unexpect_eof(input_format_t::msgpack, "value");
+        // EOF
+        case std::char_traits<char>::eof():
+            return unexpect_eof(input_format_t::msgpack, "value");
 
-            // positive fixint
-            case 0x00:
-            case 0x01:
-            case 0x02:
-            case 0x03:
-            case 0x04:
-            case 0x05:
-            case 0x06:
-            case 0x07:
-            case 0x08:
-            case 0x09:
-            case 0x0A:
-            case 0x0B:
-            case 0x0C:
-            case 0x0D:
-            case 0x0E:
-            case 0x0F:
-            case 0x10:
-            case 0x11:
-            case 0x12:
-            case 0x13:
-            case 0x14:
-            case 0x15:
-            case 0x16:
-            case 0x17:
-            case 0x18:
-            case 0x19:
-            case 0x1A:
-            case 0x1B:
-            case 0x1C:
-            case 0x1D:
-            case 0x1E:
-            case 0x1F:
-            case 0x20:
-            case 0x21:
-            case 0x22:
-            case 0x23:
-            case 0x24:
-            case 0x25:
-            case 0x26:
-            case 0x27:
-            case 0x28:
-            case 0x29:
-            case 0x2A:
-            case 0x2B:
-            case 0x2C:
-            case 0x2D:
-            case 0x2E:
-            case 0x2F:
-            case 0x30:
-            case 0x31:
-            case 0x32:
-            case 0x33:
-            case 0x34:
-            case 0x35:
-            case 0x36:
-            case 0x37:
-            case 0x38:
-            case 0x39:
-            case 0x3A:
-            case 0x3B:
-            case 0x3C:
-            case 0x3D:
-            case 0x3E:
-            case 0x3F:
-            case 0x40:
-            case 0x41:
-            case 0x42:
-            case 0x43:
-            case 0x44:
-            case 0x45:
-            case 0x46:
-            case 0x47:
-            case 0x48:
-            case 0x49:
-            case 0x4A:
-            case 0x4B:
-            case 0x4C:
-            case 0x4D:
-            case 0x4E:
-            case 0x4F:
-            case 0x50:
-            case 0x51:
-            case 0x52:
-            case 0x53:
-            case 0x54:
-            case 0x55:
-            case 0x56:
-            case 0x57:
-            case 0x58:
-            case 0x59:
-            case 0x5A:
-            case 0x5B:
-            case 0x5C:
-            case 0x5D:
-            case 0x5E:
-            case 0x5F:
-            case 0x60:
-            case 0x61:
-            case 0x62:
-            case 0x63:
-            case 0x64:
-            case 0x65:
-            case 0x66:
-            case 0x67:
-            case 0x68:
-            case 0x69:
-            case 0x6A:
-            case 0x6B:
-            case 0x6C:
-            case 0x6D:
-            case 0x6E:
-            case 0x6F:
-            case 0x70:
-            case 0x71:
-            case 0x72:
-            case 0x73:
-            case 0x74:
-            case 0x75:
-            case 0x76:
-            case 0x77:
-            case 0x78:
-            case 0x79:
-            case 0x7A:
-            case 0x7B:
-            case 0x7C:
-            case 0x7D:
-            case 0x7E:
-            case 0x7F:
-                return sax->number_unsigned(static_cast<number_unsigned_t>(current));
+        // positive fixint
+        case 0x00:
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x04:
+        case 0x05:
+        case 0x06:
+        case 0x07:
+        case 0x08:
+        case 0x09:
+        case 0x0A:
+        case 0x0B:
+        case 0x0C:
+        case 0x0D:
+        case 0x0E:
+        case 0x0F:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+        case 0x18:
+        case 0x19:
+        case 0x1A:
+        case 0x1B:
+        case 0x1C:
+        case 0x1D:
+        case 0x1E:
+        case 0x1F:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+        case 0x30:
+        case 0x31:
+        case 0x32:
+        case 0x33:
+        case 0x34:
+        case 0x35:
+        case 0x36:
+        case 0x37:
+        case 0x38:
+        case 0x39:
+        case 0x3A:
+        case 0x3B:
+        case 0x3C:
+        case 0x3D:
+        case 0x3E:
+        case 0x3F:
+        case 0x40:
+        case 0x41:
+        case 0x42:
+        case 0x43:
+        case 0x44:
+        case 0x45:
+        case 0x46:
+        case 0x47:
+        case 0x48:
+        case 0x49:
+        case 0x4A:
+        case 0x4B:
+        case 0x4C:
+        case 0x4D:
+        case 0x4E:
+        case 0x4F:
+        case 0x50:
+        case 0x51:
+        case 0x52:
+        case 0x53:
+        case 0x54:
+        case 0x55:
+        case 0x56:
+        case 0x57:
+        case 0x58:
+        case 0x59:
+        case 0x5A:
+        case 0x5B:
+        case 0x5C:
+        case 0x5D:
+        case 0x5E:
+        case 0x5F:
+        case 0x60:
+        case 0x61:
+        case 0x62:
+        case 0x63:
+        case 0x64:
+        case 0x65:
+        case 0x66:
+        case 0x67:
+        case 0x68:
+        case 0x69:
+        case 0x6A:
+        case 0x6B:
+        case 0x6C:
+        case 0x6D:
+        case 0x6E:
+        case 0x6F:
+        case 0x70:
+        case 0x71:
+        case 0x72:
+        case 0x73:
+        case 0x74:
+        case 0x75:
+        case 0x76:
+        case 0x77:
+        case 0x78:
+        case 0x79:
+        case 0x7A:
+        case 0x7B:
+        case 0x7C:
+        case 0x7D:
+        case 0x7E:
+        case 0x7F:
+            return sax->number_unsigned(static_cast<number_unsigned_t>(current));
 
-            // fixmap
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x85:
-            case 0x86:
-            case 0x87:
-            case 0x88:
-            case 0x89:
-            case 0x8A:
-            case 0x8B:
-            case 0x8C:
-            case 0x8D:
-            case 0x8E:
-            case 0x8F:
-                return get_msgpack_object(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x0Fu));
+        // fixmap
+        case 0x80:
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x85:
+        case 0x86:
+        case 0x87:
+        case 0x88:
+        case 0x89:
+        case 0x8A:
+        case 0x8B:
+        case 0x8C:
+        case 0x8D:
+        case 0x8E:
+        case 0x8F:
+            return get_msgpack_object(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x0Fu));
 
-            // fixarray
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-            case 0x95:
-            case 0x96:
-            case 0x97:
-            case 0x98:
-            case 0x99:
-            case 0x9A:
-            case 0x9B:
-            case 0x9C:
-            case 0x9D:
-            case 0x9E:
-            case 0x9F:
-                return get_msgpack_array(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x0Fu));
+        // fixarray
+        case 0x90:
+        case 0x91:
+        case 0x92:
+        case 0x93:
+        case 0x94:
+        case 0x95:
+        case 0x96:
+        case 0x97:
+        case 0x98:
+        case 0x99:
+        case 0x9A:
+        case 0x9B:
+        case 0x9C:
+        case 0x9D:
+        case 0x9E:
+        case 0x9F:
+            return get_msgpack_array(static_cast<std::size_t>(static_cast<unsigned int>(current) & 0x0Fu));
 
-            // fixstr
-            case 0xA0:
-            case 0xA1:
-            case 0xA2:
-            case 0xA3:
-            case 0xA4:
-            case 0xA5:
-            case 0xA6:
-            case 0xA7:
-            case 0xA8:
-            case 0xA9:
-            case 0xAA:
-            case 0xAB:
-            case 0xAC:
-            case 0xAD:
-            case 0xAE:
-            case 0xAF:
-            case 0xB0:
-            case 0xB1:
-            case 0xB2:
-            case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
-            case 0xB7:
-            case 0xB8:
-            case 0xB9:
-            case 0xBA:
-            case 0xBB:
-            case 0xBC:
-            case 0xBD:
-            case 0xBE:
-            case 0xBF:
-            case 0xD9: // str 8
-            case 0xDA: // str 16
-            case 0xDB: // str 32
-            {
-                string_t s;
-                return get_msgpack_string(s) and sax->string(s);
-            }
+        // fixstr
+        case 0xA0:
+        case 0xA1:
+        case 0xA2:
+        case 0xA3:
+        case 0xA4:
+        case 0xA5:
+        case 0xA6:
+        case 0xA7:
+        case 0xA8:
+        case 0xA9:
+        case 0xAA:
+        case 0xAB:
+        case 0xAC:
+        case 0xAD:
+        case 0xAE:
+        case 0xAF:
+        case 0xB0:
+        case 0xB1:
+        case 0xB2:
+        case 0xB3:
+        case 0xB4:
+        case 0xB5:
+        case 0xB6:
+        case 0xB7:
+        case 0xB8:
+        case 0xB9:
+        case 0xBA:
+        case 0xBB:
+        case 0xBC:
+        case 0xBD:
+        case 0xBE:
+        case 0xBF:
+        case 0xD9: // str 8
+        case 0xDA: // str 16
+        case 0xDB: // str 32
+        {
+            string_t s;
+            return get_msgpack_string(s) and sax->string(s);
+        }
 
-            case 0xC0: // nil
-                return sax->null();
+        case 0xC0: // nil
+            return sax->null();
 
-            case 0xC2: // false
-                return sax->boolean(false);
+        case 0xC2: // false
+            return sax->boolean(false);
 
-            case 0xC3: // true
-                return sax->boolean(true);
+        case 0xC3: // true
+            return sax->boolean(true);
 
-            case 0xCA: // float 32
-            {
-                float number;
-                return get_number(input_format_t::msgpack, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
+        case 0xCA: // float 32
+        {
+            float number;
+            return get_number(input_format_t::msgpack, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
 
-            case 0xCB: // float 64
-            {
-                double number;
-                return get_number(input_format_t::msgpack, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
+        case 0xCB: // float 64
+        {
+            double number;
+            return get_number(input_format_t::msgpack, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
 
-            case 0xCC: // uint 8
-            {
-                std::uint8_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
-            }
+        case 0xCC: // uint 8
+        {
+            std::uint8_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
+        }
 
-            case 0xCD: // uint 16
-            {
-                std::uint16_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
-            }
+        case 0xCD: // uint 16
+        {
+            std::uint16_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
+        }
 
-            case 0xCE: // uint 32
-            {
-                std::uint32_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
-            }
+        case 0xCE: // uint 32
+        {
+            std::uint32_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
+        }
 
-            case 0xCF: // uint 64
-            {
-                std::uint64_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
-            }
+        case 0xCF: // uint 64
+        {
+            std::uint64_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_unsigned(number);
+        }
 
-            case 0xD0: // int 8
-            {
-                std::int8_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
-            }
+        case 0xD0: // int 8
+        {
+            std::int8_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
+        }
 
-            case 0xD1: // int 16
-            {
-                std::int16_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
-            }
+        case 0xD1: // int 16
+        {
+            std::int16_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
+        }
 
-            case 0xD2: // int 32
-            {
-                std::int32_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
-            }
+        case 0xD2: // int 32
+        {
+            std::int32_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
+        }
 
-            case 0xD3: // int 64
-            {
-                std::int64_t number;
-                return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
-            }
+        case 0xD3: // int 64
+        {
+            std::int64_t number;
+            return get_number(input_format_t::msgpack, number) and sax->number_integer(number);
+        }
 
-            case 0xDC: // array 16
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::msgpack, len) and get_msgpack_array(static_cast<std::size_t>(len));
-            }
+        case 0xDC: // array 16
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::msgpack, len) and get_msgpack_array(static_cast<std::size_t>(len));
+        }
 
-            case 0xDD: // array 32
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::msgpack, len) and get_msgpack_array(static_cast<std::size_t>(len));
-            }
+        case 0xDD: // array 32
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::msgpack, len) and get_msgpack_array(static_cast<std::size_t>(len));
+        }
 
-            case 0xDE: // map 16
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::msgpack, len) and get_msgpack_object(static_cast<std::size_t>(len));
-            }
+        case 0xDE: // map 16
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::msgpack, len) and get_msgpack_object(static_cast<std::size_t>(len));
+        }
 
-            case 0xDF: // map 32
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::msgpack, len) and get_msgpack_object(static_cast<std::size_t>(len));
-            }
+        case 0xDF: // map 32
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::msgpack, len) and get_msgpack_object(static_cast<std::size_t>(len));
+        }
 
-            // negative fixint
-            case 0xE0:
-            case 0xE1:
-            case 0xE2:
-            case 0xE3:
-            case 0xE4:
-            case 0xE5:
-            case 0xE6:
-            case 0xE7:
-            case 0xE8:
-            case 0xE9:
-            case 0xEA:
-            case 0xEB:
-            case 0xEC:
-            case 0xED:
-            case 0xEE:
-            case 0xEF:
-            case 0xF0:
-            case 0xF1:
-            case 0xF2:
-            case 0xF3:
-            case 0xF4:
-            case 0xF5:
-            case 0xF6:
-            case 0xF7:
-            case 0xF8:
-            case 0xF9:
-            case 0xFA:
-            case 0xFB:
-            case 0xFC:
-            case 0xFD:
-            case 0xFE:
-            case 0xFF:
-                return sax->number_integer(static_cast<std::int8_t>(current));
+        // negative fixint
+        case 0xE0:
+        case 0xE1:
+        case 0xE2:
+        case 0xE3:
+        case 0xE4:
+        case 0xE5:
+        case 0xE6:
+        case 0xE7:
+        case 0xE8:
+        case 0xE9:
+        case 0xEA:
+        case 0xEB:
+        case 0xEC:
+        case 0xED:
+        case 0xEE:
+        case 0xEF:
+        case 0xF0:
+        case 0xF1:
+        case 0xF2:
+        case 0xF3:
+        case 0xF4:
+        case 0xF5:
+        case 0xF6:
+        case 0xF7:
+        case 0xF8:
+        case 0xF9:
+        case 0xFA:
+        case 0xFB:
+        case 0xFC:
+        case 0xFD:
+        case 0xFE:
+        case 0xFF:
+            return sax->number_integer(static_cast<std::int8_t>(current));
 
-            default: // anything else
-            {
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::msgpack, "invalid byte: 0x" + last_token, "value")));
-            }
+        default: // anything else
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::msgpack, "invalid byte: 0x" + last_token, "value")));
+        }
         }
     }
 
@@ -6386,66 +6386,66 @@ class binary_reader
 
         switch (current)
         {
-            // fixstr
-            case 0xA0:
-            case 0xA1:
-            case 0xA2:
-            case 0xA3:
-            case 0xA4:
-            case 0xA5:
-            case 0xA6:
-            case 0xA7:
-            case 0xA8:
-            case 0xA9:
-            case 0xAA:
-            case 0xAB:
-            case 0xAC:
-            case 0xAD:
-            case 0xAE:
-            case 0xAF:
-            case 0xB0:
-            case 0xB1:
-            case 0xB2:
-            case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
-            case 0xB7:
-            case 0xB8:
-            case 0xB9:
-            case 0xBA:
-            case 0xBB:
-            case 0xBC:
-            case 0xBD:
-            case 0xBE:
-            case 0xBF:
-            {
-                return get_string(input_format_t::msgpack, static_cast<unsigned int>(current) & 0x1Fu, result);
-            }
+        // fixstr
+        case 0xA0:
+        case 0xA1:
+        case 0xA2:
+        case 0xA3:
+        case 0xA4:
+        case 0xA5:
+        case 0xA6:
+        case 0xA7:
+        case 0xA8:
+        case 0xA9:
+        case 0xAA:
+        case 0xAB:
+        case 0xAC:
+        case 0xAD:
+        case 0xAE:
+        case 0xAF:
+        case 0xB0:
+        case 0xB1:
+        case 0xB2:
+        case 0xB3:
+        case 0xB4:
+        case 0xB5:
+        case 0xB6:
+        case 0xB7:
+        case 0xB8:
+        case 0xB9:
+        case 0xBA:
+        case 0xBB:
+        case 0xBC:
+        case 0xBD:
+        case 0xBE:
+        case 0xBF:
+        {
+            return get_string(input_format_t::msgpack, static_cast<unsigned int>(current) & 0x1Fu, result);
+        }
 
-            case 0xD9: // str 8
-            {
-                std::uint8_t len;
-                return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
-            }
+        case 0xD9: // str 8
+        {
+            std::uint8_t len;
+            return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
+        }
 
-            case 0xDA: // str 16
-            {
-                std::uint16_t len;
-                return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
-            }
+        case 0xDA: // str 16
+        {
+            std::uint16_t len;
+            return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
+        }
 
-            case 0xDB: // str 32
-            {
-                std::uint32_t len;
-                return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
-            }
+        case 0xDB: // str 32
+        {
+            std::uint32_t len;
+            return get_number(input_format_t::msgpack, len) and get_string(input_format_t::msgpack, len, result);
+        }
 
-            default:
-            {
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::msgpack, "expected length specification (0xA0-0xBF, 0xD9-0xDB); last byte: 0x" + last_token, "string")));
-            }
+        default:
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::msgpack, "expected length specification (0xA0-0xBF, 0xD9-0xDB); last byte: 0x" + last_token, "string")));
+        }
         }
     }
 
@@ -6545,39 +6545,39 @@ class binary_reader
 
         switch (current)
         {
-            case 'U':
-            {
-                std::uint8_t len;
-                return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
-            }
+        case 'U':
+        {
+            std::uint8_t len;
+            return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
+        }
 
-            case 'i':
-            {
-                std::int8_t len;
-                return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
-            }
+        case 'i':
+        {
+            std::int8_t len;
+            return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
+        }
 
-            case 'I':
-            {
-                std::int16_t len;
-                return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
-            }
+        case 'I':
+        {
+            std::int16_t len;
+            return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
+        }
 
-            case 'l':
-            {
-                std::int32_t len;
-                return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
-            }
+        case 'l':
+        {
+            std::int32_t len;
+            return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
+        }
 
-            case 'L':
-            {
-                std::int64_t len;
-                return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
-            }
+        case 'L':
+        {
+            std::int64_t len;
+            return get_number(input_format_t::ubjson, len) and get_string(input_format_t::ubjson, len, result);
+        }
 
-            default:
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "expected length type specification (U, i, I, l, L); last byte: 0x" + last_token, "string")));
+        default:
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "expected length type specification (U, i, I, l, L); last byte: 0x" + last_token, "string")));
         }
     }
 
@@ -6589,66 +6589,66 @@ class binary_reader
     {
         switch (get_ignore_noop())
         {
-            case 'U':
+        case 'U':
+        {
+            std::uint8_t number;
+            if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
             {
-                std::uint8_t number;
-                if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
-                {
-                    return false;
-                }
-                result = static_cast<std::size_t>(number);
-                return true;
+                return false;
             }
+            result = static_cast<std::size_t>(number);
+            return true;
+        }
 
-            case 'i':
+        case 'i':
+        {
+            std::int8_t number;
+            if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
             {
-                std::int8_t number;
-                if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
-                {
-                    return false;
-                }
-                result = static_cast<std::size_t>(number);
-                return true;
+                return false;
             }
+            result = static_cast<std::size_t>(number);
+            return true;
+        }
 
-            case 'I':
+        case 'I':
+        {
+            std::int16_t number;
+            if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
             {
-                std::int16_t number;
-                if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
-                {
-                    return false;
-                }
-                result = static_cast<std::size_t>(number);
-                return true;
+                return false;
             }
+            result = static_cast<std::size_t>(number);
+            return true;
+        }
 
-            case 'l':
+        case 'l':
+        {
+            std::int32_t number;
+            if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
             {
-                std::int32_t number;
-                if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
-                {
-                    return false;
-                }
-                result = static_cast<std::size_t>(number);
-                return true;
+                return false;
             }
+            result = static_cast<std::size_t>(number);
+            return true;
+        }
 
-            case 'L':
+        case 'L':
+        {
+            std::int64_t number;
+            if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
             {
-                std::int64_t number;
-                if (JSON_HEDLEY_UNLIKELY(not get_number(input_format_t::ubjson, number)))
-                {
-                    return false;
-                }
-                result = static_cast<std::size_t>(number);
-                return true;
+                return false;
             }
+            result = static_cast<std::size_t>(number);
+            return true;
+        }
 
-            default:
-            {
-                auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "expected length type specification (U, i, I, l, L) after '#'; last byte: 0x" + last_token, "size")));
-            }
+        default:
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "expected length type specification (U, i, I, l, L) after '#'; last byte: 0x" + last_token, "size")));
+        }
         }
     }
 
@@ -6707,92 +6707,92 @@ class binary_reader
     {
         switch (prefix)
         {
-            case std::char_traits<char>::eof():  // EOF
-                return unexpect_eof(input_format_t::ubjson, "value");
+        case std::char_traits<char>::eof():  // EOF
+            return unexpect_eof(input_format_t::ubjson, "value");
 
-            case 'T':  // true
-                return sax->boolean(true);
-            case 'F':  // false
-                return sax->boolean(false);
+        case 'T':  // true
+            return sax->boolean(true);
+        case 'F':  // false
+            return sax->boolean(false);
 
-            case 'Z':  // null
-                return sax->null();
+        case 'Z':  // null
+            return sax->null();
 
-            case 'U':
+        case 'U':
+        {
+            std::uint8_t number;
+            return get_number(input_format_t::ubjson, number) and sax->number_unsigned(number);
+        }
+
+        case 'i':
+        {
+            std::int8_t number;
+            return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
+        }
+
+        case 'I':
+        {
+            std::int16_t number;
+            return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
+        }
+
+        case 'l':
+        {
+            std::int32_t number;
+            return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
+        }
+
+        case 'L':
+        {
+            std::int64_t number;
+            return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
+        }
+
+        case 'd':
+        {
+            float number;
+            return get_number(input_format_t::ubjson, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
+
+        case 'D':
+        {
+            double number;
+            return get_number(input_format_t::ubjson, number) and sax->number_float(static_cast<number_float_t>(number), "");
+        }
+
+        case 'C':  // char
+        {
+            get();
+            if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::ubjson, "char")))
             {
-                std::uint8_t number;
-                return get_number(input_format_t::ubjson, number) and sax->number_unsigned(number);
+                return false;
             }
-
-            case 'i':
-            {
-                std::int8_t number;
-                return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
-            }
-
-            case 'I':
-            {
-                std::int16_t number;
-                return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
-            }
-
-            case 'l':
-            {
-                std::int32_t number;
-                return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
-            }
-
-            case 'L':
-            {
-                std::int64_t number;
-                return get_number(input_format_t::ubjson, number) and sax->number_integer(number);
-            }
-
-            case 'd':
-            {
-                float number;
-                return get_number(input_format_t::ubjson, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
-
-            case 'D':
-            {
-                double number;
-                return get_number(input_format_t::ubjson, number) and sax->number_float(static_cast<number_float_t>(number), "");
-            }
-
-            case 'C':  // char
-            {
-                get();
-                if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::ubjson, "char")))
-                {
-                    return false;
-                }
-                if (JSON_HEDLEY_UNLIKELY(current > 127))
-                {
-                    auto last_token = get_token_string();
-                    return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "byte after 'C' must be in range 0x00..0x7F; last byte: 0x" + last_token, "char")));
-                }
-                string_t s(1, static_cast<char>(current));
-                return sax->string(s);
-            }
-
-            case 'S':  // string
-            {
-                string_t s;
-                return get_ubjson_string(s) and sax->string(s);
-            }
-
-            case '[':  // array
-                return get_ubjson_array();
-
-            case '{':  // object
-                return get_ubjson_object();
-
-            default: // anything else
+            if (JSON_HEDLEY_UNLIKELY(current > 127))
             {
                 auto last_token = get_token_string();
-                return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::ubjson, "invalid byte: 0x" + last_token, "value")));
+                return sax->parse_error(chars_read, last_token, parse_error::create(113, chars_read, exception_message(input_format_t::ubjson, "byte after 'C' must be in range 0x00..0x7F; last byte: 0x" + last_token, "char")));
             }
+            string_t s(1, static_cast<char>(current));
+            return sax->string(s);
+        }
+
+        case 'S':  // string
+        {
+            string_t s;
+            return get_ubjson_string(s) and sax->string(s);
+        }
+
+        case '[':  // array
+            return get_ubjson_array();
+
+        case '{':  // object
+            return get_ubjson_object();
+
+        default: // anything else
+        {
+            auto last_token = get_token_string();
+            return sax->parse_error(chars_read, last_token, parse_error::create(112, chars_read, exception_message(input_format_t::ubjson, "invalid byte: 0x" + last_token, "value")));
+        }
         }
     }
 
@@ -7080,30 +7080,30 @@ class binary_reader
 
         switch (format)
         {
-            case input_format_t::cbor:
-                error_msg += "CBOR";
-                break;
+        case input_format_t::cbor:
+            error_msg += "CBOR";
+            break;
 
-            case input_format_t::msgpack:
-                error_msg += "MessagePack";
-                break;
+        case input_format_t::msgpack:
+            error_msg += "MessagePack";
+            break;
 
-            case input_format_t::ubjson:
-                error_msg += "UBJSON";
-                break;
+        case input_format_t::ubjson:
+            error_msg += "UBJSON";
+            break;
 
-            case input_format_t::bson:
-                error_msg += "BSON";
-                break;
+        case input_format_t::bson:
+            error_msg += "BSON";
+            break;
 
-            default:            // LCOV_EXCL_LINE
-                assert(false);  // LCOV_EXCL_LINE
+        default:            // LCOV_EXCL_LINE
+            assert(false);  // LCOV_EXCL_LINE
         }
 
         return error_msg + " " + context + ": " + detail;
     }
 
-  private:
+private:
     /// input adapter
     input_adapter_t ia = nullptr;
 
@@ -7165,7 +7165,7 @@ class lexer
     using number_float_t = typename BasicJsonType::number_float_t;
     using string_t = typename BasicJsonType::string_t;
 
-  public:
+public:
     /// token types for the parser
     enum class token_type
     {
@@ -7195,42 +7195,42 @@ class lexer
     {
         switch (t)
         {
-            case token_type::uninitialized:
-                return "<uninitialized>";
-            case token_type::literal_true:
-                return "true literal";
-            case token_type::literal_false:
-                return "false literal";
-            case token_type::literal_null:
-                return "null literal";
-            case token_type::value_string:
-                return "string literal";
-            case lexer::token_type::value_unsigned:
-            case lexer::token_type::value_integer:
-            case lexer::token_type::value_float:
-                return "number literal";
-            case token_type::begin_array:
-                return "'['";
-            case token_type::begin_object:
-                return "'{'";
-            case token_type::end_array:
-                return "']'";
-            case token_type::end_object:
-                return "'}'";
-            case token_type::name_separator:
-                return "':'";
-            case token_type::value_separator:
-                return "','";
-            case token_type::parse_error:
-                return "<parse error>";
-            case token_type::end_of_input:
-                return "end of input";
-            case token_type::literal_or_value:
-                return "'[', '{', or a literal";
-            // LCOV_EXCL_START
-            default: // catch non-enum values
-                return "unknown token";
-                // LCOV_EXCL_STOP
+        case token_type::uninitialized:
+            return "<uninitialized>";
+        case token_type::literal_true:
+            return "true literal";
+        case token_type::literal_false:
+            return "false literal";
+        case token_type::literal_null:
+            return "null literal";
+        case token_type::value_string:
+            return "string literal";
+        case lexer::token_type::value_unsigned:
+        case lexer::token_type::value_integer:
+        case lexer::token_type::value_float:
+            return "number literal";
+        case token_type::begin_array:
+            return "'['";
+        case token_type::begin_object:
+            return "'{'";
+        case token_type::end_array:
+            return "']'";
+        case token_type::end_object:
+            return "'}'";
+        case token_type::name_separator:
+            return "':'";
+        case token_type::value_separator:
+            return "','";
+        case token_type::parse_error:
+            return "<parse error>";
+        case token_type::end_of_input:
+            return "end of input";
+        case token_type::literal_or_value:
+            return "'[', '{', or a literal";
+        // LCOV_EXCL_START
+        default: // catch non-enum values
+            return "unknown token";
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -7244,7 +7244,7 @@ class lexer
     lexer& operator=(lexer&&) = delete;
     ~lexer() = default;
 
-  private:
+private:
     /////////////////////
     // locales
     /////////////////////
@@ -7375,575 +7375,575 @@ class lexer
             // get next character
             switch (get())
             {
-                // end of file while parsing string
-                case std::char_traits<char>::eof():
-                {
-                    error_message = "invalid string: missing closing quote";
-                    return token_type::parse_error;
-                }
+            // end of file while parsing string
+            case std::char_traits<char>::eof():
+            {
+                error_message = "invalid string: missing closing quote";
+                return token_type::parse_error;
+            }
 
-                // closing quote
+            // closing quote
+            case '\"':
+            {
+                return token_type::value_string;
+            }
+
+            // escapes
+            case '\\':
+            {
+                switch (get())
+                {
+                // quotation mark
                 case '\"':
-                {
-                    return token_type::value_string;
-                }
-
-                // escapes
+                    add('\"');
+                    break;
+                // reverse solidus
                 case '\\':
+                    add('\\');
+                    break;
+                // solidus
+                case '/':
+                    add('/');
+                    break;
+                // backspace
+                case 'b':
+                    add('\b');
+                    break;
+                // form feed
+                case 'f':
+                    add('\f');
+                    break;
+                // line feed
+                case 'n':
+                    add('\n');
+                    break;
+                // carriage return
+                case 'r':
+                    add('\r');
+                    break;
+                // tab
+                case 't':
+                    add('\t');
+                    break;
+
+                // unicode escapes
+                case 'u':
                 {
-                    switch (get())
+                    const int codepoint1 = get_codepoint();
+                    int codepoint = codepoint1; // start with codepoint1
+
+                    if (JSON_HEDLEY_UNLIKELY(codepoint1 == -1))
                     {
-                        // quotation mark
-                        case '\"':
-                            add('\"');
-                            break;
-                        // reverse solidus
-                        case '\\':
-                            add('\\');
-                            break;
-                        // solidus
-                        case '/':
-                            add('/');
-                            break;
-                        // backspace
-                        case 'b':
-                            add('\b');
-                            break;
-                        // form feed
-                        case 'f':
-                            add('\f');
-                            break;
-                        // line feed
-                        case 'n':
-                            add('\n');
-                            break;
-                        // carriage return
-                        case 'r':
-                            add('\r');
-                            break;
-                        // tab
-                        case 't':
-                            add('\t');
-                            break;
+                        error_message = "invalid string: '\\u' must be followed by 4 hex digits";
+                        return token_type::parse_error;
+                    }
 
-                        // unicode escapes
-                        case 'u':
+                    // check if code point is a high surrogate
+                    if (0xD800 <= codepoint1 and codepoint1 <= 0xDBFF)
+                    {
+                        // expect next \uxxxx entry
+                        if (JSON_HEDLEY_LIKELY(get() == '\\' and get() == 'u'))
                         {
-                            const int codepoint1 = get_codepoint();
-                            int codepoint = codepoint1; // start with codepoint1
+                            const int codepoint2 = get_codepoint();
 
-                            if (JSON_HEDLEY_UNLIKELY(codepoint1 == -1))
+                            if (JSON_HEDLEY_UNLIKELY(codepoint2 == -1))
                             {
                                 error_message = "invalid string: '\\u' must be followed by 4 hex digits";
                                 return token_type::parse_error;
                             }
 
-                            // check if code point is a high surrogate
-                            if (0xD800 <= codepoint1 and codepoint1 <= 0xDBFF)
+                            // check if codepoint2 is a low surrogate
+                            if (JSON_HEDLEY_LIKELY(0xDC00 <= codepoint2 and codepoint2 <= 0xDFFF))
                             {
-                                // expect next \uxxxx entry
-                                if (JSON_HEDLEY_LIKELY(get() == '\\' and get() == 'u'))
-                                {
-                                    const int codepoint2 = get_codepoint();
-
-                                    if (JSON_HEDLEY_UNLIKELY(codepoint2 == -1))
-                                    {
-                                        error_message = "invalid string: '\\u' must be followed by 4 hex digits";
-                                        return token_type::parse_error;
-                                    }
-
-                                    // check if codepoint2 is a low surrogate
-                                    if (JSON_HEDLEY_LIKELY(0xDC00 <= codepoint2 and codepoint2 <= 0xDFFF))
-                                    {
-                                        // overwrite codepoint
-                                        codepoint = static_cast<int>(
-                                                        // high surrogate occupies the most significant 22 bits
-                                                        (static_cast<unsigned int>(codepoint1) << 10u)
-                                                        // low surrogate occupies the least significant 15 bits
-                                                        + static_cast<unsigned int>(codepoint2)
-                                                        // there is still the 0xD800, 0xDC00 and 0x10000 noise
-                                                        // in the result so we have to subtract with:
-                                                        // (0xD800 << 10) + DC00 - 0x10000 = 0x35FDC00
-                                                        - 0x35FDC00u);
-                                    }
-                                    else
-                                    {
-                                        error_message = "invalid string: surrogate U+DC00..U+DFFF must be followed by U+DC00..U+DFFF";
-                                        return token_type::parse_error;
-                                    }
-                                }
-                                else
-                                {
-                                    error_message = "invalid string: surrogate U+DC00..U+DFFF must be followed by U+DC00..U+DFFF";
-                                    return token_type::parse_error;
-                                }
+                                // overwrite codepoint
+                                codepoint = static_cast<int>(
+                                                // high surrogate occupies the most significant 22 bits
+                                                (static_cast<unsigned int>(codepoint1) << 10u)
+                                                // low surrogate occupies the least significant 15 bits
+                                                + static_cast<unsigned int>(codepoint2)
+                                                // there is still the 0xD800, 0xDC00 and 0x10000 noise
+                                                // in the result so we have to subtract with:
+                                                // (0xD800 << 10) + DC00 - 0x10000 = 0x35FDC00
+                                                - 0x35FDC00u);
                             }
                             else
                             {
-                                if (JSON_HEDLEY_UNLIKELY(0xDC00 <= codepoint1 and codepoint1 <= 0xDFFF))
-                                {
-                                    error_message = "invalid string: surrogate U+DC00..U+DFFF must follow U+D800..U+DBFF";
-                                    return token_type::parse_error;
-                                }
+                                error_message = "invalid string: surrogate U+DC00..U+DFFF must be followed by U+DC00..U+DFFF";
+                                return token_type::parse_error;
                             }
-
-                            // result of the above calculation yields a proper codepoint
-                            assert(0x00 <= codepoint and codepoint <= 0x10FFFF);
-
-                            // translate codepoint into bytes
-                            if (codepoint < 0x80)
-                            {
-                                // 1-byte characters: 0xxxxxxx (ASCII)
-                                add(codepoint);
-                            }
-                            else if (codepoint <= 0x7FF)
-                            {
-                                // 2-byte characters: 110xxxxx 10xxxxxx
-                                add(static_cast<int>(0xC0u | (static_cast<unsigned int>(codepoint) >> 6u)));
-                                add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
-                            }
-                            else if (codepoint <= 0xFFFF)
-                            {
-                                // 3-byte characters: 1110xxxx 10xxxxxx 10xxxxxx
-                                add(static_cast<int>(0xE0u | (static_cast<unsigned int>(codepoint) >> 12u)));
-                                add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 6u) & 0x3Fu)));
-                                add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
-                            }
-                            else
-                            {
-                                // 4-byte characters: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-                                add(static_cast<int>(0xF0u | (static_cast<unsigned int>(codepoint) >> 18u)));
-                                add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 12u) & 0x3Fu)));
-                                add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 6u) & 0x3Fu)));
-                                add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
-                            }
-
-                            break;
                         }
-
-                        // other characters after escape
-                        default:
-                            error_message = "invalid string: forbidden character after backslash";
+                        else
+                        {
+                            error_message = "invalid string: surrogate U+DC00..U+DFFF must be followed by U+DC00..U+DFFF";
                             return token_type::parse_error;
+                        }
                     }
-
-                    break;
-                }
-
-                // invalid control characters
-                case 0x00:
-                {
-                    error_message = "invalid string: control character U+0000 (NUL) must be escaped to \\u0000";
-                    return token_type::parse_error;
-                }
-
-                case 0x01:
-                {
-                    error_message = "invalid string: control character U+0001 (SOH) must be escaped to \\u0001";
-                    return token_type::parse_error;
-                }
-
-                case 0x02:
-                {
-                    error_message = "invalid string: control character U+0002 (STX) must be escaped to \\u0002";
-                    return token_type::parse_error;
-                }
-
-                case 0x03:
-                {
-                    error_message = "invalid string: control character U+0003 (ETX) must be escaped to \\u0003";
-                    return token_type::parse_error;
-                }
-
-                case 0x04:
-                {
-                    error_message = "invalid string: control character U+0004 (EOT) must be escaped to \\u0004";
-                    return token_type::parse_error;
-                }
-
-                case 0x05:
-                {
-                    error_message = "invalid string: control character U+0005 (ENQ) must be escaped to \\u0005";
-                    return token_type::parse_error;
-                }
-
-                case 0x06:
-                {
-                    error_message = "invalid string: control character U+0006 (ACK) must be escaped to \\u0006";
-                    return token_type::parse_error;
-                }
-
-                case 0x07:
-                {
-                    error_message = "invalid string: control character U+0007 (BEL) must be escaped to \\u0007";
-                    return token_type::parse_error;
-                }
-
-                case 0x08:
-                {
-                    error_message = "invalid string: control character U+0008 (BS) must be escaped to \\u0008 or \\b";
-                    return token_type::parse_error;
-                }
-
-                case 0x09:
-                {
-                    error_message = "invalid string: control character U+0009 (HT) must be escaped to \\u0009 or \\t";
-                    return token_type::parse_error;
-                }
-
-                case 0x0A:
-                {
-                    error_message = "invalid string: control character U+000A (LF) must be escaped to \\u000A or \\n";
-                    return token_type::parse_error;
-                }
-
-                case 0x0B:
-                {
-                    error_message = "invalid string: control character U+000B (VT) must be escaped to \\u000B";
-                    return token_type::parse_error;
-                }
-
-                case 0x0C:
-                {
-                    error_message = "invalid string: control character U+000C (FF) must be escaped to \\u000C or \\f";
-                    return token_type::parse_error;
-                }
-
-                case 0x0D:
-                {
-                    error_message = "invalid string: control character U+000D (CR) must be escaped to \\u000D or \\r";
-                    return token_type::parse_error;
-                }
-
-                case 0x0E:
-                {
-                    error_message = "invalid string: control character U+000E (SO) must be escaped to \\u000E";
-                    return token_type::parse_error;
-                }
-
-                case 0x0F:
-                {
-                    error_message = "invalid string: control character U+000F (SI) must be escaped to \\u000F";
-                    return token_type::parse_error;
-                }
-
-                case 0x10:
-                {
-                    error_message = "invalid string: control character U+0010 (DLE) must be escaped to \\u0010";
-                    return token_type::parse_error;
-                }
-
-                case 0x11:
-                {
-                    error_message = "invalid string: control character U+0011 (DC1) must be escaped to \\u0011";
-                    return token_type::parse_error;
-                }
-
-                case 0x12:
-                {
-                    error_message = "invalid string: control character U+0012 (DC2) must be escaped to \\u0012";
-                    return token_type::parse_error;
-                }
-
-                case 0x13:
-                {
-                    error_message = "invalid string: control character U+0013 (DC3) must be escaped to \\u0013";
-                    return token_type::parse_error;
-                }
-
-                case 0x14:
-                {
-                    error_message = "invalid string: control character U+0014 (DC4) must be escaped to \\u0014";
-                    return token_type::parse_error;
-                }
-
-                case 0x15:
-                {
-                    error_message = "invalid string: control character U+0015 (NAK) must be escaped to \\u0015";
-                    return token_type::parse_error;
-                }
-
-                case 0x16:
-                {
-                    error_message = "invalid string: control character U+0016 (SYN) must be escaped to \\u0016";
-                    return token_type::parse_error;
-                }
-
-                case 0x17:
-                {
-                    error_message = "invalid string: control character U+0017 (ETB) must be escaped to \\u0017";
-                    return token_type::parse_error;
-                }
-
-                case 0x18:
-                {
-                    error_message = "invalid string: control character U+0018 (CAN) must be escaped to \\u0018";
-                    return token_type::parse_error;
-                }
-
-                case 0x19:
-                {
-                    error_message = "invalid string: control character U+0019 (EM) must be escaped to \\u0019";
-                    return token_type::parse_error;
-                }
-
-                case 0x1A:
-                {
-                    error_message = "invalid string: control character U+001A (SUB) must be escaped to \\u001A";
-                    return token_type::parse_error;
-                }
-
-                case 0x1B:
-                {
-                    error_message = "invalid string: control character U+001B (ESC) must be escaped to \\u001B";
-                    return token_type::parse_error;
-                }
-
-                case 0x1C:
-                {
-                    error_message = "invalid string: control character U+001C (FS) must be escaped to \\u001C";
-                    return token_type::parse_error;
-                }
-
-                case 0x1D:
-                {
-                    error_message = "invalid string: control character U+001D (GS) must be escaped to \\u001D";
-                    return token_type::parse_error;
-                }
-
-                case 0x1E:
-                {
-                    error_message = "invalid string: control character U+001E (RS) must be escaped to \\u001E";
-                    return token_type::parse_error;
-                }
-
-                case 0x1F:
-                {
-                    error_message = "invalid string: control character U+001F (US) must be escaped to \\u001F";
-                    return token_type::parse_error;
-                }
-
-                // U+0020..U+007F (except U+0022 (quote) and U+005C (backspace))
-                case 0x20:
-                case 0x21:
-                case 0x23:
-                case 0x24:
-                case 0x25:
-                case 0x26:
-                case 0x27:
-                case 0x28:
-                case 0x29:
-                case 0x2A:
-                case 0x2B:
-                case 0x2C:
-                case 0x2D:
-                case 0x2E:
-                case 0x2F:
-                case 0x30:
-                case 0x31:
-                case 0x32:
-                case 0x33:
-                case 0x34:
-                case 0x35:
-                case 0x36:
-                case 0x37:
-                case 0x38:
-                case 0x39:
-                case 0x3A:
-                case 0x3B:
-                case 0x3C:
-                case 0x3D:
-                case 0x3E:
-                case 0x3F:
-                case 0x40:
-                case 0x41:
-                case 0x42:
-                case 0x43:
-                case 0x44:
-                case 0x45:
-                case 0x46:
-                case 0x47:
-                case 0x48:
-                case 0x49:
-                case 0x4A:
-                case 0x4B:
-                case 0x4C:
-                case 0x4D:
-                case 0x4E:
-                case 0x4F:
-                case 0x50:
-                case 0x51:
-                case 0x52:
-                case 0x53:
-                case 0x54:
-                case 0x55:
-                case 0x56:
-                case 0x57:
-                case 0x58:
-                case 0x59:
-                case 0x5A:
-                case 0x5B:
-                case 0x5D:
-                case 0x5E:
-                case 0x5F:
-                case 0x60:
-                case 0x61:
-                case 0x62:
-                case 0x63:
-                case 0x64:
-                case 0x65:
-                case 0x66:
-                case 0x67:
-                case 0x68:
-                case 0x69:
-                case 0x6A:
-                case 0x6B:
-                case 0x6C:
-                case 0x6D:
-                case 0x6E:
-                case 0x6F:
-                case 0x70:
-                case 0x71:
-                case 0x72:
-                case 0x73:
-                case 0x74:
-                case 0x75:
-                case 0x76:
-                case 0x77:
-                case 0x78:
-                case 0x79:
-                case 0x7A:
-                case 0x7B:
-                case 0x7C:
-                case 0x7D:
-                case 0x7E:
-                case 0x7F:
-                {
-                    add(current);
-                    break;
-                }
-
-                // U+0080..U+07FF: bytes C2..DF 80..BF
-                case 0xC2:
-                case 0xC3:
-                case 0xC4:
-                case 0xC5:
-                case 0xC6:
-                case 0xC7:
-                case 0xC8:
-                case 0xC9:
-                case 0xCA:
-                case 0xCB:
-                case 0xCC:
-                case 0xCD:
-                case 0xCE:
-                case 0xCF:
-                case 0xD0:
-                case 0xD1:
-                case 0xD2:
-                case 0xD3:
-                case 0xD4:
-                case 0xD5:
-                case 0xD6:
-                case 0xD7:
-                case 0xD8:
-                case 0xD9:
-                case 0xDA:
-                case 0xDB:
-                case 0xDC:
-                case 0xDD:
-                case 0xDE:
-                case 0xDF:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not next_byte_in_range({0x80, 0xBF})))
+                    else
                     {
-                        return token_type::parse_error;
+                        if (JSON_HEDLEY_UNLIKELY(0xDC00 <= codepoint1 and codepoint1 <= 0xDFFF))
+                        {
+                            error_message = "invalid string: surrogate U+DC00..U+DFFF must follow U+D800..U+DBFF";
+                            return token_type::parse_error;
+                        }
                     }
-                    break;
-                }
 
-                // U+0800..U+0FFF: bytes E0 A0..BF 80..BF
-                case 0xE0:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0xA0, 0xBF, 0x80, 0xBF}))))
+                    // result of the above calculation yields a proper codepoint
+                    assert(0x00 <= codepoint and codepoint <= 0x10FFFF);
+
+                    // translate codepoint into bytes
+                    if (codepoint < 0x80)
                     {
-                        return token_type::parse_error;
+                        // 1-byte characters: 0xxxxxxx (ASCII)
+                        add(codepoint);
                     }
-                    break;
-                }
-
-                // U+1000..U+CFFF: bytes E1..EC 80..BF 80..BF
-                // U+E000..U+FFFF: bytes EE..EF 80..BF 80..BF
-                case 0xE1:
-                case 0xE2:
-                case 0xE3:
-                case 0xE4:
-                case 0xE5:
-                case 0xE6:
-                case 0xE7:
-                case 0xE8:
-                case 0xE9:
-                case 0xEA:
-                case 0xEB:
-                case 0xEC:
-                case 0xEE:
-                case 0xEF:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0xBF, 0x80, 0xBF}))))
+                    else if (codepoint <= 0x7FF)
                     {
-                        return token_type::parse_error;
+                        // 2-byte characters: 110xxxxx 10xxxxxx
+                        add(static_cast<int>(0xC0u | (static_cast<unsigned int>(codepoint) >> 6u)));
+                        add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
                     }
-                    break;
-                }
-
-                // U+D000..U+D7FF: bytes ED 80..9F 80..BF
-                case 0xED:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0x9F, 0x80, 0xBF}))))
+                    else if (codepoint <= 0xFFFF)
                     {
-                        return token_type::parse_error;
+                        // 3-byte characters: 1110xxxx 10xxxxxx 10xxxxxx
+                        add(static_cast<int>(0xE0u | (static_cast<unsigned int>(codepoint) >> 12u)));
+                        add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 6u) & 0x3Fu)));
+                        add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
                     }
-                    break;
-                }
-
-                // U+10000..U+3FFFF F0 90..BF 80..BF 80..BF
-                case 0xF0:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x90, 0xBF, 0x80, 0xBF, 0x80, 0xBF}))))
+                    else
                     {
-                        return token_type::parse_error;
+                        // 4-byte characters: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                        add(static_cast<int>(0xF0u | (static_cast<unsigned int>(codepoint) >> 18u)));
+                        add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 12u) & 0x3Fu)));
+                        add(static_cast<int>(0x80u | ((static_cast<unsigned int>(codepoint) >> 6u) & 0x3Fu)));
+                        add(static_cast<int>(0x80u | (static_cast<unsigned int>(codepoint) & 0x3Fu)));
                     }
+
                     break;
                 }
 
-                // U+40000..U+FFFFF F1..F3 80..BF 80..BF 80..BF
-                case 0xF1:
-                case 0xF2:
-                case 0xF3:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0xBF, 0x80, 0xBF, 0x80, 0xBF}))))
-                    {
-                        return token_type::parse_error;
-                    }
-                    break;
-                }
-
-                // U+100000..U+10FFFF F4 80..8F 80..BF 80..BF
-                case 0xF4:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0x8F, 0x80, 0xBF, 0x80, 0xBF}))))
-                    {
-                        return token_type::parse_error;
-                    }
-                    break;
-                }
-
-                // remaining bytes (80..C1 and F5..FF) are ill-formed
+                // other characters after escape
                 default:
-                {
-                    error_message = "invalid string: ill-formed UTF-8 byte";
+                    error_message = "invalid string: forbidden character after backslash";
                     return token_type::parse_error;
                 }
+
+                break;
+            }
+
+            // invalid control characters
+            case 0x00:
+            {
+                error_message = "invalid string: control character U+0000 (NUL) must be escaped to \\u0000";
+                return token_type::parse_error;
+            }
+
+            case 0x01:
+            {
+                error_message = "invalid string: control character U+0001 (SOH) must be escaped to \\u0001";
+                return token_type::parse_error;
+            }
+
+            case 0x02:
+            {
+                error_message = "invalid string: control character U+0002 (STX) must be escaped to \\u0002";
+                return token_type::parse_error;
+            }
+
+            case 0x03:
+            {
+                error_message = "invalid string: control character U+0003 (ETX) must be escaped to \\u0003";
+                return token_type::parse_error;
+            }
+
+            case 0x04:
+            {
+                error_message = "invalid string: control character U+0004 (EOT) must be escaped to \\u0004";
+                return token_type::parse_error;
+            }
+
+            case 0x05:
+            {
+                error_message = "invalid string: control character U+0005 (ENQ) must be escaped to \\u0005";
+                return token_type::parse_error;
+            }
+
+            case 0x06:
+            {
+                error_message = "invalid string: control character U+0006 (ACK) must be escaped to \\u0006";
+                return token_type::parse_error;
+            }
+
+            case 0x07:
+            {
+                error_message = "invalid string: control character U+0007 (BEL) must be escaped to \\u0007";
+                return token_type::parse_error;
+            }
+
+            case 0x08:
+            {
+                error_message = "invalid string: control character U+0008 (BS) must be escaped to \\u0008 or \\b";
+                return token_type::parse_error;
+            }
+
+            case 0x09:
+            {
+                error_message = "invalid string: control character U+0009 (HT) must be escaped to \\u0009 or \\t";
+                return token_type::parse_error;
+            }
+
+            case 0x0A:
+            {
+                error_message = "invalid string: control character U+000A (LF) must be escaped to \\u000A or \\n";
+                return token_type::parse_error;
+            }
+
+            case 0x0B:
+            {
+                error_message = "invalid string: control character U+000B (VT) must be escaped to \\u000B";
+                return token_type::parse_error;
+            }
+
+            case 0x0C:
+            {
+                error_message = "invalid string: control character U+000C (FF) must be escaped to \\u000C or \\f";
+                return token_type::parse_error;
+            }
+
+            case 0x0D:
+            {
+                error_message = "invalid string: control character U+000D (CR) must be escaped to \\u000D or \\r";
+                return token_type::parse_error;
+            }
+
+            case 0x0E:
+            {
+                error_message = "invalid string: control character U+000E (SO) must be escaped to \\u000E";
+                return token_type::parse_error;
+            }
+
+            case 0x0F:
+            {
+                error_message = "invalid string: control character U+000F (SI) must be escaped to \\u000F";
+                return token_type::parse_error;
+            }
+
+            case 0x10:
+            {
+                error_message = "invalid string: control character U+0010 (DLE) must be escaped to \\u0010";
+                return token_type::parse_error;
+            }
+
+            case 0x11:
+            {
+                error_message = "invalid string: control character U+0011 (DC1) must be escaped to \\u0011";
+                return token_type::parse_error;
+            }
+
+            case 0x12:
+            {
+                error_message = "invalid string: control character U+0012 (DC2) must be escaped to \\u0012";
+                return token_type::parse_error;
+            }
+
+            case 0x13:
+            {
+                error_message = "invalid string: control character U+0013 (DC3) must be escaped to \\u0013";
+                return token_type::parse_error;
+            }
+
+            case 0x14:
+            {
+                error_message = "invalid string: control character U+0014 (DC4) must be escaped to \\u0014";
+                return token_type::parse_error;
+            }
+
+            case 0x15:
+            {
+                error_message = "invalid string: control character U+0015 (NAK) must be escaped to \\u0015";
+                return token_type::parse_error;
+            }
+
+            case 0x16:
+            {
+                error_message = "invalid string: control character U+0016 (SYN) must be escaped to \\u0016";
+                return token_type::parse_error;
+            }
+
+            case 0x17:
+            {
+                error_message = "invalid string: control character U+0017 (ETB) must be escaped to \\u0017";
+                return token_type::parse_error;
+            }
+
+            case 0x18:
+            {
+                error_message = "invalid string: control character U+0018 (CAN) must be escaped to \\u0018";
+                return token_type::parse_error;
+            }
+
+            case 0x19:
+            {
+                error_message = "invalid string: control character U+0019 (EM) must be escaped to \\u0019";
+                return token_type::parse_error;
+            }
+
+            case 0x1A:
+            {
+                error_message = "invalid string: control character U+001A (SUB) must be escaped to \\u001A";
+                return token_type::parse_error;
+            }
+
+            case 0x1B:
+            {
+                error_message = "invalid string: control character U+001B (ESC) must be escaped to \\u001B";
+                return token_type::parse_error;
+            }
+
+            case 0x1C:
+            {
+                error_message = "invalid string: control character U+001C (FS) must be escaped to \\u001C";
+                return token_type::parse_error;
+            }
+
+            case 0x1D:
+            {
+                error_message = "invalid string: control character U+001D (GS) must be escaped to \\u001D";
+                return token_type::parse_error;
+            }
+
+            case 0x1E:
+            {
+                error_message = "invalid string: control character U+001E (RS) must be escaped to \\u001E";
+                return token_type::parse_error;
+            }
+
+            case 0x1F:
+            {
+                error_message = "invalid string: control character U+001F (US) must be escaped to \\u001F";
+                return token_type::parse_error;
+            }
+
+            // U+0020..U+007F (except U+0022 (quote) and U+005C (backspace))
+            case 0x20:
+            case 0x21:
+            case 0x23:
+            case 0x24:
+            case 0x25:
+            case 0x26:
+            case 0x27:
+            case 0x28:
+            case 0x29:
+            case 0x2A:
+            case 0x2B:
+            case 0x2C:
+            case 0x2D:
+            case 0x2E:
+            case 0x2F:
+            case 0x30:
+            case 0x31:
+            case 0x32:
+            case 0x33:
+            case 0x34:
+            case 0x35:
+            case 0x36:
+            case 0x37:
+            case 0x38:
+            case 0x39:
+            case 0x3A:
+            case 0x3B:
+            case 0x3C:
+            case 0x3D:
+            case 0x3E:
+            case 0x3F:
+            case 0x40:
+            case 0x41:
+            case 0x42:
+            case 0x43:
+            case 0x44:
+            case 0x45:
+            case 0x46:
+            case 0x47:
+            case 0x48:
+            case 0x49:
+            case 0x4A:
+            case 0x4B:
+            case 0x4C:
+            case 0x4D:
+            case 0x4E:
+            case 0x4F:
+            case 0x50:
+            case 0x51:
+            case 0x52:
+            case 0x53:
+            case 0x54:
+            case 0x55:
+            case 0x56:
+            case 0x57:
+            case 0x58:
+            case 0x59:
+            case 0x5A:
+            case 0x5B:
+            case 0x5D:
+            case 0x5E:
+            case 0x5F:
+            case 0x60:
+            case 0x61:
+            case 0x62:
+            case 0x63:
+            case 0x64:
+            case 0x65:
+            case 0x66:
+            case 0x67:
+            case 0x68:
+            case 0x69:
+            case 0x6A:
+            case 0x6B:
+            case 0x6C:
+            case 0x6D:
+            case 0x6E:
+            case 0x6F:
+            case 0x70:
+            case 0x71:
+            case 0x72:
+            case 0x73:
+            case 0x74:
+            case 0x75:
+            case 0x76:
+            case 0x77:
+            case 0x78:
+            case 0x79:
+            case 0x7A:
+            case 0x7B:
+            case 0x7C:
+            case 0x7D:
+            case 0x7E:
+            case 0x7F:
+            {
+                add(current);
+                break;
+            }
+
+            // U+0080..U+07FF: bytes C2..DF 80..BF
+            case 0xC2:
+            case 0xC3:
+            case 0xC4:
+            case 0xC5:
+            case 0xC6:
+            case 0xC7:
+            case 0xC8:
+            case 0xC9:
+            case 0xCA:
+            case 0xCB:
+            case 0xCC:
+            case 0xCD:
+            case 0xCE:
+            case 0xCF:
+            case 0xD0:
+            case 0xD1:
+            case 0xD2:
+            case 0xD3:
+            case 0xD4:
+            case 0xD5:
+            case 0xD6:
+            case 0xD7:
+            case 0xD8:
+            case 0xD9:
+            case 0xDA:
+            case 0xDB:
+            case 0xDC:
+            case 0xDD:
+            case 0xDE:
+            case 0xDF:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not next_byte_in_range({0x80, 0xBF})))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+0800..U+0FFF: bytes E0 A0..BF 80..BF
+            case 0xE0:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0xA0, 0xBF, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+1000..U+CFFF: bytes E1..EC 80..BF 80..BF
+            // U+E000..U+FFFF: bytes EE..EF 80..BF 80..BF
+            case 0xE1:
+            case 0xE2:
+            case 0xE3:
+            case 0xE4:
+            case 0xE5:
+            case 0xE6:
+            case 0xE7:
+            case 0xE8:
+            case 0xE9:
+            case 0xEA:
+            case 0xEB:
+            case 0xEC:
+            case 0xEE:
+            case 0xEF:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0xBF, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+D000..U+D7FF: bytes ED 80..9F 80..BF
+            case 0xED:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0x9F, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+10000..U+3FFFF F0 90..BF 80..BF 80..BF
+            case 0xF0:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x90, 0xBF, 0x80, 0xBF, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+40000..U+FFFFF F1..F3 80..BF 80..BF 80..BF
+            case 0xF1:
+            case 0xF2:
+            case 0xF3:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0xBF, 0x80, 0xBF, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // U+100000..U+10FFFF F4 80..8F 80..BF 80..BF
+            case 0xF4:
+            {
+                if (JSON_HEDLEY_UNLIKELY(not (next_byte_in_range({0x80, 0x8F, 0x80, 0xBF, 0x80, 0xBF}))))
+                {
+                    return token_type::parse_error;
+                }
+                break;
+            }
+
+            // remaining bytes (80..C1 and F5..FF) are ill-formed
+            default:
+            {
+                error_message = "invalid string: ill-formed UTF-8 byte";
+                return token_type::parse_error;
+            }
             }
         }
     }
@@ -8018,35 +8018,35 @@ class lexer
         // state (init): we just found out we need to scan a number
         switch (current)
         {
-            case '-':
-            {
-                add(current);
-                goto scan_number_minus;
-            }
+        case '-':
+        {
+            add(current);
+            goto scan_number_minus;
+        }
 
-            case '0':
-            {
-                add(current);
-                goto scan_number_zero;
-            }
+        case '0':
+        {
+            add(current);
+            goto scan_number_zero;
+        }
 
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any1;
-            }
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any1;
+        }
 
-            // all other characters are rejected outside scan_number()
-            default:            // LCOV_EXCL_LINE
-                assert(false);  // LCOV_EXCL_LINE
+        // all other characters are rejected outside scan_number()
+        default:            // LCOV_EXCL_LINE
+            assert(false);  // LCOV_EXCL_LINE
         }
 
 scan_number_minus:
@@ -8054,88 +8054,88 @@ scan_number_minus:
         number_type = token_type::value_integer;
         switch (get())
         {
-            case '0':
-            {
-                add(current);
-                goto scan_number_zero;
-            }
+        case '0':
+        {
+            add(current);
+            goto scan_number_zero;
+        }
 
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any1;
-            }
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any1;
+        }
 
-            default:
-            {
-                error_message = "invalid number; expected digit after '-'";
-                return token_type::parse_error;
-            }
+        default:
+        {
+            error_message = "invalid number; expected digit after '-'";
+            return token_type::parse_error;
+        }
         }
 
 scan_number_zero:
         // state: we just parse a zero (maybe with a leading minus sign)
         switch (get())
         {
-            case '.':
-            {
-                add(decimal_point_char);
-                goto scan_number_decimal1;
-            }
+        case '.':
+        {
+            add(decimal_point_char);
+            goto scan_number_decimal1;
+        }
 
-            case 'e':
-            case 'E':
-            {
-                add(current);
-                goto scan_number_exponent;
-            }
+        case 'e':
+        case 'E':
+        {
+            add(current);
+            goto scan_number_exponent;
+        }
 
-            default:
-                goto scan_number_done;
+        default:
+            goto scan_number_done;
         }
 
 scan_number_any1:
         // state: we just parsed a number 0-9 (maybe with a leading minus sign)
         switch (get())
         {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any1;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any1;
+        }
 
-            case '.':
-            {
-                add(decimal_point_char);
-                goto scan_number_decimal1;
-            }
+        case '.':
+        {
+            add(decimal_point_char);
+            goto scan_number_decimal1;
+        }
 
-            case 'e':
-            case 'E':
-            {
-                add(current);
-                goto scan_number_exponent;
-            }
+        case 'e':
+        case 'E':
+        {
+            add(current);
+            goto scan_number_exponent;
+        }
 
-            default:
-                goto scan_number_done;
+        default:
+            goto scan_number_done;
         }
 
 scan_number_decimal1:
@@ -8143,56 +8143,56 @@ scan_number_decimal1:
         number_type = token_type::value_float;
         switch (get())
         {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_decimal2;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_decimal2;
+        }
 
-            default:
-            {
-                error_message = "invalid number; expected digit after '.'";
-                return token_type::parse_error;
-            }
+        default:
+        {
+            error_message = "invalid number; expected digit after '.'";
+            return token_type::parse_error;
+        }
         }
 
 scan_number_decimal2:
         // we just parsed at least one number after a decimal point
         switch (get())
         {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_decimal2;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_decimal2;
+        }
 
-            case 'e':
-            case 'E':
-            {
-                add(current);
-                goto scan_number_exponent;
-            }
+        case 'e':
+        case 'E':
+        {
+            add(current);
+            goto scan_number_exponent;
+        }
 
-            default:
-                goto scan_number_done;
+        default:
+            goto scan_number_done;
         }
 
 scan_number_exponent:
@@ -8200,83 +8200,83 @@ scan_number_exponent:
         number_type = token_type::value_float;
         switch (get())
         {
-            case '+':
-            case '-':
-            {
-                add(current);
-                goto scan_number_sign;
-            }
+        case '+':
+        case '-':
+        {
+            add(current);
+            goto scan_number_sign;
+        }
 
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any2;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any2;
+        }
 
-            default:
-            {
-                error_message =
-                    "invalid number; expected '+', '-', or digit after exponent";
-                return token_type::parse_error;
-            }
+        default:
+        {
+            error_message =
+                "invalid number; expected '+', '-', or digit after exponent";
+            return token_type::parse_error;
+        }
         }
 
 scan_number_sign:
         // we just parsed an exponent sign
         switch (get())
         {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any2;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any2;
+        }
 
-            default:
-            {
-                error_message = "invalid number; expected digit after exponent sign";
-                return token_type::parse_error;
-            }
+        default:
+        {
+            error_message = "invalid number; expected digit after exponent sign";
+            return token_type::parse_error;
+        }
         }
 
 scan_number_any2:
         // we just parsed a number after the exponent or exponent sign
         switch (get())
         {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            {
-                add(current);
-                goto scan_number_any2;
-            }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        {
+            add(current);
+            goto scan_number_any2;
+        }
 
-            default:
-                goto scan_number_done;
+        default:
+            goto scan_number_done;
         }
 
 scan_number_done:
@@ -8443,7 +8443,7 @@ scan_number_done:
         token_buffer.push_back(std::char_traits<char>::to_char_type(c));
     }
 
-  public:
+public:
     /////////////////////
     // value getters
     /////////////////////
@@ -8555,60 +8555,60 @@ scan_number_done:
 
         switch (current)
         {
-            // structural characters
-            case '[':
-                return token_type::begin_array;
-            case ']':
-                return token_type::end_array;
-            case '{':
-                return token_type::begin_object;
-            case '}':
-                return token_type::end_object;
-            case ':':
-                return token_type::name_separator;
-            case ',':
-                return token_type::value_separator;
+        // structural characters
+        case '[':
+            return token_type::begin_array;
+        case ']':
+            return token_type::end_array;
+        case '{':
+            return token_type::begin_object;
+        case '}':
+            return token_type::end_object;
+        case ':':
+            return token_type::name_separator;
+        case ',':
+            return token_type::value_separator;
 
-            // literals
-            case 't':
-                return scan_literal("true", 4, token_type::literal_true);
-            case 'f':
-                return scan_literal("false", 5, token_type::literal_false);
-            case 'n':
-                return scan_literal("null", 4, token_type::literal_null);
+        // literals
+        case 't':
+            return scan_literal("true", 4, token_type::literal_true);
+        case 'f':
+            return scan_literal("false", 5, token_type::literal_false);
+        case 'n':
+            return scan_literal("null", 4, token_type::literal_null);
 
-            // string
-            case '\"':
-                return scan_string();
+        // string
+        case '\"':
+            return scan_string();
 
-            // number
-            case '-':
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                return scan_number();
+        // number
+        case '-':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            return scan_number();
 
-            // end of input (the null byte is needed when parsing from
-            // string literals)
-            case '\0':
-            case std::char_traits<char>::eof():
-                return token_type::end_of_input;
+        // end of input (the null byte is needed when parsing from
+        // string literals)
+        case '\0':
+        case std::char_traits<char>::eof():
+            return token_type::end_of_input;
 
-            // error
-            default:
-                error_message = "invalid literal";
-                return token_type::parse_error;
+        // error
+        default:
+            error_message = "invalid literal";
+            return token_type::parse_error;
         }
     }
 
-  private:
+private:
     /// input adapter
     detail::input_adapter_t ia = nullptr;
 
@@ -8690,7 +8690,7 @@ class parser
     using lexer_t = lexer<BasicJsonType>;
     using token_type = typename lexer_t::token_type;
 
-  public:
+public:
     enum class parse_event_t : uint8_t
     {
         /// the parser read `{` and started to process a JSON object
@@ -8816,7 +8816,7 @@ class parser
         return result;
     }
 
-  private:
+private:
     template <typename SAX>
     JSON_HEDLEY_NON_NULL(2)
     bool sax_parse_internal(SAX* sax)
@@ -8834,166 +8834,166 @@ class parser
                 // invariant: get_token() was called before each iteration
                 switch (last_token)
                 {
-                    case token_type::begin_object:
+                case token_type::begin_object:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->start_object(std::size_t(-1))))
                     {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->start_object(std::size_t(-1))))
-                        {
-                            return false;
-                        }
-
-                        // closing } -> we are done
-                        if (get_token() == token_type::end_object)
-                        {
-                            if (JSON_HEDLEY_UNLIKELY(not sax->end_object()))
-                            {
-                                return false;
-                            }
-                            break;
-                        }
-
-                        // parse key
-                        if (JSON_HEDLEY_UNLIKELY(last_token != token_type::value_string))
-                        {
-                            return sax->parse_error(m_lexer.get_position(),
-                                                    m_lexer.get_token_string(),
-                                                    parse_error::create(101, m_lexer.get_position(),
-                                                            exception_message(token_type::value_string, "object key")));
-                        }
-                        if (JSON_HEDLEY_UNLIKELY(not sax->key(m_lexer.get_string())))
-                        {
-                            return false;
-                        }
-
-                        // parse separator (:)
-                        if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_separator))
-                        {
-                            return sax->parse_error(m_lexer.get_position(),
-                                                    m_lexer.get_token_string(),
-                                                    parse_error::create(101, m_lexer.get_position(),
-                                                            exception_message(token_type::name_separator, "object separator")));
-                        }
-
-                        // remember we are now inside an object
-                        states.push_back(false);
-
-                        // parse values
-                        get_token();
-                        continue;
+                        return false;
                     }
 
-                    case token_type::begin_array:
+                    // closing } -> we are done
+                    if (get_token() == token_type::end_object)
                     {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->start_array(std::size_t(-1))))
-                        {
-                            return false;
-                        }
-
-                        // closing ] -> we are done
-                        if (get_token() == token_type::end_array)
-                        {
-                            if (JSON_HEDLEY_UNLIKELY(not sax->end_array()))
-                            {
-                                return false;
-                            }
-                            break;
-                        }
-
-                        // remember we are now inside an array
-                        states.push_back(true);
-
-                        // parse values (no need to call get_token)
-                        continue;
-                    }
-
-                    case token_type::value_float:
-                    {
-                        const auto res = m_lexer.get_number_float();
-
-                        if (JSON_HEDLEY_UNLIKELY(not std::isfinite(res)))
-                        {
-                            return sax->parse_error(m_lexer.get_position(),
-                                                    m_lexer.get_token_string(),
-                                                    out_of_range::create(406, "number overflow parsing '" + m_lexer.get_token_string() + "'"));
-                        }
-
-                        if (JSON_HEDLEY_UNLIKELY(not sax->number_float(res, m_lexer.get_string())))
-                        {
-                            return false;
-                        }
-
-                        break;
-                    }
-
-                    case token_type::literal_false:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->boolean(false)))
+                        if (JSON_HEDLEY_UNLIKELY(not sax->end_object()))
                         {
                             return false;
                         }
                         break;
                     }
 
-                    case token_type::literal_null:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->null()))
-                        {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case token_type::literal_true:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->boolean(true)))
-                        {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case token_type::value_integer:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->number_integer(m_lexer.get_number_integer())))
-                        {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case token_type::value_string:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->string(m_lexer.get_string())))
-                        {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case token_type::value_unsigned:
-                    {
-                        if (JSON_HEDLEY_UNLIKELY(not sax->number_unsigned(m_lexer.get_number_unsigned())))
-                        {
-                            return false;
-                        }
-                        break;
-                    }
-
-                    case token_type::parse_error:
-                    {
-                        // using "uninitialized" to avoid "expected" message
-                        return sax->parse_error(m_lexer.get_position(),
-                                                m_lexer.get_token_string(),
-                                                parse_error::create(101, m_lexer.get_position(),
-                                                        exception_message(token_type::uninitialized, "value")));
-                    }
-
-                    default: // the last token was unexpected
+                    // parse key
+                    if (JSON_HEDLEY_UNLIKELY(last_token != token_type::value_string))
                     {
                         return sax->parse_error(m_lexer.get_position(),
                                                 m_lexer.get_token_string(),
                                                 parse_error::create(101, m_lexer.get_position(),
-                                                        exception_message(token_type::literal_or_value, "value")));
+                                                        exception_message(token_type::value_string, "object key")));
                     }
+                    if (JSON_HEDLEY_UNLIKELY(not sax->key(m_lexer.get_string())))
+                    {
+                        return false;
+                    }
+
+                    // parse separator (:)
+                    if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_separator))
+                    {
+                        return sax->parse_error(m_lexer.get_position(),
+                                                m_lexer.get_token_string(),
+                                                parse_error::create(101, m_lexer.get_position(),
+                                                        exception_message(token_type::name_separator, "object separator")));
+                    }
+
+                    // remember we are now inside an object
+                    states.push_back(false);
+
+                    // parse values
+                    get_token();
+                    continue;
+                }
+
+                case token_type::begin_array:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->start_array(std::size_t(-1))))
+                    {
+                        return false;
+                    }
+
+                    // closing ] -> we are done
+                    if (get_token() == token_type::end_array)
+                    {
+                        if (JSON_HEDLEY_UNLIKELY(not sax->end_array()))
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+
+                    // remember we are now inside an array
+                    states.push_back(true);
+
+                    // parse values (no need to call get_token)
+                    continue;
+                }
+
+                case token_type::value_float:
+                {
+                    const auto res = m_lexer.get_number_float();
+
+                    if (JSON_HEDLEY_UNLIKELY(not std::isfinite(res)))
+                    {
+                        return sax->parse_error(m_lexer.get_position(),
+                                                m_lexer.get_token_string(),
+                                                out_of_range::create(406, "number overflow parsing '" + m_lexer.get_token_string() + "'"));
+                    }
+
+                    if (JSON_HEDLEY_UNLIKELY(not sax->number_float(res, m_lexer.get_string())))
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
+
+                case token_type::literal_false:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->boolean(false)))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::literal_null:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->null()))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::literal_true:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->boolean(true)))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::value_integer:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->number_integer(m_lexer.get_number_integer())))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::value_string:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->string(m_lexer.get_string())))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::value_unsigned:
+                {
+                    if (JSON_HEDLEY_UNLIKELY(not sax->number_unsigned(m_lexer.get_number_unsigned())))
+                    {
+                        return false;
+                    }
+                    break;
+                }
+
+                case token_type::parse_error:
+                {
+                    // using "uninitialized" to avoid "expected" message
+                    return sax->parse_error(m_lexer.get_position(),
+                                            m_lexer.get_token_string(),
+                                            parse_error::create(101, m_lexer.get_position(),
+                                                    exception_message(token_type::uninitialized, "value")));
+                }
+
+                default: // the last token was unexpected
+                {
+                    return sax->parse_error(m_lexer.get_position(),
+                                            m_lexer.get_token_string(),
+                                            parse_error::create(101, m_lexer.get_position(),
+                                                    exception_message(token_type::literal_or_value, "value")));
+                }
                 }
             }
             else
@@ -9135,7 +9135,7 @@ class parser
         return error_msg;
     }
 
-  private:
+private:
     /// callback function
     const parser_callback_t callback = nullptr;
     /// the type of the last read token
@@ -9172,7 +9172,7 @@ end_value (`1`) models past the end.
 */
 class primitive_iterator_t
 {
-  private:
+private:
     using difference_type = std::ptrdiff_t;
     static constexpr difference_type begin_value = 0;
     static constexpr difference_type end_value = begin_value + 1;
@@ -9180,7 +9180,7 @@ class primitive_iterator_t
     /// iterator as signed integer type
     difference_type m_it = (std::numeric_limits<std::ptrdiff_t>::min)();
 
-  public:
+public:
     constexpr difference_type get_value() const noexcept
     {
         return m_it;
@@ -9357,7 +9357,7 @@ class iter_impl
     static_assert(is_basic_json<typename std::remove_const<BasicJsonType>::type>::value,
                   "iter_impl only accepts (const) basic_json");
 
-  public:
+public:
 
     /// The std::iterator class template (used as a base class to provide typedefs) is deprecated in C++17.
     /// The C++ Standard has never required user-defined iterators to derive from std::iterator.
@@ -9395,23 +9395,23 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-            {
-                m_it.object_iterator = typename object_t::iterator();
-                break;
-            }
+        case value_t::object:
+        {
+            m_it.object_iterator = typename object_t::iterator();
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_it.array_iterator = typename array_t::iterator();
-                break;
-            }
+        case value_t::array:
+        {
+            m_it.array_iterator = typename array_t::iterator();
+            break;
+        }
 
-            default:
-            {
-                m_it.primitive_iterator = primitive_iterator_t();
-                break;
-            }
+        default:
+        {
+            m_it.primitive_iterator = primitive_iterator_t();
+            break;
+        }
         }
     }
 
@@ -9470,7 +9470,7 @@ class iter_impl
         return *this;
     }
 
-  private:
+private:
     /*!
     @brief set the iterator to the first value
     @pre The iterator is initialized; i.e. `m_object != nullptr`.
@@ -9481,30 +9481,30 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-            {
-                m_it.object_iterator = m_object->m_value.object->begin();
-                break;
-            }
+        case value_t::object:
+        {
+            m_it.object_iterator = m_object->m_value.object->begin();
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_it.array_iterator = m_object->m_value.array->begin();
-                break;
-            }
+        case value_t::array:
+        {
+            m_it.array_iterator = m_object->m_value.array->begin();
+            break;
+        }
 
-            case value_t::null:
-            {
-                // set to end so begin()==end() is true: null is empty
-                m_it.primitive_iterator.set_end();
-                break;
-            }
+        case value_t::null:
+        {
+            // set to end so begin()==end() is true: null is empty
+            m_it.primitive_iterator.set_end();
+            break;
+        }
 
-            default:
-            {
-                m_it.primitive_iterator.set_begin();
-                break;
-            }
+        default:
+        {
+            m_it.primitive_iterator.set_begin();
+            break;
+        }
         }
     }
 
@@ -9518,27 +9518,27 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-            {
-                m_it.object_iterator = m_object->m_value.object->end();
-                break;
-            }
+        case value_t::object:
+        {
+            m_it.object_iterator = m_object->m_value.object->end();
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_it.array_iterator = m_object->m_value.array->end();
-                break;
-            }
+        case value_t::array:
+        {
+            m_it.array_iterator = m_object->m_value.array->end();
+            break;
+        }
 
-            default:
-            {
-                m_it.primitive_iterator.set_end();
-                break;
-            }
+        default:
+        {
+            m_it.primitive_iterator.set_end();
+            break;
+        }
         }
     }
 
-  public:
+public:
     /*!
     @brief return a reference to the value pointed to by the iterator
     @pre The iterator is initialized; i.e. `m_object != nullptr`.
@@ -9549,30 +9549,30 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
+        case value_t::object:
+        {
+            assert(m_it.object_iterator != m_object->m_value.object->end());
+            return m_it.object_iterator->second;
+        }
+
+        case value_t::array:
+        {
+            assert(m_it.array_iterator != m_object->m_value.array->end());
+            return *m_it.array_iterator;
+        }
+
+        case value_t::null:
+            JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+
+        default:
+        {
+            if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.is_begin()))
             {
-                assert(m_it.object_iterator != m_object->m_value.object->end());
-                return m_it.object_iterator->second;
+                return *m_object;
             }
 
-            case value_t::array:
-            {
-                assert(m_it.array_iterator != m_object->m_value.array->end());
-                return *m_it.array_iterator;
-            }
-
-            case value_t::null:
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
-
-            default:
-            {
-                if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.is_begin()))
-                {
-                    return *m_object;
-                }
-
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
-            }
+            JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+        }
         }
     }
 
@@ -9586,27 +9586,27 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
+        case value_t::object:
+        {
+            assert(m_it.object_iterator != m_object->m_value.object->end());
+            return &(m_it.object_iterator->second);
+        }
+
+        case value_t::array:
+        {
+            assert(m_it.array_iterator != m_object->m_value.array->end());
+            return &*m_it.array_iterator;
+        }
+
+        default:
+        {
+            if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.is_begin()))
             {
-                assert(m_it.object_iterator != m_object->m_value.object->end());
-                return &(m_it.object_iterator->second);
+                return m_object;
             }
 
-            case value_t::array:
-            {
-                assert(m_it.array_iterator != m_object->m_value.array->end());
-                return &*m_it.array_iterator;
-            }
-
-            default:
-            {
-                if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.is_begin()))
-                {
-                    return m_object;
-                }
-
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
-            }
+            JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+        }
         }
     }
 
@@ -9631,23 +9631,23 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-            {
-                std::advance(m_it.object_iterator, 1);
-                break;
-            }
+        case value_t::object:
+        {
+            std::advance(m_it.object_iterator, 1);
+            break;
+        }
 
-            case value_t::array:
-            {
-                std::advance(m_it.array_iterator, 1);
-                break;
-            }
+        case value_t::array:
+        {
+            std::advance(m_it.array_iterator, 1);
+            break;
+        }
 
-            default:
-            {
-                ++m_it.primitive_iterator;
-                break;
-            }
+        default:
+        {
+            ++m_it.primitive_iterator;
+            break;
+        }
         }
 
         return *this;
@@ -9674,23 +9674,23 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-            {
-                std::advance(m_it.object_iterator, -1);
-                break;
-            }
+        case value_t::object:
+        {
+            std::advance(m_it.object_iterator, -1);
+            break;
+        }
 
-            case value_t::array:
-            {
-                std::advance(m_it.array_iterator, -1);
-                break;
-            }
+        case value_t::array:
+        {
+            std::advance(m_it.array_iterator, -1);
+            break;
+        }
 
-            default:
-            {
-                --m_it.primitive_iterator;
-                break;
-            }
+        default:
+        {
+            --m_it.primitive_iterator;
+            break;
+        }
         }
 
         return *this;
@@ -9712,14 +9712,14 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-                return (m_it.object_iterator == other.m_it.object_iterator);
+        case value_t::object:
+            return (m_it.object_iterator == other.m_it.object_iterator);
 
-            case value_t::array:
-                return (m_it.array_iterator == other.m_it.array_iterator);
+        case value_t::array:
+            return (m_it.array_iterator == other.m_it.array_iterator);
 
-            default:
-                return (m_it.primitive_iterator == other.m_it.primitive_iterator);
+        default:
+            return (m_it.primitive_iterator == other.m_it.primitive_iterator);
         }
     }
 
@@ -9748,14 +9748,14 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-                JSON_THROW(invalid_iterator::create(213, "cannot compare order of object iterators"));
+        case value_t::object:
+            JSON_THROW(invalid_iterator::create(213, "cannot compare order of object iterators"));
 
-            case value_t::array:
-                return (m_it.array_iterator < other.m_it.array_iterator);
+        case value_t::array:
+            return (m_it.array_iterator < other.m_it.array_iterator);
 
-            default:
-                return (m_it.primitive_iterator < other.m_it.primitive_iterator);
+        default:
+            return (m_it.primitive_iterator < other.m_it.primitive_iterator);
         }
     }
 
@@ -9796,20 +9796,20 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-                JSON_THROW(invalid_iterator::create(209, "cannot use offsets with object iterators"));
+        case value_t::object:
+            JSON_THROW(invalid_iterator::create(209, "cannot use offsets with object iterators"));
 
-            case value_t::array:
-            {
-                std::advance(m_it.array_iterator, i);
-                break;
-            }
+        case value_t::array:
+        {
+            std::advance(m_it.array_iterator, i);
+            break;
+        }
 
-            default:
-            {
-                m_it.primitive_iterator += i;
-                break;
-            }
+        default:
+        {
+            m_it.primitive_iterator += i;
+            break;
+        }
         }
 
         return *this;
@@ -9867,14 +9867,14 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-                JSON_THROW(invalid_iterator::create(209, "cannot use offsets with object iterators"));
+        case value_t::object:
+            JSON_THROW(invalid_iterator::create(209, "cannot use offsets with object iterators"));
 
-            case value_t::array:
-                return m_it.array_iterator - other.m_it.array_iterator;
+        case value_t::array:
+            return m_it.array_iterator - other.m_it.array_iterator;
 
-            default:
-                return m_it.primitive_iterator - other.m_it.primitive_iterator;
+        default:
+            return m_it.primitive_iterator - other.m_it.primitive_iterator;
         }
     }
 
@@ -9888,24 +9888,24 @@ class iter_impl
 
         switch (m_object->m_type)
         {
-            case value_t::object:
-                JSON_THROW(invalid_iterator::create(208, "cannot use operator[] for object iterators"));
+        case value_t::object:
+            JSON_THROW(invalid_iterator::create(208, "cannot use operator[] for object iterators"));
 
-            case value_t::array:
-                return *std::next(m_it.array_iterator, n);
+        case value_t::array:
+            return *std::next(m_it.array_iterator, n);
 
-            case value_t::null:
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+        case value_t::null:
+            JSON_THROW(invalid_iterator::create(214, "cannot get value"));
 
-            default:
+        default:
+        {
+            if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.get_value() == -n))
             {
-                if (JSON_HEDLEY_LIKELY(m_it.primitive_iterator.get_value() == -n))
-                {
-                    return *m_object;
-                }
-
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                return *m_object;
             }
+
+            JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+        }
         }
     }
 
@@ -9934,7 +9934,7 @@ class iter_impl
         return operator*();
     }
 
-  private:
+private:
     /// associated JSON instance
     pointer m_object = nullptr;
     /// the actual iterator of the associated instance
@@ -9981,7 +9981,7 @@ create @ref const_reverse_iterator).
 template<typename Base>
 class json_reverse_iterator : public std::reverse_iterator<Base>
 {
-  public:
+public:
     using difference_type = std::ptrdiff_t;
     /// shortcut to the reverse iterator adapter
     using base_iterator = std::reverse_iterator<Base>;
@@ -10095,7 +10095,7 @@ class json_pointer
     NLOHMANN_BASIC_JSON_TPL_DECLARATION
     friend class basic_json;
 
-  public:
+public:
     /*!
     @brief create JSON pointer
 
@@ -10393,7 +10393,7 @@ class json_pointer
         return reference_tokens.empty();
     }
 
-  private:
+private:
     /*!
     @param[in] s  reference token to be converted into an array index
 
@@ -10446,50 +10446,50 @@ class json_pointer
         {
             switch (result->type())
             {
-                case detail::value_t::null:
+            case detail::value_t::null:
+            {
+                if (reference_token == "0")
                 {
-                    if (reference_token == "0")
-                    {
-                        // start a new array if reference token is 0
-                        result = &result->operator[](0);
-                    }
-                    else
-                    {
-                        // start a new object otherwise
-                        result = &result->operator[](reference_token);
-                    }
-                    break;
+                    // start a new array if reference token is 0
+                    result = &result->operator[](0);
                 }
-
-                case detail::value_t::object:
+                else
                 {
-                    // create an entry in the object
+                    // start a new object otherwise
                     result = &result->operator[](reference_token);
-                    break;
                 }
+                break;
+            }
 
-                case detail::value_t::array:
+            case detail::value_t::object:
+            {
+                // create an entry in the object
+                result = &result->operator[](reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                // create an entry in the array
+                JSON_TRY
                 {
-                    // create an entry in the array
-                    JSON_TRY
-                    {
-                        result = &result->operator[](static_cast<size_type>(array_index(reference_token)));
-                    }
-                    JSON_CATCH(std::invalid_argument&)
-                    {
-                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                    }
-                    break;
+                    result = &result->operator[](static_cast<size_type>(array_index(reference_token)));
                 }
+                JSON_CATCH(std::invalid_argument&)
+                {
+                    JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                }
+                break;
+            }
 
-                /*
-                The following code is only reached if there exists a reference
-                token _and_ the current value is primitive. In this case, we have
-                an error situation, because primitive values may only occur as
-                single value; that is, with an empty list of reference tokens.
-                */
-                default:
-                    JSON_THROW(detail::type_error::create(313, "invalid value to unflatten"));
+            /*
+            The following code is only reached if there exists a reference
+            token _and_ the current value is primitive. In this case, we have
+            an error situation, because primitive values may only occur as
+            single value; that is, with an empty list of reference tokens.
+            */
+            default:
+                JSON_THROW(detail::type_error::create(313, "invalid value to unflatten"));
             }
         }
 
@@ -10539,46 +10539,46 @@ class json_pointer
 
             switch (ptr->type())
             {
-                case detail::value_t::object:
+            case detail::value_t::object:
+            {
+                // use unchecked object access
+                ptr = &ptr->operator[](reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                // error condition (cf. RFC 6901, Sect. 4)
+                if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
                 {
-                    // use unchecked object access
-                    ptr = &ptr->operator[](reference_token);
-                    break;
+                    JSON_THROW(detail::parse_error::create(106, 0,
+                                                           "array index '" + reference_token +
+                                                           "' must not begin with '0'"));
                 }
 
-                case detail::value_t::array:
+                if (reference_token == "-")
                 {
-                    // error condition (cf. RFC 6901, Sect. 4)
-                    if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
-                    {
-                        JSON_THROW(detail::parse_error::create(106, 0,
-                                                               "array index '" + reference_token +
-                                                               "' must not begin with '0'"));
-                    }
-
-                    if (reference_token == "-")
-                    {
-                        // explicitly treat "-" as index beyond the end
-                        ptr = &ptr->operator[](ptr->m_value.array->size());
-                    }
-                    else
-                    {
-                        // convert array index to number; unchecked access
-                        JSON_TRY
-                        {
-                            ptr = &ptr->operator[](
-                                static_cast<size_type>(array_index(reference_token)));
-                        }
-                        JSON_CATCH(std::invalid_argument&)
-                        {
-                            JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                        }
-                    }
-                    break;
+                    // explicitly treat "-" as index beyond the end
+                    ptr = &ptr->operator[](ptr->m_value.array->size());
                 }
+                else
+                {
+                    // convert array index to number; unchecked access
+                    JSON_TRY
+                    {
+                        ptr = &ptr->operator[](
+                            static_cast<size_type>(array_index(reference_token)));
+                    }
+                    JSON_CATCH(std::invalid_argument&)
+                    {
+                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                    }
+                }
+                break;
+            }
 
-                default:
-                    JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
+            default:
+                JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
             }
         }
 
@@ -10598,45 +10598,45 @@ class json_pointer
         {
             switch (ptr->type())
             {
-                case detail::value_t::object:
+            case detail::value_t::object:
+            {
+                // note: at performs range check
+                ptr = &ptr->at(reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
                 {
-                    // note: at performs range check
-                    ptr = &ptr->at(reference_token);
-                    break;
+                    // "-" always fails the range check
+                    JSON_THROW(detail::out_of_range::create(402,
+                                                            "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
+                                                            ") is out of range"));
                 }
 
-                case detail::value_t::array:
+                // error condition (cf. RFC 6901, Sect. 4)
+                if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
                 {
-                    if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
-                    {
-                        // "-" always fails the range check
-                        JSON_THROW(detail::out_of_range::create(402,
-                                                                "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
-                                                                ") is out of range"));
-                    }
-
-                    // error condition (cf. RFC 6901, Sect. 4)
-                    if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
-                    {
-                        JSON_THROW(detail::parse_error::create(106, 0,
-                                                               "array index '" + reference_token +
-                                                               "' must not begin with '0'"));
-                    }
-
-                    // note: at performs range check
-                    JSON_TRY
-                    {
-                        ptr = &ptr->at(static_cast<size_type>(array_index(reference_token)));
-                    }
-                    JSON_CATCH(std::invalid_argument&)
-                    {
-                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                    }
-                    break;
+                    JSON_THROW(detail::parse_error::create(106, 0,
+                                                           "array index '" + reference_token +
+                                                           "' must not begin with '0'"));
                 }
 
-                default:
-                    JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
+                // note: at performs range check
+                JSON_TRY
+                {
+                    ptr = &ptr->at(static_cast<size_type>(array_index(reference_token)));
+                }
+                JSON_CATCH(std::invalid_argument&)
+                {
+                    JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                }
+                break;
+            }
+
+            default:
+                JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
             }
         }
 
@@ -10663,46 +10663,46 @@ class json_pointer
         {
             switch (ptr->type())
             {
-                case detail::value_t::object:
+            case detail::value_t::object:
+            {
+                // use unchecked object access
+                ptr = &ptr->operator[](reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
                 {
-                    // use unchecked object access
-                    ptr = &ptr->operator[](reference_token);
-                    break;
+                    // "-" cannot be used for const access
+                    JSON_THROW(detail::out_of_range::create(402,
+                                                            "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
+                                                            ") is out of range"));
                 }
 
-                case detail::value_t::array:
+                // error condition (cf. RFC 6901, Sect. 4)
+                if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
                 {
-                    if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
-                    {
-                        // "-" cannot be used for const access
-                        JSON_THROW(detail::out_of_range::create(402,
-                                                                "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
-                                                                ") is out of range"));
-                    }
-
-                    // error condition (cf. RFC 6901, Sect. 4)
-                    if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
-                    {
-                        JSON_THROW(detail::parse_error::create(106, 0,
-                                                               "array index '" + reference_token +
-                                                               "' must not begin with '0'"));
-                    }
-
-                    // use unchecked array access
-                    JSON_TRY
-                    {
-                        ptr = &ptr->operator[](
-                            static_cast<size_type>(array_index(reference_token)));
-                    }
-                    JSON_CATCH(std::invalid_argument&)
-                    {
-                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                    }
-                    break;
+                    JSON_THROW(detail::parse_error::create(106, 0,
+                                                           "array index '" + reference_token +
+                                                           "' must not begin with '0'"));
                 }
 
-                default:
-                    JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
+                // use unchecked array access
+                JSON_TRY
+                {
+                    ptr = &ptr->operator[](
+                        static_cast<size_type>(array_index(reference_token)));
+                }
+                JSON_CATCH(std::invalid_argument&)
+                {
+                    JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                }
+                break;
+            }
+
+            default:
+                JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
             }
         }
 
@@ -10722,45 +10722,45 @@ class json_pointer
         {
             switch (ptr->type())
             {
-                case detail::value_t::object:
+            case detail::value_t::object:
+            {
+                // note: at performs range check
+                ptr = &ptr->at(reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
                 {
-                    // note: at performs range check
-                    ptr = &ptr->at(reference_token);
-                    break;
+                    // "-" always fails the range check
+                    JSON_THROW(detail::out_of_range::create(402,
+                                                            "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
+                                                            ") is out of range"));
                 }
 
-                case detail::value_t::array:
+                // error condition (cf. RFC 6901, Sect. 4)
+                if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
                 {
-                    if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
-                    {
-                        // "-" always fails the range check
-                        JSON_THROW(detail::out_of_range::create(402,
-                                                                "array index '-' (" + std::to_string(ptr->m_value.array->size()) +
-                                                                ") is out of range"));
-                    }
-
-                    // error condition (cf. RFC 6901, Sect. 4)
-                    if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
-                    {
-                        JSON_THROW(detail::parse_error::create(106, 0,
-                                                               "array index '" + reference_token +
-                                                               "' must not begin with '0'"));
-                    }
-
-                    // note: at performs range check
-                    JSON_TRY
-                    {
-                        ptr = &ptr->at(static_cast<size_type>(array_index(reference_token)));
-                    }
-                    JSON_CATCH(std::invalid_argument&)
-                    {
-                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                    }
-                    break;
+                    JSON_THROW(detail::parse_error::create(106, 0,
+                                                           "array index '" + reference_token +
+                                                           "' must not begin with '0'"));
                 }
 
-                default:
-                    JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
+                // note: at performs range check
+                JSON_TRY
+                {
+                    ptr = &ptr->at(static_cast<size_type>(array_index(reference_token)));
+                }
+                JSON_CATCH(std::invalid_argument&)
+                {
+                    JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                }
+                break;
+            }
+
+            default:
+                JSON_THROW(detail::out_of_range::create(404, "unresolved reference token '" + reference_token + "'"));
             }
         }
 
@@ -10778,59 +10778,59 @@ class json_pointer
         {
             switch (ptr->type())
             {
-                case detail::value_t::object:
+            case detail::value_t::object:
+            {
+                if (not ptr->contains(reference_token))
                 {
-                    if (not ptr->contains(reference_token))
-                    {
-                        // we did not find the key in the object
-                        return false;
-                    }
-
-                    ptr = &ptr->operator[](reference_token);
-                    break;
-                }
-
-                case detail::value_t::array:
-                {
-                    if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
-                    {
-                        // "-" always fails the range check
-                        return false;
-                    }
-
-                    // error condition (cf. RFC 6901, Sect. 4)
-                    if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
-                    {
-                        JSON_THROW(detail::parse_error::create(106, 0,
-                                                               "array index '" + reference_token +
-                                                               "' must not begin with '0'"));
-                    }
-
-                    JSON_TRY
-                    {
-                        const auto idx = static_cast<size_type>(array_index(reference_token));
-                        if (idx >= ptr->size())
-                        {
-                            // index out of range
-                            return false;
-                        }
-
-                        ptr = &ptr->operator[](idx);
-                        break;
-                    }
-                    JSON_CATCH(std::invalid_argument&)
-                    {
-                        JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
-                    }
-                    break;
-                }
-
-                default:
-                {
-                    // we do not expect primitive values if there is still a
-                    // reference token to process
+                    // we did not find the key in the object
                     return false;
                 }
+
+                ptr = &ptr->operator[](reference_token);
+                break;
+            }
+
+            case detail::value_t::array:
+            {
+                if (JSON_HEDLEY_UNLIKELY(reference_token == "-"))
+                {
+                    // "-" always fails the range check
+                    return false;
+                }
+
+                // error condition (cf. RFC 6901, Sect. 4)
+                if (JSON_HEDLEY_UNLIKELY(reference_token.size() > 1 and reference_token[0] == '0'))
+                {
+                    JSON_THROW(detail::parse_error::create(106, 0,
+                                                           "array index '" + reference_token +
+                                                           "' must not begin with '0'"));
+                }
+
+                JSON_TRY
+                {
+                    const auto idx = static_cast<size_type>(array_index(reference_token));
+                    if (idx >= ptr->size())
+                    {
+                        // index out of range
+                        return false;
+                    }
+
+                    ptr = &ptr->operator[](idx);
+                    break;
+                }
+                JSON_CATCH(std::invalid_argument&)
+                {
+                    JSON_THROW(detail::parse_error::create(109, 0, "array index '" + reference_token + "' is not a number"));
+                }
+                break;
+            }
+
+            default:
+            {
+                // we do not expect primitive values if there is still a
+                // reference token to process
+                return false;
+            }
             }
         }
 
@@ -10961,49 +10961,49 @@ class json_pointer
     {
         switch (value.type())
         {
-            case detail::value_t::array:
+        case detail::value_t::array:
+        {
+            if (value.m_value.array->empty())
             {
-                if (value.m_value.array->empty())
-                {
-                    // flatten empty array as null
-                    result[reference_string] = nullptr;
-                }
-                else
-                {
-                    // iterate array and use index as reference string
-                    for (std::size_t i = 0; i < value.m_value.array->size(); ++i)
-                    {
-                        flatten(reference_string + "/" + std::to_string(i),
-                                value.m_value.array->operator[](i), result);
-                    }
-                }
-                break;
+                // flatten empty array as null
+                result[reference_string] = nullptr;
             }
+            else
+            {
+                // iterate array and use index as reference string
+                for (std::size_t i = 0; i < value.m_value.array->size(); ++i)
+                {
+                    flatten(reference_string + "/" + std::to_string(i),
+                            value.m_value.array->operator[](i), result);
+                }
+            }
+            break;
+        }
 
-            case detail::value_t::object:
+        case detail::value_t::object:
+        {
+            if (value.m_value.object->empty())
             {
-                if (value.m_value.object->empty())
-                {
-                    // flatten empty object as null
-                    result[reference_string] = nullptr;
-                }
-                else
-                {
-                    // iterate object and use keys as reference string
-                    for (const auto& element : *value.m_value.object)
-                    {
-                        flatten(reference_string + "/" + escape(element.first), element.second, result);
-                    }
-                }
-                break;
+                // flatten empty object as null
+                result[reference_string] = nullptr;
             }
+            else
+            {
+                // iterate object and use keys as reference string
+                for (const auto& element : *value.m_value.object)
+                {
+                    flatten(reference_string + "/" + escape(element.first), element.second, result);
+                }
+            }
+            break;
+        }
 
-            default:
-            {
-                // add primitive value with its reference string
-                result[reference_string] = value;
-                break;
-            }
+        default:
+        {
+            // add primitive value with its reference string
+            result[reference_string] = value;
+            break;
+        }
         }
     }
 
@@ -11100,7 +11100,7 @@ namespace detail
 template<typename BasicJsonType>
 class json_ref
 {
-  public:
+public:
     using value_type = BasicJsonType;
 
     json_ref(value_type&& value)
@@ -11148,7 +11148,7 @@ class json_ref
         return static_cast<value_type const*>(value_ref);
     }
 
-  private:
+private:
     mutable value_type owned_value = nullptr;
     value_type* value_ref = nullptr;
     const bool is_rvalue;
@@ -11210,7 +11210,7 @@ using output_adapter_t = std::shared_ptr<output_adapter_protocol<CharType>>;
 template<typename CharType>
 class output_vector_adapter : public output_adapter_protocol<CharType>
 {
-  public:
+public:
     explicit output_vector_adapter(std::vector<CharType>& vec) noexcept
         : v(vec)
     {}
@@ -11226,7 +11226,7 @@ class output_vector_adapter : public output_adapter_protocol<CharType>
         std::copy(s, s + length, std::back_inserter(v));
     }
 
-  private:
+private:
     std::vector<CharType>& v;
 };
 
@@ -11234,7 +11234,7 @@ class output_vector_adapter : public output_adapter_protocol<CharType>
 template<typename CharType>
 class output_stream_adapter : public output_adapter_protocol<CharType>
 {
-  public:
+public:
     explicit output_stream_adapter(std::basic_ostream<CharType>& s) noexcept
         : stream(s)
     {}
@@ -11250,7 +11250,7 @@ class output_stream_adapter : public output_adapter_protocol<CharType>
         stream.write(s, static_cast<std::streamsize>(length));
     }
 
-  private:
+private:
     std::basic_ostream<CharType>& stream;
 };
 
@@ -11258,7 +11258,7 @@ class output_stream_adapter : public output_adapter_protocol<CharType>
 template<typename CharType, typename StringType = std::basic_string<CharType>>
 class output_string_adapter : public output_adapter_protocol<CharType>
 {
-  public:
+public:
     explicit output_string_adapter(StringType& s) noexcept
         : str(s)
     {}
@@ -11274,14 +11274,14 @@ class output_string_adapter : public output_adapter_protocol<CharType>
         str.append(s, length);
     }
 
-  private:
+private:
     StringType& str;
 };
 
 template<typename CharType, typename StringType = std::basic_string<CharType>>
 class output_adapter
 {
-  public:
+public:
     output_adapter(std::vector<CharType>& vec)
         : oa(std::make_shared<output_vector_adapter<CharType>>(vec)) {}
 
@@ -11296,7 +11296,7 @@ class output_adapter
         return oa;
     }
 
-  private:
+private:
     output_adapter_t<CharType> oa = nullptr;
 };
 }  // namespace detail
@@ -11319,7 +11319,7 @@ class binary_writer
 {
     using string_t = typename BasicJsonType::string_t;
 
-  public:
+public:
     /*!
     @brief create a binary writer
 
@@ -11338,16 +11338,16 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::object:
-            {
-                write_bson_object(*j.m_value.object);
-                break;
-            }
+        case value_t::object:
+        {
+            write_bson_object(*j.m_value.object);
+            break;
+        }
 
-            default:
-            {
-                JSON_THROW(type_error::create(317, "to serialize to BSON, top-level type must be object, but is " + std::string(j.type_name())));
-            }
+        default:
+        {
+            JSON_THROW(type_error::create(317, "to serialize to BSON, top-level type must be object, but is " + std::string(j.type_name())));
+        }
         }
     }
 
@@ -11358,240 +11358,240 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::null:
-            {
-                oa->write_character(to_char_type(0xF6));
-                break;
-            }
+        case value_t::null:
+        {
+            oa->write_character(to_char_type(0xF6));
+            break;
+        }
 
-            case value_t::boolean:
-            {
-                oa->write_character(j.m_value.boolean
-                                    ? to_char_type(0xF5)
-                                    : to_char_type(0xF4));
-                break;
-            }
+        case value_t::boolean:
+        {
+            oa->write_character(j.m_value.boolean
+                                ? to_char_type(0xF5)
+                                : to_char_type(0xF4));
+            break;
+        }
 
-            case value_t::number_integer:
+        case value_t::number_integer:
+        {
+            if (j.m_value.number_integer >= 0)
             {
-                if (j.m_value.number_integer >= 0)
+                // CBOR does not differentiate between positive signed
+                // integers and unsigned integers. Therefore, we used the
+                // code from the value_t::number_unsigned case here.
+                if (j.m_value.number_integer <= 0x17)
                 {
-                    // CBOR does not differentiate between positive signed
-                    // integers and unsigned integers. Therefore, we used the
-                    // code from the value_t::number_unsigned case here.
-                    if (j.m_value.number_integer <= 0x17)
-                    {
-                        write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer <= (std::numeric_limits<std::uint8_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x18));
-                        write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer <= (std::numeric_limits<std::uint16_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x19));
-                        write_number(static_cast<std::uint16_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer <= (std::numeric_limits<std::uint32_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x1A));
-                        write_number(static_cast<std::uint32_t>(j.m_value.number_integer));
-                    }
-                    else
-                    {
-                        oa->write_character(to_char_type(0x1B));
-                        write_number(static_cast<std::uint64_t>(j.m_value.number_integer));
-                    }
+                    write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
                 }
-                else
-                {
-                    // The conversions below encode the sign in the first
-                    // byte, and the value is converted to a positive number.
-                    const auto positive_number = -1 - j.m_value.number_integer;
-                    if (j.m_value.number_integer >= -24)
-                    {
-                        write_number(static_cast<std::uint8_t>(0x20 + positive_number));
-                    }
-                    else if (positive_number <= (std::numeric_limits<std::uint8_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x38));
-                        write_number(static_cast<std::uint8_t>(positive_number));
-                    }
-                    else if (positive_number <= (std::numeric_limits<std::uint16_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x39));
-                        write_number(static_cast<std::uint16_t>(positive_number));
-                    }
-                    else if (positive_number <= (std::numeric_limits<std::uint32_t>::max)())
-                    {
-                        oa->write_character(to_char_type(0x3A));
-                        write_number(static_cast<std::uint32_t>(positive_number));
-                    }
-                    else
-                    {
-                        oa->write_character(to_char_type(0x3B));
-                        write_number(static_cast<std::uint64_t>(positive_number));
-                    }
-                }
-                break;
-            }
-
-            case value_t::number_unsigned:
-            {
-                if (j.m_value.number_unsigned <= 0x17)
-                {
-                    write_number(static_cast<std::uint8_t>(j.m_value.number_unsigned));
-                }
-                else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint8_t>::max)())
+                else if (j.m_value.number_integer <= (std::numeric_limits<std::uint8_t>::max)())
                 {
                     oa->write_character(to_char_type(0x18));
-                    write_number(static_cast<std::uint8_t>(j.m_value.number_unsigned));
+                    write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
                 }
-                else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint16_t>::max)())
+                else if (j.m_value.number_integer <= (std::numeric_limits<std::uint16_t>::max)())
                 {
                     oa->write_character(to_char_type(0x19));
-                    write_number(static_cast<std::uint16_t>(j.m_value.number_unsigned));
+                    write_number(static_cast<std::uint16_t>(j.m_value.number_integer));
                 }
-                else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint32_t>::max)())
+                else if (j.m_value.number_integer <= (std::numeric_limits<std::uint32_t>::max)())
                 {
                     oa->write_character(to_char_type(0x1A));
-                    write_number(static_cast<std::uint32_t>(j.m_value.number_unsigned));
+                    write_number(static_cast<std::uint32_t>(j.m_value.number_integer));
                 }
                 else
                 {
                     oa->write_character(to_char_type(0x1B));
-                    write_number(static_cast<std::uint64_t>(j.m_value.number_unsigned));
+                    write_number(static_cast<std::uint64_t>(j.m_value.number_integer));
                 }
-                break;
             }
-
-            case value_t::number_float:
+            else
             {
-                oa->write_character(get_cbor_float_prefix(j.m_value.number_float));
-                write_number(j.m_value.number_float);
-                break;
+                // The conversions below encode the sign in the first
+                // byte, and the value is converted to a positive number.
+                const auto positive_number = -1 - j.m_value.number_integer;
+                if (j.m_value.number_integer >= -24)
+                {
+                    write_number(static_cast<std::uint8_t>(0x20 + positive_number));
+                }
+                else if (positive_number <= (std::numeric_limits<std::uint8_t>::max)())
+                {
+                    oa->write_character(to_char_type(0x38));
+                    write_number(static_cast<std::uint8_t>(positive_number));
+                }
+                else if (positive_number <= (std::numeric_limits<std::uint16_t>::max)())
+                {
+                    oa->write_character(to_char_type(0x39));
+                    write_number(static_cast<std::uint16_t>(positive_number));
+                }
+                else if (positive_number <= (std::numeric_limits<std::uint32_t>::max)())
+                {
+                    oa->write_character(to_char_type(0x3A));
+                    write_number(static_cast<std::uint32_t>(positive_number));
+                }
+                else
+                {
+                    oa->write_character(to_char_type(0x3B));
+                    write_number(static_cast<std::uint64_t>(positive_number));
+                }
             }
+            break;
+        }
 
-            case value_t::string:
+        case value_t::number_unsigned:
+        {
+            if (j.m_value.number_unsigned <= 0x17)
             {
-                // step 1: write control byte and the string length
-                const auto N = j.m_value.string->size();
-                if (N <= 0x17)
-                {
-                    write_number(static_cast<std::uint8_t>(0x60 + N));
-                }
-                else if (N <= (std::numeric_limits<std::uint8_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x78));
-                    write_number(static_cast<std::uint8_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x79));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x7A));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
-                // LCOV_EXCL_START
-                else if (N <= (std::numeric_limits<std::uint64_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x7B));
-                    write_number(static_cast<std::uint64_t>(N));
-                }
-                // LCOV_EXCL_STOP
-
-                // step 2: write the string
-                oa->write_characters(
-                    reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
-                    j.m_value.string->size());
-                break;
+                write_number(static_cast<std::uint8_t>(j.m_value.number_unsigned));
             }
-
-            case value_t::array:
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint8_t>::max)())
             {
-                // step 1: write control byte and the array size
-                const auto N = j.m_value.array->size();
-                if (N <= 0x17)
-                {
-                    write_number(static_cast<std::uint8_t>(0x80 + N));
-                }
-                else if (N <= (std::numeric_limits<std::uint8_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x98));
-                    write_number(static_cast<std::uint8_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x99));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x9A));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
-                // LCOV_EXCL_START
-                else if (N <= (std::numeric_limits<std::uint64_t>::max)())
-                {
-                    oa->write_character(to_char_type(0x9B));
-                    write_number(static_cast<std::uint64_t>(N));
-                }
-                // LCOV_EXCL_STOP
-
-                // step 2: write each element
-                for (const auto& el : *j.m_value.array)
-                {
-                    write_cbor(el);
-                }
-                break;
+                oa->write_character(to_char_type(0x18));
+                write_number(static_cast<std::uint8_t>(j.m_value.number_unsigned));
             }
-
-            case value_t::object:
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint16_t>::max)())
             {
-                // step 1: write control byte and the object size
-                const auto N = j.m_value.object->size();
-                if (N <= 0x17)
-                {
-                    write_number(static_cast<std::uint8_t>(0xA0 + N));
-                }
-                else if (N <= (std::numeric_limits<std::uint8_t>::max)())
-                {
-                    oa->write_character(to_char_type(0xB8));
-                    write_number(static_cast<std::uint8_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    oa->write_character(to_char_type(0xB9));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    oa->write_character(to_char_type(0xBA));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
-                // LCOV_EXCL_START
-                else if (N <= (std::numeric_limits<std::uint64_t>::max)())
-                {
-                    oa->write_character(to_char_type(0xBB));
-                    write_number(static_cast<std::uint64_t>(N));
-                }
-                // LCOV_EXCL_STOP
-
-                // step 2: write each element
-                for (const auto& el : *j.m_value.object)
-                {
-                    write_cbor(el.first);
-                    write_cbor(el.second);
-                }
-                break;
+                oa->write_character(to_char_type(0x19));
+                write_number(static_cast<std::uint16_t>(j.m_value.number_unsigned));
             }
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                oa->write_character(to_char_type(0x1A));
+                write_number(static_cast<std::uint32_t>(j.m_value.number_unsigned));
+            }
+            else
+            {
+                oa->write_character(to_char_type(0x1B));
+                write_number(static_cast<std::uint64_t>(j.m_value.number_unsigned));
+            }
+            break;
+        }
 
-            default:
-                break;
+        case value_t::number_float:
+        {
+            oa->write_character(get_cbor_float_prefix(j.m_value.number_float));
+            write_number(j.m_value.number_float);
+            break;
+        }
+
+        case value_t::string:
+        {
+            // step 1: write control byte and the string length
+            const auto N = j.m_value.string->size();
+            if (N <= 0x17)
+            {
+                write_number(static_cast<std::uint8_t>(0x60 + N));
+            }
+            else if (N <= (std::numeric_limits<std::uint8_t>::max)())
+            {
+                oa->write_character(to_char_type(0x78));
+                write_number(static_cast<std::uint8_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                oa->write_character(to_char_type(0x79));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                oa->write_character(to_char_type(0x7A));
+                write_number(static_cast<std::uint32_t>(N));
+            }
+            // LCOV_EXCL_START
+            else if (N <= (std::numeric_limits<std::uint64_t>::max)())
+            {
+                oa->write_character(to_char_type(0x7B));
+                write_number(static_cast<std::uint64_t>(N));
+            }
+            // LCOV_EXCL_STOP
+
+            // step 2: write the string
+            oa->write_characters(
+                reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
+                j.m_value.string->size());
+            break;
+        }
+
+        case value_t::array:
+        {
+            // step 1: write control byte and the array size
+            const auto N = j.m_value.array->size();
+            if (N <= 0x17)
+            {
+                write_number(static_cast<std::uint8_t>(0x80 + N));
+            }
+            else if (N <= (std::numeric_limits<std::uint8_t>::max)())
+            {
+                oa->write_character(to_char_type(0x98));
+                write_number(static_cast<std::uint8_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                oa->write_character(to_char_type(0x99));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                oa->write_character(to_char_type(0x9A));
+                write_number(static_cast<std::uint32_t>(N));
+            }
+            // LCOV_EXCL_START
+            else if (N <= (std::numeric_limits<std::uint64_t>::max)())
+            {
+                oa->write_character(to_char_type(0x9B));
+                write_number(static_cast<std::uint64_t>(N));
+            }
+            // LCOV_EXCL_STOP
+
+            // step 2: write each element
+            for (const auto& el : *j.m_value.array)
+            {
+                write_cbor(el);
+            }
+            break;
+        }
+
+        case value_t::object:
+        {
+            // step 1: write control byte and the object size
+            const auto N = j.m_value.object->size();
+            if (N <= 0x17)
+            {
+                write_number(static_cast<std::uint8_t>(0xA0 + N));
+            }
+            else if (N <= (std::numeric_limits<std::uint8_t>::max)())
+            {
+                oa->write_character(to_char_type(0xB8));
+                write_number(static_cast<std::uint8_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                oa->write_character(to_char_type(0xB9));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                oa->write_character(to_char_type(0xBA));
+                write_number(static_cast<std::uint32_t>(N));
+            }
+            // LCOV_EXCL_START
+            else if (N <= (std::numeric_limits<std::uint64_t>::max)())
+            {
+                oa->write_character(to_char_type(0xBB));
+                write_number(static_cast<std::uint64_t>(N));
+            }
+            // LCOV_EXCL_STOP
+
+            // step 2: write each element
+            for (const auto& el : *j.m_value.object)
+            {
+                write_cbor(el.first);
+                write_cbor(el.second);
+            }
+            break;
+        }
+
+        default:
+            break;
         }
     }
 
@@ -11602,98 +11602,27 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::null: // nil
-            {
-                oa->write_character(to_char_type(0xC0));
-                break;
-            }
+        case value_t::null: // nil
+        {
+            oa->write_character(to_char_type(0xC0));
+            break;
+        }
 
-            case value_t::boolean: // true and false
-            {
-                oa->write_character(j.m_value.boolean
-                                    ? to_char_type(0xC3)
-                                    : to_char_type(0xC2));
-                break;
-            }
+        case value_t::boolean: // true and false
+        {
+            oa->write_character(j.m_value.boolean
+                                ? to_char_type(0xC3)
+                                : to_char_type(0xC2));
+            break;
+        }
 
-            case value_t::number_integer:
+        case value_t::number_integer:
+        {
+            if (j.m_value.number_integer >= 0)
             {
-                if (j.m_value.number_integer >= 0)
-                {
-                    // MessagePack does not differentiate between positive
-                    // signed integers and unsigned integers. Therefore, we used
-                    // the code from the value_t::number_unsigned case here.
-                    if (j.m_value.number_unsigned < 128)
-                    {
-                        // positive fixnum
-                        write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint8_t>::max)())
-                    {
-                        // uint 8
-                        oa->write_character(to_char_type(0xCC));
-                        write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint16_t>::max)())
-                    {
-                        // uint 16
-                        oa->write_character(to_char_type(0xCD));
-                        write_number(static_cast<std::uint16_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint32_t>::max)())
-                    {
-                        // uint 32
-                        oa->write_character(to_char_type(0xCE));
-                        write_number(static_cast<std::uint32_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint64_t>::max)())
-                    {
-                        // uint 64
-                        oa->write_character(to_char_type(0xCF));
-                        write_number(static_cast<std::uint64_t>(j.m_value.number_integer));
-                    }
-                }
-                else
-                {
-                    if (j.m_value.number_integer >= -32)
-                    {
-                        // negative fixnum
-                        write_number(static_cast<std::int8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer >= (std::numeric_limits<std::int8_t>::min)() and
-                             j.m_value.number_integer <= (std::numeric_limits<std::int8_t>::max)())
-                    {
-                        // int 8
-                        oa->write_character(to_char_type(0xD0));
-                        write_number(static_cast<std::int8_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer >= (std::numeric_limits<std::int16_t>::min)() and
-                             j.m_value.number_integer <= (std::numeric_limits<std::int16_t>::max)())
-                    {
-                        // int 16
-                        oa->write_character(to_char_type(0xD1));
-                        write_number(static_cast<std::int16_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer >= (std::numeric_limits<std::int32_t>::min)() and
-                             j.m_value.number_integer <= (std::numeric_limits<std::int32_t>::max)())
-                    {
-                        // int 32
-                        oa->write_character(to_char_type(0xD2));
-                        write_number(static_cast<std::int32_t>(j.m_value.number_integer));
-                    }
-                    else if (j.m_value.number_integer >= (std::numeric_limits<std::int64_t>::min)() and
-                             j.m_value.number_integer <= (std::numeric_limits<std::int64_t>::max)())
-                    {
-                        // int 64
-                        oa->write_character(to_char_type(0xD3));
-                        write_number(static_cast<std::int64_t>(j.m_value.number_integer));
-                    }
-                }
-                break;
-            }
-
-            case value_t::number_unsigned:
-            {
+                // MessagePack does not differentiate between positive
+                // signed integers and unsigned integers. Therefore, we used
+                // the code from the value_t::number_unsigned case here.
                 if (j.m_value.number_unsigned < 128)
                 {
                     // positive fixnum
@@ -11723,114 +11652,185 @@ class binary_writer
                     oa->write_character(to_char_type(0xCF));
                     write_number(static_cast<std::uint64_t>(j.m_value.number_integer));
                 }
-                break;
             }
-
-            case value_t::number_float:
+            else
             {
-                oa->write_character(get_msgpack_float_prefix(j.m_value.number_float));
-                write_number(j.m_value.number_float);
-                break;
+                if (j.m_value.number_integer >= -32)
+                {
+                    // negative fixnum
+                    write_number(static_cast<std::int8_t>(j.m_value.number_integer));
+                }
+                else if (j.m_value.number_integer >= (std::numeric_limits<std::int8_t>::min)() and
+                         j.m_value.number_integer <= (std::numeric_limits<std::int8_t>::max)())
+                {
+                    // int 8
+                    oa->write_character(to_char_type(0xD0));
+                    write_number(static_cast<std::int8_t>(j.m_value.number_integer));
+                }
+                else if (j.m_value.number_integer >= (std::numeric_limits<std::int16_t>::min)() and
+                         j.m_value.number_integer <= (std::numeric_limits<std::int16_t>::max)())
+                {
+                    // int 16
+                    oa->write_character(to_char_type(0xD1));
+                    write_number(static_cast<std::int16_t>(j.m_value.number_integer));
+                }
+                else if (j.m_value.number_integer >= (std::numeric_limits<std::int32_t>::min)() and
+                         j.m_value.number_integer <= (std::numeric_limits<std::int32_t>::max)())
+                {
+                    // int 32
+                    oa->write_character(to_char_type(0xD2));
+                    write_number(static_cast<std::int32_t>(j.m_value.number_integer));
+                }
+                else if (j.m_value.number_integer >= (std::numeric_limits<std::int64_t>::min)() and
+                         j.m_value.number_integer <= (std::numeric_limits<std::int64_t>::max)())
+                {
+                    // int 64
+                    oa->write_character(to_char_type(0xD3));
+                    write_number(static_cast<std::int64_t>(j.m_value.number_integer));
+                }
             }
+            break;
+        }
 
-            case value_t::string:
+        case value_t::number_unsigned:
+        {
+            if (j.m_value.number_unsigned < 128)
             {
-                // step 1: write control byte and the string length
-                const auto N = j.m_value.string->size();
-                if (N <= 31)
-                {
-                    // fixstr
-                    write_number(static_cast<std::uint8_t>(0xA0 | N));
-                }
-                else if (N <= (std::numeric_limits<std::uint8_t>::max)())
-                {
-                    // str 8
-                    oa->write_character(to_char_type(0xD9));
-                    write_number(static_cast<std::uint8_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    // str 16
-                    oa->write_character(to_char_type(0xDA));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    // str 32
-                    oa->write_character(to_char_type(0xDB));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
-
-                // step 2: write the string
-                oa->write_characters(
-                    reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
-                    j.m_value.string->size());
-                break;
+                // positive fixnum
+                write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
             }
-
-            case value_t::array:
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint8_t>::max)())
             {
-                // step 1: write control byte and the array size
-                const auto N = j.m_value.array->size();
-                if (N <= 15)
-                {
-                    // fixarray
-                    write_number(static_cast<std::uint8_t>(0x90 | N));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    // array 16
-                    oa->write_character(to_char_type(0xDC));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    // array 32
-                    oa->write_character(to_char_type(0xDD));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
-
-                // step 2: write each element
-                for (const auto& el : *j.m_value.array)
-                {
-                    write_msgpack(el);
-                }
-                break;
+                // uint 8
+                oa->write_character(to_char_type(0xCC));
+                write_number(static_cast<std::uint8_t>(j.m_value.number_integer));
             }
-
-            case value_t::object:
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint16_t>::max)())
             {
-                // step 1: write control byte and the object size
-                const auto N = j.m_value.object->size();
-                if (N <= 15)
-                {
-                    // fixmap
-                    write_number(static_cast<std::uint8_t>(0x80 | (N & 0xF)));
-                }
-                else if (N <= (std::numeric_limits<std::uint16_t>::max)())
-                {
-                    // map 16
-                    oa->write_character(to_char_type(0xDE));
-                    write_number(static_cast<std::uint16_t>(N));
-                }
-                else if (N <= (std::numeric_limits<std::uint32_t>::max)())
-                {
-                    // map 32
-                    oa->write_character(to_char_type(0xDF));
-                    write_number(static_cast<std::uint32_t>(N));
-                }
+                // uint 16
+                oa->write_character(to_char_type(0xCD));
+                write_number(static_cast<std::uint16_t>(j.m_value.number_integer));
+            }
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                // uint 32
+                oa->write_character(to_char_type(0xCE));
+                write_number(static_cast<std::uint32_t>(j.m_value.number_integer));
+            }
+            else if (j.m_value.number_unsigned <= (std::numeric_limits<std::uint64_t>::max)())
+            {
+                // uint 64
+                oa->write_character(to_char_type(0xCF));
+                write_number(static_cast<std::uint64_t>(j.m_value.number_integer));
+            }
+            break;
+        }
 
-                // step 2: write each element
-                for (const auto& el : *j.m_value.object)
-                {
-                    write_msgpack(el.first);
-                    write_msgpack(el.second);
-                }
-                break;
+        case value_t::number_float:
+        {
+            oa->write_character(get_msgpack_float_prefix(j.m_value.number_float));
+            write_number(j.m_value.number_float);
+            break;
+        }
+
+        case value_t::string:
+        {
+            // step 1: write control byte and the string length
+            const auto N = j.m_value.string->size();
+            if (N <= 31)
+            {
+                // fixstr
+                write_number(static_cast<std::uint8_t>(0xA0 | N));
+            }
+            else if (N <= (std::numeric_limits<std::uint8_t>::max)())
+            {
+                // str 8
+                oa->write_character(to_char_type(0xD9));
+                write_number(static_cast<std::uint8_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                // str 16
+                oa->write_character(to_char_type(0xDA));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                // str 32
+                oa->write_character(to_char_type(0xDB));
+                write_number(static_cast<std::uint32_t>(N));
             }
 
-            default:
-                break;
+            // step 2: write the string
+            oa->write_characters(
+                reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
+                j.m_value.string->size());
+            break;
+        }
+
+        case value_t::array:
+        {
+            // step 1: write control byte and the array size
+            const auto N = j.m_value.array->size();
+            if (N <= 15)
+            {
+                // fixarray
+                write_number(static_cast<std::uint8_t>(0x90 | N));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                // array 16
+                oa->write_character(to_char_type(0xDC));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                // array 32
+                oa->write_character(to_char_type(0xDD));
+                write_number(static_cast<std::uint32_t>(N));
+            }
+
+            // step 2: write each element
+            for (const auto& el : *j.m_value.array)
+            {
+                write_msgpack(el);
+            }
+            break;
+        }
+
+        case value_t::object:
+        {
+            // step 1: write control byte and the object size
+            const auto N = j.m_value.object->size();
+            if (N <= 15)
+            {
+                // fixmap
+                write_number(static_cast<std::uint8_t>(0x80 | (N & 0xF)));
+            }
+            else if (N <= (std::numeric_limits<std::uint16_t>::max)())
+            {
+                // map 16
+                oa->write_character(to_char_type(0xDE));
+                write_number(static_cast<std::uint16_t>(N));
+            }
+            else if (N <= (std::numeric_limits<std::uint32_t>::max)())
+            {
+                // map 32
+                oa->write_character(to_char_type(0xDF));
+                write_number(static_cast<std::uint32_t>(N));
+            }
+
+            // step 2: write each element
+            for (const auto& el : *j.m_value.object)
+            {
+                write_msgpack(el.first);
+                write_msgpack(el.second);
+            }
+            break;
+        }
+
+        default:
+            break;
         }
     }
 
@@ -11845,157 +11845,157 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::null:
+        case value_t::null:
+        {
+            if (add_prefix)
             {
-                if (add_prefix)
+                oa->write_character(to_char_type('Z'));
+            }
+            break;
+        }
+
+        case value_t::boolean:
+        {
+            if (add_prefix)
+            {
+                oa->write_character(j.m_value.boolean
+                                    ? to_char_type('T')
+                                    : to_char_type('F'));
+            }
+            break;
+        }
+
+        case value_t::number_integer:
+        {
+            write_number_with_ubjson_prefix(j.m_value.number_integer, add_prefix);
+            break;
+        }
+
+        case value_t::number_unsigned:
+        {
+            write_number_with_ubjson_prefix(j.m_value.number_unsigned, add_prefix);
+            break;
+        }
+
+        case value_t::number_float:
+        {
+            write_number_with_ubjson_prefix(j.m_value.number_float, add_prefix);
+            break;
+        }
+
+        case value_t::string:
+        {
+            if (add_prefix)
+            {
+                oa->write_character(to_char_type('S'));
+            }
+            write_number_with_ubjson_prefix(j.m_value.string->size(), true);
+            oa->write_characters(
+                reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
+                j.m_value.string->size());
+            break;
+        }
+
+        case value_t::array:
+        {
+            if (add_prefix)
+            {
+                oa->write_character(to_char_type('['));
+            }
+
+            bool prefix_required = true;
+            if (use_type and not j.m_value.array->empty())
+            {
+                assert(use_count);
+                const CharType first_prefix = ubjson_prefix(j.front());
+                const bool same_prefix = std::all_of(j.begin() + 1, j.end(),
+                                                     [this, first_prefix](const BasicJsonType & v)
                 {
-                    oa->write_character(to_char_type('Z'));
-                }
-                break;
-            }
+                    return ubjson_prefix(v) == first_prefix;
+                });
 
-            case value_t::boolean:
-            {
-                if (add_prefix)
+                if (same_prefix)
                 {
-                    oa->write_character(j.m_value.boolean
-                                        ? to_char_type('T')
-                                        : to_char_type('F'));
+                    prefix_required = false;
+                    oa->write_character(to_char_type('$'));
+                    oa->write_character(first_prefix);
                 }
-                break;
             }
 
-            case value_t::number_integer:
+            if (use_count)
             {
-                write_number_with_ubjson_prefix(j.m_value.number_integer, add_prefix);
-                break;
+                oa->write_character(to_char_type('#'));
+                write_number_with_ubjson_prefix(j.m_value.array->size(), true);
             }
 
-            case value_t::number_unsigned:
+            for (const auto& el : *j.m_value.array)
             {
-                write_number_with_ubjson_prefix(j.m_value.number_unsigned, add_prefix);
-                break;
+                write_ubjson(el, use_count, use_type, prefix_required);
             }
 
-            case value_t::number_float:
+            if (not use_count)
             {
-                write_number_with_ubjson_prefix(j.m_value.number_float, add_prefix);
-                break;
+                oa->write_character(to_char_type(']'));
             }
 
-            case value_t::string:
+            break;
+        }
+
+        case value_t::object:
+        {
+            if (add_prefix)
             {
-                if (add_prefix)
+                oa->write_character(to_char_type('{'));
+            }
+
+            bool prefix_required = true;
+            if (use_type and not j.m_value.object->empty())
+            {
+                assert(use_count);
+                const CharType first_prefix = ubjson_prefix(j.front());
+                const bool same_prefix = std::all_of(j.begin(), j.end(),
+                                                     [this, first_prefix](const BasicJsonType & v)
                 {
-                    oa->write_character(to_char_type('S'));
+                    return ubjson_prefix(v) == first_prefix;
+                });
+
+                if (same_prefix)
+                {
+                    prefix_required = false;
+                    oa->write_character(to_char_type('$'));
+                    oa->write_character(first_prefix);
                 }
-                write_number_with_ubjson_prefix(j.m_value.string->size(), true);
+            }
+
+            if (use_count)
+            {
+                oa->write_character(to_char_type('#'));
+                write_number_with_ubjson_prefix(j.m_value.object->size(), true);
+            }
+
+            for (const auto& el : *j.m_value.object)
+            {
+                write_number_with_ubjson_prefix(el.first.size(), true);
                 oa->write_characters(
-                    reinterpret_cast<const CharType*>(j.m_value.string->c_str()),
-                    j.m_value.string->size());
-                break;
+                    reinterpret_cast<const CharType*>(el.first.c_str()),
+                    el.first.size());
+                write_ubjson(el.second, use_count, use_type, prefix_required);
             }
 
-            case value_t::array:
+            if (not use_count)
             {
-                if (add_prefix)
-                {
-                    oa->write_character(to_char_type('['));
-                }
-
-                bool prefix_required = true;
-                if (use_type and not j.m_value.array->empty())
-                {
-                    assert(use_count);
-                    const CharType first_prefix = ubjson_prefix(j.front());
-                    const bool same_prefix = std::all_of(j.begin() + 1, j.end(),
-                                                         [this, first_prefix](const BasicJsonType & v)
-                    {
-                        return ubjson_prefix(v) == first_prefix;
-                    });
-
-                    if (same_prefix)
-                    {
-                        prefix_required = false;
-                        oa->write_character(to_char_type('$'));
-                        oa->write_character(first_prefix);
-                    }
-                }
-
-                if (use_count)
-                {
-                    oa->write_character(to_char_type('#'));
-                    write_number_with_ubjson_prefix(j.m_value.array->size(), true);
-                }
-
-                for (const auto& el : *j.m_value.array)
-                {
-                    write_ubjson(el, use_count, use_type, prefix_required);
-                }
-
-                if (not use_count)
-                {
-                    oa->write_character(to_char_type(']'));
-                }
-
-                break;
+                oa->write_character(to_char_type('}'));
             }
 
-            case value_t::object:
-            {
-                if (add_prefix)
-                {
-                    oa->write_character(to_char_type('{'));
-                }
+            break;
+        }
 
-                bool prefix_required = true;
-                if (use_type and not j.m_value.object->empty())
-                {
-                    assert(use_count);
-                    const CharType first_prefix = ubjson_prefix(j.front());
-                    const bool same_prefix = std::all_of(j.begin(), j.end(),
-                                                         [this, first_prefix](const BasicJsonType & v)
-                    {
-                        return ubjson_prefix(v) == first_prefix;
-                    });
-
-                    if (same_prefix)
-                    {
-                        prefix_required = false;
-                        oa->write_character(to_char_type('$'));
-                        oa->write_character(first_prefix);
-                    }
-                }
-
-                if (use_count)
-                {
-                    oa->write_character(to_char_type('#'));
-                    write_number_with_ubjson_prefix(j.m_value.object->size(), true);
-                }
-
-                for (const auto& el : *j.m_value.object)
-                {
-                    write_number_with_ubjson_prefix(el.first.size(), true);
-                    oa->write_characters(
-                        reinterpret_cast<const CharType*>(el.first.c_str()),
-                        el.first.size());
-                    write_ubjson(el.second, use_count, use_type, prefix_required);
-                }
-
-                if (not use_count)
-                {
-                    oa->write_character(to_char_type('}'));
-                }
-
-                break;
-            }
-
-            default:
-                break;
+        default:
+            break;
         }
     }
 
-  private:
+private:
     //////////
     // BSON //
     //////////
@@ -12192,35 +12192,35 @@ class binary_writer
         const auto header_size = calc_bson_entry_header_size(name);
         switch (j.type())
         {
-            case value_t::object:
-                return header_size + calc_bson_object_size(*j.m_value.object);
+        case value_t::object:
+            return header_size + calc_bson_object_size(*j.m_value.object);
 
-            case value_t::array:
-                return header_size + calc_bson_array_size(*j.m_value.array);
+        case value_t::array:
+            return header_size + calc_bson_array_size(*j.m_value.array);
 
-            case value_t::boolean:
-                return header_size + 1ul;
+        case value_t::boolean:
+            return header_size + 1ul;
 
-            case value_t::number_float:
-                return header_size + 8ul;
+        case value_t::number_float:
+            return header_size + 8ul;
 
-            case value_t::number_integer:
-                return header_size + calc_bson_integer_size(j.m_value.number_integer);
+        case value_t::number_integer:
+            return header_size + calc_bson_integer_size(j.m_value.number_integer);
 
-            case value_t::number_unsigned:
-                return header_size + calc_bson_unsigned_size(j.m_value.number_unsigned);
+        case value_t::number_unsigned:
+            return header_size + calc_bson_unsigned_size(j.m_value.number_unsigned);
 
-            case value_t::string:
-                return header_size + calc_bson_string_size(*j.m_value.string);
+        case value_t::string:
+            return header_size + calc_bson_string_size(*j.m_value.string);
 
-            case value_t::null:
-                return header_size + 0ul;
+        case value_t::null:
+            return header_size + 0ul;
 
-            // LCOV_EXCL_START
-            default:
-                assert(false);
-                return 0ul;
-                // LCOV_EXCL_STOP
+        // LCOV_EXCL_START
+        default:
+            assert(false);
+            return 0ul;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -12236,35 +12236,35 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::object:
-                return write_bson_object_entry(name, *j.m_value.object);
+        case value_t::object:
+            return write_bson_object_entry(name, *j.m_value.object);
 
-            case value_t::array:
-                return write_bson_array(name, *j.m_value.array);
+        case value_t::array:
+            return write_bson_array(name, *j.m_value.array);
 
-            case value_t::boolean:
-                return write_bson_boolean(name, j.m_value.boolean);
+        case value_t::boolean:
+            return write_bson_boolean(name, j.m_value.boolean);
 
-            case value_t::number_float:
-                return write_bson_double(name, j.m_value.number_float);
+        case value_t::number_float:
+            return write_bson_double(name, j.m_value.number_float);
 
-            case value_t::number_integer:
-                return write_bson_integer(name, j.m_value.number_integer);
+        case value_t::number_integer:
+            return write_bson_integer(name, j.m_value.number_integer);
 
-            case value_t::number_unsigned:
-                return write_bson_unsigned(name, j.m_value.number_unsigned);
+        case value_t::number_unsigned:
+            return write_bson_unsigned(name, j.m_value.number_unsigned);
 
-            case value_t::string:
-                return write_bson_string(name, *j.m_value.string);
+        case value_t::string:
+            return write_bson_string(name, *j.m_value.string);
 
-            case value_t::null:
-                return write_bson_null(name);
+        case value_t::null:
+            return write_bson_null(name);
 
-            // LCOV_EXCL_START
-            default:
-                assert(false);
-                return;
-                // LCOV_EXCL_STOP
+        // LCOV_EXCL_START
+        default:
+            assert(false);
+            return;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -12466,70 +12466,70 @@ class binary_writer
     {
         switch (j.type())
         {
-            case value_t::null:
-                return 'Z';
+        case value_t::null:
+            return 'Z';
 
-            case value_t::boolean:
-                return j.m_value.boolean ? 'T' : 'F';
+        case value_t::boolean:
+            return j.m_value.boolean ? 'T' : 'F';
 
-            case value_t::number_integer:
+        case value_t::number_integer:
+        {
+            if ((std::numeric_limits<std::int8_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int8_t>::max)())
             {
-                if ((std::numeric_limits<std::int8_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int8_t>::max)())
-                {
-                    return 'i';
-                }
-                if ((std::numeric_limits<std::uint8_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::uint8_t>::max)())
-                {
-                    return 'U';
-                }
-                if ((std::numeric_limits<std::int16_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int16_t>::max)())
-                {
-                    return 'I';
-                }
-                if ((std::numeric_limits<std::int32_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int32_t>::max)())
-                {
-                    return 'l';
-                }
-                // no check and assume int64_t (see note above)
-                return 'L';
+                return 'i';
             }
-
-            case value_t::number_unsigned:
+            if ((std::numeric_limits<std::uint8_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::uint8_t>::max)())
             {
-                if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int8_t>::max)()))
-                {
-                    return 'i';
-                }
-                if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::uint8_t>::max)()))
-                {
-                    return 'U';
-                }
-                if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int16_t>::max)()))
-                {
-                    return 'I';
-                }
-                if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int32_t>::max)()))
-                {
-                    return 'l';
-                }
-                // no check and assume int64_t (see note above)
-                return 'L';
+                return 'U';
             }
+            if ((std::numeric_limits<std::int16_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int16_t>::max)())
+            {
+                return 'I';
+            }
+            if ((std::numeric_limits<std::int32_t>::min)() <= j.m_value.number_integer and j.m_value.number_integer <= (std::numeric_limits<std::int32_t>::max)())
+            {
+                return 'l';
+            }
+            // no check and assume int64_t (see note above)
+            return 'L';
+        }
 
-            case value_t::number_float:
-                return get_ubjson_float_prefix(j.m_value.number_float);
+        case value_t::number_unsigned:
+        {
+            if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int8_t>::max)()))
+            {
+                return 'i';
+            }
+            if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::uint8_t>::max)()))
+            {
+                return 'U';
+            }
+            if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int16_t>::max)()))
+            {
+                return 'I';
+            }
+            if (j.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int32_t>::max)()))
+            {
+                return 'l';
+            }
+            // no check and assume int64_t (see note above)
+            return 'L';
+        }
 
-            case value_t::string:
-                return 'S';
+        case value_t::number_float:
+            return get_ubjson_float_prefix(j.m_value.number_float);
 
-            case value_t::array:
-                return '[';
+        case value_t::string:
+            return 'S';
 
-            case value_t::object:
-                return '{';
+        case value_t::array:
+            return '[';
 
-            default:  // discarded values
-                return 'N';
+        case value_t::object:
+            return '{';
+
+        default:  // discarded values
+            return 'N';
         }
     }
 
@@ -12575,7 +12575,7 @@ class binary_writer
         oa->write_characters(vec.data(), sizeof(NumberType));
     }
 
-  public:
+public:
     // The following to_char_type functions are implement the conversion
     // between uint8_t and CharType. In case CharType is not unsigned,
     // such a conversion is required to allow values greater than 128.
@@ -12616,7 +12616,7 @@ class binary_writer
         return x;
     }
 
-  private:
+private:
     /// whether we can assume little endianess
     const bool is_little_endian = binary_reader<BasicJsonType>::little_endianess();
 
@@ -13793,7 +13793,7 @@ class serializer
     static constexpr std::uint8_t UTF8_ACCEPT = 0;
     static constexpr std::uint8_t UTF8_REJECT = 1;
 
-  public:
+public:
     /*!
     @param[in] s  output stream to serialize to
     @param[in] ichar  indentation character to use
@@ -13841,195 +13841,195 @@ class serializer
     {
         switch (val.m_type)
         {
-            case value_t::object:
+        case value_t::object:
+        {
+            if (val.m_value.object->empty())
             {
-                if (val.m_value.object->empty())
+                o->write_characters("{}", 2);
+                return;
+            }
+
+            if (pretty_print)
+            {
+                o->write_characters("{\n", 2);
+
+                // variable to hold indentation for recursive calls
+                const auto new_indent = current_indent + indent_step;
+                if (JSON_HEDLEY_UNLIKELY(indent_string.size() < new_indent))
                 {
-                    o->write_characters("{}", 2);
-                    return;
+                    indent_string.resize(indent_string.size() * 2, ' ');
                 }
 
-                if (pretty_print)
+                // first n-1 elements
+                auto i = val.m_value.object->cbegin();
+                for (std::size_t cnt = 0; cnt < val.m_value.object->size() - 1; ++cnt, ++i)
                 {
-                    o->write_characters("{\n", 2);
-
-                    // variable to hold indentation for recursive calls
-                    const auto new_indent = current_indent + indent_step;
-                    if (JSON_HEDLEY_UNLIKELY(indent_string.size() < new_indent))
-                    {
-                        indent_string.resize(indent_string.size() * 2, ' ');
-                    }
-
-                    // first n-1 elements
-                    auto i = val.m_value.object->cbegin();
-                    for (std::size_t cnt = 0; cnt < val.m_value.object->size() - 1; ++cnt, ++i)
-                    {
-                        o->write_characters(indent_string.c_str(), new_indent);
-                        o->write_character('\"');
-                        dump_escaped(i->first, ensure_ascii);
-                        o->write_characters("\": ", 3);
-                        dump(i->second, true, ensure_ascii, indent_step, new_indent);
-                        o->write_characters(",\n", 2);
-                    }
-
-                    // last element
-                    assert(i != val.m_value.object->cend());
-                    assert(std::next(i) == val.m_value.object->cend());
                     o->write_characters(indent_string.c_str(), new_indent);
                     o->write_character('\"');
                     dump_escaped(i->first, ensure_ascii);
                     o->write_characters("\": ", 3);
                     dump(i->second, true, ensure_ascii, indent_step, new_indent);
-
-                    o->write_character('\n');
-                    o->write_characters(indent_string.c_str(), current_indent);
-                    o->write_character('}');
+                    o->write_characters(",\n", 2);
                 }
-                else
+
+                // last element
+                assert(i != val.m_value.object->cend());
+                assert(std::next(i) == val.m_value.object->cend());
+                o->write_characters(indent_string.c_str(), new_indent);
+                o->write_character('\"');
+                dump_escaped(i->first, ensure_ascii);
+                o->write_characters("\": ", 3);
+                dump(i->second, true, ensure_ascii, indent_step, new_indent);
+
+                o->write_character('\n');
+                o->write_characters(indent_string.c_str(), current_indent);
+                o->write_character('}');
+            }
+            else
+            {
+                o->write_character('{');
+
+                // first n-1 elements
+                auto i = val.m_value.object->cbegin();
+                for (std::size_t cnt = 0; cnt < val.m_value.object->size() - 1; ++cnt, ++i)
                 {
-                    o->write_character('{');
-
-                    // first n-1 elements
-                    auto i = val.m_value.object->cbegin();
-                    for (std::size_t cnt = 0; cnt < val.m_value.object->size() - 1; ++cnt, ++i)
-                    {
-                        o->write_character('\"');
-                        dump_escaped(i->first, ensure_ascii);
-                        o->write_characters("\":", 2);
-                        dump(i->second, false, ensure_ascii, indent_step, current_indent);
-                        o->write_character(',');
-                    }
-
-                    // last element
-                    assert(i != val.m_value.object->cend());
-                    assert(std::next(i) == val.m_value.object->cend());
                     o->write_character('\"');
                     dump_escaped(i->first, ensure_ascii);
                     o->write_characters("\":", 2);
                     dump(i->second, false, ensure_ascii, indent_step, current_indent);
-
-                    o->write_character('}');
+                    o->write_character(',');
                 }
 
+                // last element
+                assert(i != val.m_value.object->cend());
+                assert(std::next(i) == val.m_value.object->cend());
+                o->write_character('\"');
+                dump_escaped(i->first, ensure_ascii);
+                o->write_characters("\":", 2);
+                dump(i->second, false, ensure_ascii, indent_step, current_indent);
+
+                o->write_character('}');
+            }
+
+            return;
+        }
+
+        case value_t::array:
+        {
+            if (val.m_value.array->empty())
+            {
+                o->write_characters("[]", 2);
                 return;
             }
 
-            case value_t::array:
+            if (pretty_print)
             {
-                if (val.m_value.array->empty())
+                o->write_characters("[\n", 2);
+
+                // variable to hold indentation for recursive calls
+                const auto new_indent = current_indent + indent_step;
+                if (JSON_HEDLEY_UNLIKELY(indent_string.size() < new_indent))
                 {
-                    o->write_characters("[]", 2);
-                    return;
+                    indent_string.resize(indent_string.size() * 2, ' ');
                 }
 
-                if (pretty_print)
+                // first n-1 elements
+                for (auto i = val.m_value.array->cbegin();
+                        i != val.m_value.array->cend() - 1; ++i)
                 {
-                    o->write_characters("[\n", 2);
-
-                    // variable to hold indentation for recursive calls
-                    const auto new_indent = current_indent + indent_step;
-                    if (JSON_HEDLEY_UNLIKELY(indent_string.size() < new_indent))
-                    {
-                        indent_string.resize(indent_string.size() * 2, ' ');
-                    }
-
-                    // first n-1 elements
-                    for (auto i = val.m_value.array->cbegin();
-                            i != val.m_value.array->cend() - 1; ++i)
-                    {
-                        o->write_characters(indent_string.c_str(), new_indent);
-                        dump(*i, true, ensure_ascii, indent_step, new_indent);
-                        o->write_characters(",\n", 2);
-                    }
-
-                    // last element
-                    assert(not val.m_value.array->empty());
                     o->write_characters(indent_string.c_str(), new_indent);
-                    dump(val.m_value.array->back(), true, ensure_ascii, indent_step, new_indent);
-
-                    o->write_character('\n');
-                    o->write_characters(indent_string.c_str(), current_indent);
-                    o->write_character(']');
+                    dump(*i, true, ensure_ascii, indent_step, new_indent);
+                    o->write_characters(",\n", 2);
                 }
-                else
+
+                // last element
+                assert(not val.m_value.array->empty());
+                o->write_characters(indent_string.c_str(), new_indent);
+                dump(val.m_value.array->back(), true, ensure_ascii, indent_step, new_indent);
+
+                o->write_character('\n');
+                o->write_characters(indent_string.c_str(), current_indent);
+                o->write_character(']');
+            }
+            else
+            {
+                o->write_character('[');
+
+                // first n-1 elements
+                for (auto i = val.m_value.array->cbegin();
+                        i != val.m_value.array->cend() - 1; ++i)
                 {
-                    o->write_character('[');
-
-                    // first n-1 elements
-                    for (auto i = val.m_value.array->cbegin();
-                            i != val.m_value.array->cend() - 1; ++i)
-                    {
-                        dump(*i, false, ensure_ascii, indent_step, current_indent);
-                        o->write_character(',');
-                    }
-
-                    // last element
-                    assert(not val.m_value.array->empty());
-                    dump(val.m_value.array->back(), false, ensure_ascii, indent_step, current_indent);
-
-                    o->write_character(']');
+                    dump(*i, false, ensure_ascii, indent_step, current_indent);
+                    o->write_character(',');
                 }
 
-                return;
+                // last element
+                assert(not val.m_value.array->empty());
+                dump(val.m_value.array->back(), false, ensure_ascii, indent_step, current_indent);
+
+                o->write_character(']');
             }
 
-            case value_t::string:
+            return;
+        }
+
+        case value_t::string:
+        {
+            o->write_character('\"');
+            dump_escaped(*val.m_value.string, ensure_ascii);
+            o->write_character('\"');
+            return;
+        }
+
+        case value_t::boolean:
+        {
+            if (val.m_value.boolean)
             {
-                o->write_character('\"');
-                dump_escaped(*val.m_value.string, ensure_ascii);
-                o->write_character('\"');
-                return;
+                o->write_characters("true", 4);
             }
-
-            case value_t::boolean:
+            else
             {
-                if (val.m_value.boolean)
-                {
-                    o->write_characters("true", 4);
-                }
-                else
-                {
-                    o->write_characters("false", 5);
-                }
-                return;
+                o->write_characters("false", 5);
             }
+            return;
+        }
 
-            case value_t::number_integer:
-            {
-                dump_integer(val.m_value.number_integer);
-                return;
-            }
+        case value_t::number_integer:
+        {
+            dump_integer(val.m_value.number_integer);
+            return;
+        }
 
-            case value_t::number_unsigned:
-            {
-                dump_integer(val.m_value.number_unsigned);
-                return;
-            }
+        case value_t::number_unsigned:
+        {
+            dump_integer(val.m_value.number_unsigned);
+            return;
+        }
 
-            case value_t::number_float:
-            {
-                dump_float(val.m_value.number_float);
-                return;
-            }
+        case value_t::number_float:
+        {
+            dump_float(val.m_value.number_float);
+            return;
+        }
 
-            case value_t::discarded:
-            {
-                o->write_characters("<discarded>", 11);
-                return;
-            }
+        case value_t::discarded:
+        {
+            o->write_characters("<discarded>", 11);
+            return;
+        }
 
-            case value_t::null:
-            {
-                o->write_characters("null", 4);
-                return;
-            }
+        case value_t::null:
+        {
+            o->write_characters("null", 4);
+            return;
+        }
 
-            default:            // LCOV_EXCL_LINE
-                assert(false);  // LCOV_EXCL_LINE
+        default:            // LCOV_EXCL_LINE
+            assert(false);  // LCOV_EXCL_LINE
         }
     }
 
-  private:
+private:
     /*!
     @brief dump escaped string
 
@@ -14060,185 +14060,185 @@ class serializer
 
             switch (decode(state, codepoint, byte))
             {
-                case UTF8_ACCEPT:  // decode found a new code point
+            case UTF8_ACCEPT:  // decode found a new code point
+            {
+                switch (codepoint)
                 {
-                    switch (codepoint)
-                    {
-                        case 0x08: // backspace
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = 'b';
-                            break;
-                        }
-
-                        case 0x09: // horizontal tab
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = 't';
-                            break;
-                        }
-
-                        case 0x0A: // newline
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = 'n';
-                            break;
-                        }
-
-                        case 0x0C: // formfeed
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = 'f';
-                            break;
-                        }
-
-                        case 0x0D: // carriage return
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = 'r';
-                            break;
-                        }
-
-                        case 0x22: // quotation mark
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = '\"';
-                            break;
-                        }
-
-                        case 0x5C: // reverse solidus
-                        {
-                            string_buffer[bytes++] = '\\';
-                            string_buffer[bytes++] = '\\';
-                            break;
-                        }
-
-                        default:
-                        {
-                            // escape control characters (0x00..0x1F) or, if
-                            // ensure_ascii parameter is used, non-ASCII characters
-                            if ((codepoint <= 0x1F) or (ensure_ascii and (codepoint >= 0x7F)))
-                            {
-                                if (codepoint <= 0xFFFF)
-                                {
-                                    (std::snprintf)(string_buffer.data() + bytes, 7, "\\u%04x",
-                                                    static_cast<std::uint16_t>(codepoint));
-                                    bytes += 6;
-                                }
-                                else
-                                {
-                                    (std::snprintf)(string_buffer.data() + bytes, 13, "\\u%04x\\u%04x",
-                                                    static_cast<std::uint16_t>(0xD7C0u + (codepoint >> 10u)),
-                                                    static_cast<std::uint16_t>(0xDC00u + (codepoint & 0x3FFu)));
-                                    bytes += 12;
-                                }
-                            }
-                            else
-                            {
-                                // copy byte to buffer (all previous bytes
-                                // been copied have in default case above)
-                                string_buffer[bytes++] = s[i];
-                            }
-                            break;
-                        }
-                    }
-
-                    // write buffer and reset index; there must be 13 bytes
-                    // left, as this is the maximal number of bytes to be
-                    // written ("\uxxxx\uxxxx\0") for one code point
-                    if (string_buffer.size() - bytes < 13)
-                    {
-                        o->write_characters(string_buffer.data(), bytes);
-                        bytes = 0;
-                    }
-
-                    // remember the byte position of this accept
-                    bytes_after_last_accept = bytes;
-                    undumped_chars = 0;
+                case 0x08: // backspace
+                {
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = 'b';
                     break;
                 }
 
-                case UTF8_REJECT:  // decode found invalid UTF-8 byte
+                case 0x09: // horizontal tab
                 {
-                    switch (error_handler)
-                    {
-                        case error_handler_t::strict:
-                        {
-                            std::string sn(3, '\0');
-                            (std::snprintf)(&sn[0], sn.size(), "%.2X", byte);
-                            JSON_THROW(type_error::create(316, "invalid UTF-8 byte at index " + std::to_string(i) + ": 0x" + sn));
-                        }
-
-                        case error_handler_t::ignore:
-                        case error_handler_t::replace:
-                        {
-                            // in case we saw this character the first time, we
-                            // would like to read it again, because the byte
-                            // may be OK for itself, but just not OK for the
-                            // previous sequence
-                            if (undumped_chars > 0)
-                            {
-                                --i;
-                            }
-
-                            // reset length buffer to the last accepted index;
-                            // thus removing/ignoring the invalid characters
-                            bytes = bytes_after_last_accept;
-
-                            if (error_handler == error_handler_t::replace)
-                            {
-                                // add a replacement character
-                                if (ensure_ascii)
-                                {
-                                    string_buffer[bytes++] = '\\';
-                                    string_buffer[bytes++] = 'u';
-                                    string_buffer[bytes++] = 'f';
-                                    string_buffer[bytes++] = 'f';
-                                    string_buffer[bytes++] = 'f';
-                                    string_buffer[bytes++] = 'd';
-                                }
-                                else
-                                {
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xEF');
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBF');
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBD');
-                                }
-
-                                // write buffer and reset index; there must be 13 bytes
-                                // left, as this is the maximal number of bytes to be
-                                // written ("\uxxxx\uxxxx\0") for one code point
-                                if (string_buffer.size() - bytes < 13)
-                                {
-                                    o->write_characters(string_buffer.data(), bytes);
-                                    bytes = 0;
-                                }
-
-                                bytes_after_last_accept = bytes;
-                            }
-
-                            undumped_chars = 0;
-
-                            // continue processing the string
-                            state = UTF8_ACCEPT;
-                            break;
-                        }
-
-                        default:            // LCOV_EXCL_LINE
-                            assert(false);  // LCOV_EXCL_LINE
-                    }
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = 't';
                     break;
                 }
 
-                default:  // decode found yet incomplete multi-byte code point
+                case 0x0A: // newline
                 {
-                    if (not ensure_ascii)
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = 'n';
+                    break;
+                }
+
+                case 0x0C: // formfeed
+                {
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = 'f';
+                    break;
+                }
+
+                case 0x0D: // carriage return
+                {
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = 'r';
+                    break;
+                }
+
+                case 0x22: // quotation mark
+                {
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = '\"';
+                    break;
+                }
+
+                case 0x5C: // reverse solidus
+                {
+                    string_buffer[bytes++] = '\\';
+                    string_buffer[bytes++] = '\\';
+                    break;
+                }
+
+                default:
+                {
+                    // escape control characters (0x00..0x1F) or, if
+                    // ensure_ascii parameter is used, non-ASCII characters
+                    if ((codepoint <= 0x1F) or (ensure_ascii and (codepoint >= 0x7F)))
                     {
-                        // code point will not be escaped - copy byte to buffer
+                        if (codepoint <= 0xFFFF)
+                        {
+                            (std::snprintf)(string_buffer.data() + bytes, 7, "\\u%04x",
+                                            static_cast<std::uint16_t>(codepoint));
+                            bytes += 6;
+                        }
+                        else
+                        {
+                            (std::snprintf)(string_buffer.data() + bytes, 13, "\\u%04x\\u%04x",
+                                            static_cast<std::uint16_t>(0xD7C0u + (codepoint >> 10u)),
+                                            static_cast<std::uint16_t>(0xDC00u + (codepoint & 0x3FFu)));
+                            bytes += 12;
+                        }
+                    }
+                    else
+                    {
+                        // copy byte to buffer (all previous bytes
+                        // been copied have in default case above)
                         string_buffer[bytes++] = s[i];
                     }
-                    ++undumped_chars;
                     break;
                 }
+                }
+
+                // write buffer and reset index; there must be 13 bytes
+                // left, as this is the maximal number of bytes to be
+                // written ("\uxxxx\uxxxx\0") for one code point
+                if (string_buffer.size() - bytes < 13)
+                {
+                    o->write_characters(string_buffer.data(), bytes);
+                    bytes = 0;
+                }
+
+                // remember the byte position of this accept
+                bytes_after_last_accept = bytes;
+                undumped_chars = 0;
+                break;
+            }
+
+            case UTF8_REJECT:  // decode found invalid UTF-8 byte
+            {
+                switch (error_handler)
+                {
+                case error_handler_t::strict:
+                {
+                    std::string sn(3, '\0');
+                    (std::snprintf)(&sn[0], sn.size(), "%.2X", byte);
+                    JSON_THROW(type_error::create(316, "invalid UTF-8 byte at index " + std::to_string(i) + ": 0x" + sn));
+                }
+
+                case error_handler_t::ignore:
+                case error_handler_t::replace:
+                {
+                    // in case we saw this character the first time, we
+                    // would like to read it again, because the byte
+                    // may be OK for itself, but just not OK for the
+                    // previous sequence
+                    if (undumped_chars > 0)
+                    {
+                        --i;
+                    }
+
+                    // reset length buffer to the last accepted index;
+                    // thus removing/ignoring the invalid characters
+                    bytes = bytes_after_last_accept;
+
+                    if (error_handler == error_handler_t::replace)
+                    {
+                        // add a replacement character
+                        if (ensure_ascii)
+                        {
+                            string_buffer[bytes++] = '\\';
+                            string_buffer[bytes++] = 'u';
+                            string_buffer[bytes++] = 'f';
+                            string_buffer[bytes++] = 'f';
+                            string_buffer[bytes++] = 'f';
+                            string_buffer[bytes++] = 'd';
+                        }
+                        else
+                        {
+                            string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xEF');
+                            string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBF');
+                            string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBD');
+                        }
+
+                        // write buffer and reset index; there must be 13 bytes
+                        // left, as this is the maximal number of bytes to be
+                        // written ("\uxxxx\uxxxx\0") for one code point
+                        if (string_buffer.size() - bytes < 13)
+                        {
+                            o->write_characters(string_buffer.data(), bytes);
+                            bytes = 0;
+                        }
+
+                        bytes_after_last_accept = bytes;
+                    }
+
+                    undumped_chars = 0;
+
+                    // continue processing the string
+                    state = UTF8_ACCEPT;
+                    break;
+                }
+
+                default:            // LCOV_EXCL_LINE
+                    assert(false);  // LCOV_EXCL_LINE
+                }
+                break;
+            }
+
+            default:  // decode found yet incomplete multi-byte code point
+            {
+                if (not ensure_ascii)
+                {
+                    // code point will not be escaped - copy byte to buffer
+                    string_buffer[bytes++] = s[i];
+                }
+                ++undumped_chars;
+                break;
+            }
             }
         }
 
@@ -14256,38 +14256,38 @@ class serializer
             // we finish reading, but do not accept: string was incomplete
             switch (error_handler)
             {
-                case error_handler_t::strict:
-                {
-                    std::string sn(3, '\0');
-                    (std::snprintf)(&sn[0], sn.size(), "%.2X", static_cast<std::uint8_t>(s.back()));
-                    JSON_THROW(type_error::create(316, "incomplete UTF-8 string; last byte: 0x" + sn));
-                }
+            case error_handler_t::strict:
+            {
+                std::string sn(3, '\0');
+                (std::snprintf)(&sn[0], sn.size(), "%.2X", static_cast<std::uint8_t>(s.back()));
+                JSON_THROW(type_error::create(316, "incomplete UTF-8 string; last byte: 0x" + sn));
+            }
 
-                case error_handler_t::ignore:
-                {
-                    // write all accepted bytes
-                    o->write_characters(string_buffer.data(), bytes_after_last_accept);
-                    break;
-                }
+            case error_handler_t::ignore:
+            {
+                // write all accepted bytes
+                o->write_characters(string_buffer.data(), bytes_after_last_accept);
+                break;
+            }
 
-                case error_handler_t::replace:
+            case error_handler_t::replace:
+            {
+                // write all accepted bytes
+                o->write_characters(string_buffer.data(), bytes_after_last_accept);
+                // add a replacement character
+                if (ensure_ascii)
                 {
-                    // write all accepted bytes
-                    o->write_characters(string_buffer.data(), bytes_after_last_accept);
-                    // add a replacement character
-                    if (ensure_ascii)
-                    {
-                        o->write_characters("\\ufffd", 6);
-                    }
-                    else
-                    {
-                        o->write_characters("\xEF\xBF\xBD", 3);
-                    }
-                    break;
+                    o->write_characters("\\ufffd", 6);
                 }
+                else
+                {
+                    o->write_characters("\xEF\xBF\xBD", 3);
+                }
+                break;
+            }
 
-                default:            // LCOV_EXCL_LINE
-                    assert(false);  // LCOV_EXCL_LINE
+            default:            // LCOV_EXCL_LINE
+                assert(false);  // LCOV_EXCL_LINE
             }
         }
     }
@@ -14582,7 +14582,7 @@ class serializer
         return static_cast<number_unsigned_t>(-(x + 1)) + 1;
     }
 
-  private:
+private:
     /// the output of the serializer
     output_adapter_t<char> o = nullptr;
 
@@ -14707,7 +14707,7 @@ Format](http://rfc7159.net/rfc7159)
 NLOHMANN_BASIC_JSON_TPL_DECLARATION
 class basic_json
 {
-  private:
+private:
     template<detail::value_t> friend struct detail::external_constructor;
     friend ::nlohmann::json_pointer<basic_json>;
     friend ::nlohmann::detail::parser<basic_json>;
@@ -14747,7 +14747,7 @@ class basic_json
 
     using serializer = ::nlohmann::detail::serializer<basic_json>;
 
-  public:
+public:
     using value_t = detail::value_t;
     /// JSON Pointer, see @ref nlohmann::json_pointer
     using json_pointer = ::nlohmann::json_pointer<basic_json>;
@@ -15363,7 +15363,7 @@ class basic_json
 
     /// @}
 
-  private:
+private:
 
     /// helper for exception-safe object creation
     template<typename T, typename... Args>
@@ -15443,63 +15443,63 @@ class basic_json
         {
             switch (t)
             {
-                case value_t::object:
-                {
-                    object = create<object_t>();
-                    break;
-                }
+            case value_t::object:
+            {
+                object = create<object_t>();
+                break;
+            }
 
-                case value_t::array:
-                {
-                    array = create<array_t>();
-                    break;
-                }
+            case value_t::array:
+            {
+                array = create<array_t>();
+                break;
+            }
 
-                case value_t::string:
-                {
-                    string = create<string_t>("");
-                    break;
-                }
+            case value_t::string:
+            {
+                string = create<string_t>("");
+                break;
+            }
 
-                case value_t::boolean:
-                {
-                    boolean = boolean_t(false);
-                    break;
-                }
+            case value_t::boolean:
+            {
+                boolean = boolean_t(false);
+                break;
+            }
 
-                case value_t::number_integer:
-                {
-                    number_integer = number_integer_t(0);
-                    break;
-                }
+            case value_t::number_integer:
+            {
+                number_integer = number_integer_t(0);
+                break;
+            }
 
-                case value_t::number_unsigned:
-                {
-                    number_unsigned = number_unsigned_t(0);
-                    break;
-                }
+            case value_t::number_unsigned:
+            {
+                number_unsigned = number_unsigned_t(0);
+                break;
+            }
 
-                case value_t::number_float:
-                {
-                    number_float = number_float_t(0.0);
-                    break;
-                }
+            case value_t::number_float:
+            {
+                number_float = number_float_t(0.0);
+                break;
+            }
 
-                case value_t::null:
-                {
-                    object = nullptr;  // silence warning, see #821
-                    break;
-                }
+            case value_t::null:
+            {
+                object = nullptr;  // silence warning, see #821
+                break;
+            }
 
-                default:
+            default:
+            {
+                object = nullptr;  // silence warning, see #821
+                if (JSON_HEDLEY_UNLIKELY(t == value_t::null))
                 {
-                    object = nullptr;  // silence warning, see #821
-                    if (JSON_HEDLEY_UNLIKELY(t == value_t::null))
-                    {
-                        JSON_THROW(other_error::create(500, "961c151d2e87f2686a955a9be24d316f1362bf21 3.7.3")); // LCOV_EXCL_LINE
-                    }
-                    break;
+                    JSON_THROW(other_error::create(500, "961c151d2e87f2686a955a9be24d316f1362bf21 3.7.3")); // LCOV_EXCL_LINE
                 }
+                break;
+            }
             }
         }
 
@@ -15590,34 +15590,34 @@ class basic_json
 
             switch (t)
             {
-                case value_t::object:
-                {
-                    AllocatorType<object_t> alloc;
-                    std::allocator_traits<decltype(alloc)>::destroy(alloc, object);
-                    std::allocator_traits<decltype(alloc)>::deallocate(alloc, object, 1);
-                    break;
-                }
+            case value_t::object:
+            {
+                AllocatorType<object_t> alloc;
+                std::allocator_traits<decltype(alloc)>::destroy(alloc, object);
+                std::allocator_traits<decltype(alloc)>::deallocate(alloc, object, 1);
+                break;
+            }
 
-                case value_t::array:
-                {
-                    AllocatorType<array_t> alloc;
-                    std::allocator_traits<decltype(alloc)>::destroy(alloc, array);
-                    std::allocator_traits<decltype(alloc)>::deallocate(alloc, array, 1);
-                    break;
-                }
+            case value_t::array:
+            {
+                AllocatorType<array_t> alloc;
+                std::allocator_traits<decltype(alloc)>::destroy(alloc, array);
+                std::allocator_traits<decltype(alloc)>::deallocate(alloc, array, 1);
+                break;
+            }
 
-                case value_t::string:
-                {
-                    AllocatorType<string_t> alloc;
-                    std::allocator_traits<decltype(alloc)>::destroy(alloc, string);
-                    std::allocator_traits<decltype(alloc)>::deallocate(alloc, string, 1);
-                    break;
-                }
+            case value_t::string:
+            {
+                AllocatorType<string_t> alloc;
+                std::allocator_traits<decltype(alloc)>::destroy(alloc, string);
+                std::allocator_traits<decltype(alloc)>::deallocate(alloc, string, 1);
+                break;
+            }
 
-                default:
-                {
-                    break;
-                }
+            default:
+            {
+                break;
+            }
             }
         }
     };
@@ -15638,7 +15638,7 @@ class basic_json
         assert(m_type != value_t::string or m_value.string != nullptr);
     }
 
-  public:
+public:
     //////////////////////////
     // JSON parser callback //
     //////////////////////////
@@ -15889,35 +15889,35 @@ class basic_json
 
         switch (val.type())
         {
-            case value_t::boolean:
-                JSONSerializer<other_boolean_t>::to_json(*this, val.template get<other_boolean_t>());
-                break;
-            case value_t::number_float:
-                JSONSerializer<other_number_float_t>::to_json(*this, val.template get<other_number_float_t>());
-                break;
-            case value_t::number_integer:
-                JSONSerializer<other_number_integer_t>::to_json(*this, val.template get<other_number_integer_t>());
-                break;
-            case value_t::number_unsigned:
-                JSONSerializer<other_number_unsigned_t>::to_json(*this, val.template get<other_number_unsigned_t>());
-                break;
-            case value_t::string:
-                JSONSerializer<other_string_t>::to_json(*this, val.template get_ref<const other_string_t&>());
-                break;
-            case value_t::object:
-                JSONSerializer<other_object_t>::to_json(*this, val.template get_ref<const other_object_t&>());
-                break;
-            case value_t::array:
-                JSONSerializer<other_array_t>::to_json(*this, val.template get_ref<const other_array_t&>());
-                break;
-            case value_t::null:
-                *this = nullptr;
-                break;
-            case value_t::discarded:
-                m_type = value_t::discarded;
-                break;
-            default:            // LCOV_EXCL_LINE
-                assert(false);  // LCOV_EXCL_LINE
+        case value_t::boolean:
+            JSONSerializer<other_boolean_t>::to_json(*this, val.template get<other_boolean_t>());
+            break;
+        case value_t::number_float:
+            JSONSerializer<other_number_float_t>::to_json(*this, val.template get<other_number_float_t>());
+            break;
+        case value_t::number_integer:
+            JSONSerializer<other_number_integer_t>::to_json(*this, val.template get<other_number_integer_t>());
+            break;
+        case value_t::number_unsigned:
+            JSONSerializer<other_number_unsigned_t>::to_json(*this, val.template get<other_number_unsigned_t>());
+            break;
+        case value_t::string:
+            JSONSerializer<other_string_t>::to_json(*this, val.template get_ref<const other_string_t&>());
+            break;
+        case value_t::object:
+            JSONSerializer<other_object_t>::to_json(*this, val.template get_ref<const other_object_t&>());
+            break;
+        case value_t::array:
+            JSONSerializer<other_array_t>::to_json(*this, val.template get_ref<const other_array_t&>());
+            break;
+        case value_t::null:
+            *this = nullptr;
+            break;
+        case value_t::discarded:
+            m_type = value_t::discarded;
+            break;
+        default:            // LCOV_EXCL_LINE
+            assert(false);  // LCOV_EXCL_LINE
         }
         assert_invariant();
     }
@@ -16239,73 +16239,73 @@ class basic_json
         // check if iterator range is complete for primitive values
         switch (m_type)
         {
-            case value_t::boolean:
-            case value_t::number_float:
-            case value_t::number_integer:
-            case value_t::number_unsigned:
-            case value_t::string:
+        case value_t::boolean:
+        case value_t::number_float:
+        case value_t::number_integer:
+        case value_t::number_unsigned:
+        case value_t::string:
+        {
+            if (JSON_HEDLEY_UNLIKELY(not first.m_it.primitive_iterator.is_begin()
+                                     or not last.m_it.primitive_iterator.is_end()))
             {
-                if (JSON_HEDLEY_UNLIKELY(not first.m_it.primitive_iterator.is_begin()
-                                         or not last.m_it.primitive_iterator.is_end()))
-                {
-                    JSON_THROW(invalid_iterator::create(204, "iterators out of range"));
-                }
-                break;
+                JSON_THROW(invalid_iterator::create(204, "iterators out of range"));
             }
+            break;
+        }
 
-            default:
-                break;
+        default:
+            break;
         }
 
         switch (m_type)
         {
-            case value_t::number_integer:
-            {
-                m_value.number_integer = first.m_object->m_value.number_integer;
-                break;
-            }
+        case value_t::number_integer:
+        {
+            m_value.number_integer = first.m_object->m_value.number_integer;
+            break;
+        }
 
-            case value_t::number_unsigned:
-            {
-                m_value.number_unsigned = first.m_object->m_value.number_unsigned;
-                break;
-            }
+        case value_t::number_unsigned:
+        {
+            m_value.number_unsigned = first.m_object->m_value.number_unsigned;
+            break;
+        }
 
-            case value_t::number_float:
-            {
-                m_value.number_float = first.m_object->m_value.number_float;
-                break;
-            }
+        case value_t::number_float:
+        {
+            m_value.number_float = first.m_object->m_value.number_float;
+            break;
+        }
 
-            case value_t::boolean:
-            {
-                m_value.boolean = first.m_object->m_value.boolean;
-                break;
-            }
+        case value_t::boolean:
+        {
+            m_value.boolean = first.m_object->m_value.boolean;
+            break;
+        }
 
-            case value_t::string:
-            {
-                m_value = *first.m_object->m_value.string;
-                break;
-            }
+        case value_t::string:
+        {
+            m_value = *first.m_object->m_value.string;
+            break;
+        }
 
-            case value_t::object:
-            {
-                m_value.object = create<object_t>(first.m_it.object_iterator,
-                                                  last.m_it.object_iterator);
-                break;
-            }
+        case value_t::object:
+        {
+            m_value.object = create<object_t>(first.m_it.object_iterator,
+                                              last.m_it.object_iterator);
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_value.array = create<array_t>(first.m_it.array_iterator,
-                                                last.m_it.array_iterator);
-                break;
-            }
+        case value_t::array:
+        {
+            m_value.array = create<array_t>(first.m_it.array_iterator,
+                                            last.m_it.array_iterator);
+            break;
+        }
 
-            default:
-                JSON_THROW(invalid_iterator::create(206, "cannot construct with iterators from " +
-                                                    std::string(first.m_object->type_name())));
+        default:
+            JSON_THROW(invalid_iterator::create(206, "cannot construct with iterators from " +
+                                                std::string(first.m_object->type_name())));
         }
 
         assert_invariant();
@@ -16354,50 +16354,50 @@ class basic_json
 
         switch (m_type)
         {
-            case value_t::object:
-            {
-                m_value = *other.m_value.object;
-                break;
-            }
+        case value_t::object:
+        {
+            m_value = *other.m_value.object;
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_value = *other.m_value.array;
-                break;
-            }
+        case value_t::array:
+        {
+            m_value = *other.m_value.array;
+            break;
+        }
 
-            case value_t::string:
-            {
-                m_value = *other.m_value.string;
-                break;
-            }
+        case value_t::string:
+        {
+            m_value = *other.m_value.string;
+            break;
+        }
 
-            case value_t::boolean:
-            {
-                m_value = other.m_value.boolean;
-                break;
-            }
+        case value_t::boolean:
+        {
+            m_value = other.m_value.boolean;
+            break;
+        }
 
-            case value_t::number_integer:
-            {
-                m_value = other.m_value.number_integer;
-                break;
-            }
+        case value_t::number_integer:
+        {
+            m_value = other.m_value.number_integer;
+            break;
+        }
 
-            case value_t::number_unsigned:
-            {
-                m_value = other.m_value.number_unsigned;
-                break;
-            }
+        case value_t::number_unsigned:
+        {
+            m_value = other.m_value.number_unsigned;
+            break;
+        }
 
-            case value_t::number_float:
-            {
-                m_value = other.m_value.number_float;
-                break;
-            }
+        case value_t::number_float:
+        {
+            m_value = other.m_value.number_float;
+            break;
+        }
 
-            default:
-                break;
+        default:
+            break;
         }
 
         assert_invariant();
@@ -16507,7 +16507,7 @@ class basic_json
 
     /// @}
 
-  public:
+public:
     ///////////////////////
     // object inspection //
     ///////////////////////
@@ -16951,7 +16951,7 @@ class basic_json
 
     /// @}
 
-  private:
+private:
     //////////////////
     // value access //
     //////////////////
@@ -17076,7 +17076,7 @@ class basic_json
         JSON_THROW(type_error::create(303, "incompatible ReferenceType for get_ref, actual type is " + std::string(obj.type_name())));
     }
 
-  public:
+public:
     /// @name value access
     /// Direct access to the stored value of a JSON value.
     /// @{
@@ -18249,44 +18249,44 @@ class basic_json
 
         switch (m_type)
         {
-            case value_t::boolean:
-            case value_t::number_float:
-            case value_t::number_integer:
-            case value_t::number_unsigned:
-            case value_t::string:
+        case value_t::boolean:
+        case value_t::number_float:
+        case value_t::number_integer:
+        case value_t::number_unsigned:
+        case value_t::string:
+        {
+            if (JSON_HEDLEY_UNLIKELY(not pos.m_it.primitive_iterator.is_begin()))
             {
-                if (JSON_HEDLEY_UNLIKELY(not pos.m_it.primitive_iterator.is_begin()))
-                {
-                    JSON_THROW(invalid_iterator::create(205, "iterator out of range"));
-                }
-
-                if (is_string())
-                {
-                    AllocatorType<string_t> alloc;
-                    std::allocator_traits<decltype(alloc)>::destroy(alloc, m_value.string);
-                    std::allocator_traits<decltype(alloc)>::deallocate(alloc, m_value.string, 1);
-                    m_value.string = nullptr;
-                }
-
-                m_type = value_t::null;
-                assert_invariant();
-                break;
+                JSON_THROW(invalid_iterator::create(205, "iterator out of range"));
             }
 
-            case value_t::object:
+            if (is_string())
             {
-                result.m_it.object_iterator = m_value.object->erase(pos.m_it.object_iterator);
-                break;
+                AllocatorType<string_t> alloc;
+                std::allocator_traits<decltype(alloc)>::destroy(alloc, m_value.string);
+                std::allocator_traits<decltype(alloc)>::deallocate(alloc, m_value.string, 1);
+                m_value.string = nullptr;
             }
 
-            case value_t::array:
-            {
-                result.m_it.array_iterator = m_value.array->erase(pos.m_it.array_iterator);
-                break;
-            }
+            m_type = value_t::null;
+            assert_invariant();
+            break;
+        }
 
-            default:
-                JSON_THROW(type_error::create(307, "cannot use erase() with " + std::string(type_name())));
+        case value_t::object:
+        {
+            result.m_it.object_iterator = m_value.object->erase(pos.m_it.object_iterator);
+            break;
+        }
+
+        case value_t::array:
+        {
+            result.m_it.array_iterator = m_value.array->erase(pos.m_it.array_iterator);
+            break;
+        }
+
+        default:
+            JSON_THROW(type_error::create(307, "cannot use erase() with " + std::string(type_name())));
         }
 
         return result;
@@ -18354,47 +18354,47 @@ class basic_json
 
         switch (m_type)
         {
-            case value_t::boolean:
-            case value_t::number_float:
-            case value_t::number_integer:
-            case value_t::number_unsigned:
-            case value_t::string:
+        case value_t::boolean:
+        case value_t::number_float:
+        case value_t::number_integer:
+        case value_t::number_unsigned:
+        case value_t::string:
+        {
+            if (JSON_HEDLEY_LIKELY(not first.m_it.primitive_iterator.is_begin()
+                                   or not last.m_it.primitive_iterator.is_end()))
             {
-                if (JSON_HEDLEY_LIKELY(not first.m_it.primitive_iterator.is_begin()
-                                       or not last.m_it.primitive_iterator.is_end()))
-                {
-                    JSON_THROW(invalid_iterator::create(204, "iterators out of range"));
-                }
-
-                if (is_string())
-                {
-                    AllocatorType<string_t> alloc;
-                    std::allocator_traits<decltype(alloc)>::destroy(alloc, m_value.string);
-                    std::allocator_traits<decltype(alloc)>::deallocate(alloc, m_value.string, 1);
-                    m_value.string = nullptr;
-                }
-
-                m_type = value_t::null;
-                assert_invariant();
-                break;
+                JSON_THROW(invalid_iterator::create(204, "iterators out of range"));
             }
 
-            case value_t::object:
+            if (is_string())
             {
-                result.m_it.object_iterator = m_value.object->erase(first.m_it.object_iterator,
-                                              last.m_it.object_iterator);
-                break;
+                AllocatorType<string_t> alloc;
+                std::allocator_traits<decltype(alloc)>::destroy(alloc, m_value.string);
+                std::allocator_traits<decltype(alloc)>::deallocate(alloc, m_value.string, 1);
+                m_value.string = nullptr;
             }
 
-            case value_t::array:
-            {
-                result.m_it.array_iterator = m_value.array->erase(first.m_it.array_iterator,
-                                             last.m_it.array_iterator);
-                break;
-            }
+            m_type = value_t::null;
+            assert_invariant();
+            break;
+        }
 
-            default:
-                JSON_THROW(type_error::create(307, "cannot use erase() with " + std::string(type_name())));
+        case value_t::object:
+        {
+            result.m_it.object_iterator = m_value.object->erase(first.m_it.object_iterator,
+                                          last.m_it.object_iterator);
+            break;
+        }
+
+        case value_t::array:
+        {
+            result.m_it.array_iterator = m_value.array->erase(first.m_it.array_iterator,
+                                         last.m_it.array_iterator);
+            break;
+        }
+
+        default:
+            JSON_THROW(type_error::create(307, "cannot use erase() with " + std::string(type_name())));
         }
 
         return result;
@@ -18920,7 +18920,7 @@ class basic_json
         return const_reverse_iterator(cbegin());
     }
 
-  public:
+public:
     /*!
     @brief wrapper to access iterator member functions in range-based for
 
@@ -19124,29 +19124,29 @@ class basic_json
     {
         switch (m_type)
         {
-            case value_t::null:
-            {
-                // null values are empty
-                return true;
-            }
+        case value_t::null:
+        {
+            // null values are empty
+            return true;
+        }
 
-            case value_t::array:
-            {
-                // delegate call to array_t::empty()
-                return m_value.array->empty();
-            }
+        case value_t::array:
+        {
+            // delegate call to array_t::empty()
+            return m_value.array->empty();
+        }
 
-            case value_t::object:
-            {
-                // delegate call to object_t::empty()
-                return m_value.object->empty();
-            }
+        case value_t::object:
+        {
+            // delegate call to object_t::empty()
+            return m_value.object->empty();
+        }
 
-            default:
-            {
-                // all other types are nonempty
-                return false;
-            }
+        default:
+        {
+            // all other types are nonempty
+            return false;
+        }
         }
     }
 
@@ -19196,29 +19196,29 @@ class basic_json
     {
         switch (m_type)
         {
-            case value_t::null:
-            {
-                // null values are empty
-                return 0;
-            }
+        case value_t::null:
+        {
+            // null values are empty
+            return 0;
+        }
 
-            case value_t::array:
-            {
-                // delegate call to array_t::size()
-                return m_value.array->size();
-            }
+        case value_t::array:
+        {
+            // delegate call to array_t::size()
+            return m_value.array->size();
+        }
 
-            case value_t::object:
-            {
-                // delegate call to object_t::size()
-                return m_value.object->size();
-            }
+        case value_t::object:
+        {
+            // delegate call to object_t::size()
+            return m_value.object->size();
+        }
 
-            default:
-            {
-                // all other types have size 1
-                return 1;
-            }
+        default:
+        {
+            // all other types have size 1
+            return 1;
+        }
         }
     }
 
@@ -19266,23 +19266,23 @@ class basic_json
     {
         switch (m_type)
         {
-            case value_t::array:
-            {
-                // delegate call to array_t::max_size()
-                return m_value.array->max_size();
-            }
+        case value_t::array:
+        {
+            // delegate call to array_t::max_size()
+            return m_value.array->max_size();
+        }
 
-            case value_t::object:
-            {
-                // delegate call to object_t::max_size()
-                return m_value.object->max_size();
-            }
+        case value_t::object:
+        {
+            // delegate call to object_t::max_size()
+            return m_value.object->max_size();
+        }
 
-            default:
-            {
-                // all other types have max_size() == size()
-                return size();
-            }
+        default:
+        {
+            // all other types have max_size() == size()
+            return size();
+        }
         }
     }
 
@@ -19336,50 +19336,50 @@ class basic_json
     {
         switch (m_type)
         {
-            case value_t::number_integer:
-            {
-                m_value.number_integer = 0;
-                break;
-            }
+        case value_t::number_integer:
+        {
+            m_value.number_integer = 0;
+            break;
+        }
 
-            case value_t::number_unsigned:
-            {
-                m_value.number_unsigned = 0;
-                break;
-            }
+        case value_t::number_unsigned:
+        {
+            m_value.number_unsigned = 0;
+            break;
+        }
 
-            case value_t::number_float:
-            {
-                m_value.number_float = 0.0;
-                break;
-            }
+        case value_t::number_float:
+        {
+            m_value.number_float = 0.0;
+            break;
+        }
 
-            case value_t::boolean:
-            {
-                m_value.boolean = false;
-                break;
-            }
+        case value_t::boolean:
+        {
+            m_value.boolean = false;
+            break;
+        }
 
-            case value_t::string:
-            {
-                m_value.string->clear();
-                break;
-            }
+        case value_t::string:
+        {
+            m_value.string->clear();
+            break;
+        }
 
-            case value_t::array:
-            {
-                m_value.array->clear();
-                break;
-            }
+        case value_t::array:
+        {
+            m_value.array->clear();
+            break;
+        }
 
-            case value_t::object:
-            {
-                m_value.object->clear();
-                break;
-            }
+        case value_t::object:
+        {
+            m_value.object->clear();
+            break;
+        }
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -20164,7 +20164,7 @@ class basic_json
 
     /// @}
 
-  public:
+public:
     //////////////////////////////////////////
     // lexicographical comparison operators //
     //////////////////////////////////////////
@@ -20220,32 +20220,32 @@ class basic_json
         {
             switch (lhs_type)
             {
-                case value_t::array:
-                    return *lhs.m_value.array == *rhs.m_value.array;
+            case value_t::array:
+                return *lhs.m_value.array == *rhs.m_value.array;
 
-                case value_t::object:
-                    return *lhs.m_value.object == *rhs.m_value.object;
+            case value_t::object:
+                return *lhs.m_value.object == *rhs.m_value.object;
 
-                case value_t::null:
-                    return true;
+            case value_t::null:
+                return true;
 
-                case value_t::string:
-                    return *lhs.m_value.string == *rhs.m_value.string;
+            case value_t::string:
+                return *lhs.m_value.string == *rhs.m_value.string;
 
-                case value_t::boolean:
-                    return lhs.m_value.boolean == rhs.m_value.boolean;
+            case value_t::boolean:
+                return lhs.m_value.boolean == rhs.m_value.boolean;
 
-                case value_t::number_integer:
-                    return lhs.m_value.number_integer == rhs.m_value.number_integer;
+            case value_t::number_integer:
+                return lhs.m_value.number_integer == rhs.m_value.number_integer;
 
-                case value_t::number_unsigned:
-                    return lhs.m_value.number_unsigned == rhs.m_value.number_unsigned;
+            case value_t::number_unsigned:
+                return lhs.m_value.number_unsigned == rhs.m_value.number_unsigned;
 
-                case value_t::number_float:
-                    return lhs.m_value.number_float == rhs.m_value.number_float;
+            case value_t::number_float:
+                return lhs.m_value.number_float == rhs.m_value.number_float;
 
-                default:
-                    return false;
+            default:
+                return false;
             }
         }
         else if (lhs_type == value_t::number_integer and rhs_type == value_t::number_float)
@@ -20378,34 +20378,34 @@ class basic_json
         {
             switch (lhs_type)
             {
-                case value_t::array:
-                    // note parentheses are necessary, see
-                    // https://github.com/nlohmann/json/issues/1530
-                    return (*lhs.m_value.array) < (*rhs.m_value.array);
+            case value_t::array:
+                // note parentheses are necessary, see
+                // https://github.com/nlohmann/json/issues/1530
+                return (*lhs.m_value.array) < (*rhs.m_value.array);
 
-                case value_t::object:
-                    return (*lhs.m_value.object) < (*rhs.m_value.object);
+            case value_t::object:
+                return (*lhs.m_value.object) < (*rhs.m_value.object);
 
-                case value_t::null:
-                    return false;
+            case value_t::null:
+                return false;
 
-                case value_t::string:
-                    return (*lhs.m_value.string) < (*rhs.m_value.string);
+            case value_t::string:
+                return (*lhs.m_value.string) < (*rhs.m_value.string);
 
-                case value_t::boolean:
-                    return (lhs.m_value.boolean) < (rhs.m_value.boolean);
+            case value_t::boolean:
+                return (lhs.m_value.boolean) < (rhs.m_value.boolean);
 
-                case value_t::number_integer:
-                    return (lhs.m_value.number_integer) < (rhs.m_value.number_integer);
+            case value_t::number_integer:
+                return (lhs.m_value.number_integer) < (rhs.m_value.number_integer);
 
-                case value_t::number_unsigned:
-                    return (lhs.m_value.number_unsigned) < (rhs.m_value.number_unsigned);
+            case value_t::number_unsigned:
+                return (lhs.m_value.number_unsigned) < (rhs.m_value.number_unsigned);
 
-                case value_t::number_float:
-                    return (lhs.m_value.number_float) < (rhs.m_value.number_float);
+            case value_t::number_float:
+                return (lhs.m_value.number_float) < (rhs.m_value.number_float);
 
-                default:
-                    return false;
+            default:
+                return false;
             }
         }
         else if (lhs_type == value_t::number_integer and rhs_type == value_t::number_float)
@@ -20989,26 +20989,26 @@ class basic_json
         {
             switch (m_type)
             {
-                case value_t::null:
-                    return "null";
-                case value_t::object:
-                    return "object";
-                case value_t::array:
-                    return "array";
-                case value_t::string:
-                    return "string";
-                case value_t::boolean:
-                    return "boolean";
-                case value_t::discarded:
-                    return "discarded";
-                default:
-                    return "number";
+            case value_t::null:
+                return "null";
+            case value_t::object:
+                return "object";
+            case value_t::array:
+                return "array";
+            case value_t::string:
+                return "string";
+            case value_t::boolean:
+                return "boolean";
+            case value_t::discarded:
+                return "discarded";
+            default:
+                return "number";
             }
         }
     }
 
 
-  private:
+private:
     //////////////////////
     // member variables //
     //////////////////////
@@ -21026,7 +21026,7 @@ class basic_json
     /// @name binary serialization/deserialization support
     /// @{
 
-  public:
+public:
     /*!
     @brief create a CBOR serialization of a given JSON value
 
@@ -22169,39 +22169,39 @@ class basic_json
 
             switch (parent.m_type)
             {
-                case value_t::null:
-                case value_t::object:
+            case value_t::null:
+            case value_t::object:
+            {
+                // use operator[] to add value
+                parent[last_path] = val;
+                break;
+            }
+
+            case value_t::array:
+            {
+                if (last_path == "-")
                 {
-                    // use operator[] to add value
-                    parent[last_path] = val;
-                    break;
+                    // special case: append to back
+                    parent.push_back(val);
                 }
-
-                case value_t::array:
+                else
                 {
-                    if (last_path == "-")
+                    const auto idx = json_pointer::array_index(last_path);
+                    if (JSON_HEDLEY_UNLIKELY(static_cast<size_type>(idx) > parent.size()))
                     {
-                        // special case: append to back
-                        parent.push_back(val);
+                        // avoid undefined behavior
+                        JSON_THROW(out_of_range::create(401, "array index " + std::to_string(idx) + " is out of range"));
                     }
-                    else
-                    {
-                        const auto idx = json_pointer::array_index(last_path);
-                        if (JSON_HEDLEY_UNLIKELY(static_cast<size_type>(idx) > parent.size()))
-                        {
-                            // avoid undefined behavior
-                            JSON_THROW(out_of_range::create(401, "array index " + std::to_string(idx) + " is out of range"));
-                        }
 
-                        // default case: insert add offset
-                        parent.insert(parent.begin() + static_cast<difference_type>(idx), val);
-                    }
-                    break;
+                    // default case: insert add offset
+                    parent.insert(parent.begin() + static_cast<difference_type>(idx), val);
                 }
+                break;
+            }
 
-                // if there exists a parent it cannot be primitive
-                default:            // LCOV_EXCL_LINE
-                    assert(false);  // LCOV_EXCL_LINE
+            // if there exists a parent it cannot be primitive
+            default:            // LCOV_EXCL_LINE
+                assert(false);  // LCOV_EXCL_LINE
             }
         };
 
@@ -22283,86 +22283,86 @@ class basic_json
 
             switch (get_op(op))
             {
-                case patch_operations::add:
-                {
-                    operation_add(ptr, get_value("add", "value", false));
-                    break;
-                }
+            case patch_operations::add:
+            {
+                operation_add(ptr, get_value("add", "value", false));
+                break;
+            }
 
-                case patch_operations::remove:
-                {
-                    operation_remove(ptr);
-                    break;
-                }
+            case patch_operations::remove:
+            {
+                operation_remove(ptr);
+                break;
+            }
 
-                case patch_operations::replace:
+            case patch_operations::replace:
+            {
+                // the "path" location must exist - use at()
+                result.at(ptr) = get_value("replace", "value", false);
+                break;
+            }
+
+            case patch_operations::move:
+            {
+                const std::string from_path = get_value("move", "from", true);
+                json_pointer from_ptr(from_path);
+
+                // the "from" location must exist - use at()
+                basic_json v = result.at(from_ptr);
+
+                // The move operation is functionally identical to a
+                // "remove" operation on the "from" location, followed
+                // immediately by an "add" operation at the target
+                // location with the value that was just removed.
+                operation_remove(from_ptr);
+                operation_add(ptr, v);
+                break;
+            }
+
+            case patch_operations::copy:
+            {
+                const std::string from_path = get_value("copy", "from", true);
+                const json_pointer from_ptr(from_path);
+
+                // the "from" location must exist - use at()
+                basic_json v = result.at(from_ptr);
+
+                // The copy is functionally identical to an "add"
+                // operation at the target location using the value
+                // specified in the "from" member.
+                operation_add(ptr, v);
+                break;
+            }
+
+            case patch_operations::test:
+            {
+                bool success = false;
+                JSON_TRY
                 {
+                    // check if "value" matches the one at "path"
                     // the "path" location must exist - use at()
-                    result.at(ptr) = get_value("replace", "value", false);
-                    break;
+                    success = (result.at(ptr) == get_value("test", "value", false));
                 }
-
-                case patch_operations::move:
+                JSON_INTERNAL_CATCH (out_of_range&)
                 {
-                    const std::string from_path = get_value("move", "from", true);
-                    json_pointer from_ptr(from_path);
-
-                    // the "from" location must exist - use at()
-                    basic_json v = result.at(from_ptr);
-
-                    // The move operation is functionally identical to a
-                    // "remove" operation on the "from" location, followed
-                    // immediately by an "add" operation at the target
-                    // location with the value that was just removed.
-                    operation_remove(from_ptr);
-                    operation_add(ptr, v);
-                    break;
+                    // ignore out of range errors: success remains false
                 }
 
-                case patch_operations::copy:
+                // throw an exception if test fails
+                if (JSON_HEDLEY_UNLIKELY(not success))
                 {
-                    const std::string from_path = get_value("copy", "from", true);
-                    const json_pointer from_ptr(from_path);
-
-                    // the "from" location must exist - use at()
-                    basic_json v = result.at(from_ptr);
-
-                    // The copy is functionally identical to an "add"
-                    // operation at the target location using the value
-                    // specified in the "from" member.
-                    operation_add(ptr, v);
-                    break;
+                    JSON_THROW(other_error::create(501, "unsuccessful: " + val.dump()));
                 }
 
-                case patch_operations::test:
-                {
-                    bool success = false;
-                    JSON_TRY
-                    {
-                        // check if "value" matches the one at "path"
-                        // the "path" location must exist - use at()
-                        success = (result.at(ptr) == get_value("test", "value", false));
-                    }
-                    JSON_INTERNAL_CATCH (out_of_range&)
-                    {
-                        // ignore out of range errors: success remains false
-                    }
+                break;
+            }
 
-                    // throw an exception if test fails
-                    if (JSON_HEDLEY_UNLIKELY(not success))
-                    {
-                        JSON_THROW(other_error::create(501, "unsuccessful: " + val.dump()));
-                    }
-
-                    break;
-                }
-
-                default:
-                {
-                    // op must be "add", "remove", "replace", "move", "copy", or
-                    // "test"
-                    JSON_THROW(parse_error::create(105, 0, "operation value '" + op + "' is invalid"));
-                }
+            default:
+            {
+                // op must be "add", "remove", "replace", "move", "copy", or
+                // "test"
+                JSON_THROW(parse_error::create(105, 0, "operation value '" + op + "' is invalid"));
+            }
             }
         }
 
@@ -22427,101 +22427,101 @@ class basic_json
 
         switch (source.type())
         {
-            case value_t::array:
+        case value_t::array:
+        {
+            // first pass: traverse common elements
+            std::size_t i = 0;
+            while (i < source.size() and i < target.size())
             {
-                // first pass: traverse common elements
-                std::size_t i = 0;
-                while (i < source.size() and i < target.size())
-                {
-                    // recursive call to compare array values at index i
-                    auto temp_diff = diff(source[i], target[i], path + "/" + std::to_string(i));
-                    result.insert(result.end(), temp_diff.begin(), temp_diff.end());
-                    ++i;
-                }
-
-                // i now reached the end of at least one array
-                // in a second pass, traverse the remaining elements
-
-                // remove my remaining elements
-                const auto end_index = static_cast<difference_type>(result.size());
-                while (i < source.size())
-                {
-                    // add operations in reverse order to avoid invalid
-                    // indices
-                    result.insert(result.begin() + end_index, object(
-                    {
-                        {"op", "remove"},
-                        {"path", path + "/" + std::to_string(i)}
-                    }));
-                    ++i;
-                }
-
-                // add other remaining elements
-                while (i < target.size())
-                {
-                    result.push_back(
-                    {
-                        {"op", "add"},
-                        {"path", path + "/" + std::to_string(i)},
-                        {"value", target[i]}
-                    });
-                    ++i;
-                }
-
-                break;
+                // recursive call to compare array values at index i
+                auto temp_diff = diff(source[i], target[i], path + "/" + std::to_string(i));
+                result.insert(result.end(), temp_diff.begin(), temp_diff.end());
+                ++i;
             }
 
-            case value_t::object:
+            // i now reached the end of at least one array
+            // in a second pass, traverse the remaining elements
+
+            // remove my remaining elements
+            const auto end_index = static_cast<difference_type>(result.size());
+            while (i < source.size())
             {
-                // first pass: traverse this object's elements
-                for (auto it = source.cbegin(); it != source.cend(); ++it)
+                // add operations in reverse order to avoid invalid
+                // indices
+                result.insert(result.begin() + end_index, object(
                 {
-                    // escape the key name to be used in a JSON patch
-                    const auto key = json_pointer::escape(it.key());
-
-                    if (target.find(it.key()) != target.end())
-                    {
-                        // recursive call to compare object values at key it
-                        auto temp_diff = diff(it.value(), target[it.key()], path + "/" + key);
-                        result.insert(result.end(), temp_diff.begin(), temp_diff.end());
-                    }
-                    else
-                    {
-                        // found a key that is not in o -> remove it
-                        result.push_back(object(
-                        {
-                            {"op", "remove"}, {"path", path + "/" + key}
-                        }));
-                    }
-                }
-
-                // second pass: traverse other object's elements
-                for (auto it = target.cbegin(); it != target.cend(); ++it)
-                {
-                    if (source.find(it.key()) == source.end())
-                    {
-                        // found a key that is not in this -> add it
-                        const auto key = json_pointer::escape(it.key());
-                        result.push_back(
-                        {
-                            {"op", "add"}, {"path", path + "/" + key},
-                            {"value", it.value()}
-                        });
-                    }
-                }
-
-                break;
+                    {"op", "remove"},
+                    {"path", path + "/" + std::to_string(i)}
+                }));
+                ++i;
             }
 
-            default:
+            // add other remaining elements
+            while (i < target.size())
             {
-                // both primitive type: replace value
                 result.push_back(
                 {
-                    {"op", "replace"}, {"path", path}, {"value", target}
+                    {"op", "add"},
+                    {"path", path + "/" + std::to_string(i)},
+                    {"value", target[i]}
                 });
-                break;
+                ++i;
             }
+
+            break;
+        }
+
+        case value_t::object:
+        {
+            // first pass: traverse this object's elements
+            for (auto it = source.cbegin(); it != source.cend(); ++it)
+            {
+                // escape the key name to be used in a JSON patch
+                const auto key = json_pointer::escape(it.key());
+
+                if (target.find(it.key()) != target.end())
+                {
+                    // recursive call to compare object values at key it
+                    auto temp_diff = diff(it.value(), target[it.key()], path + "/" + key);
+                    result.insert(result.end(), temp_diff.begin(), temp_diff.end());
+                }
+                else
+                {
+                    // found a key that is not in o -> remove it
+                    result.push_back(object(
+                    {
+                        {"op", "remove"}, {"path", path + "/" + key}
+                    }));
+                }
+            }
+
+            // second pass: traverse other object's elements
+            for (auto it = target.cbegin(); it != target.cend(); ++it)
+            {
+                if (source.find(it.key()) == source.end())
+                {
+                    // found a key that is not in this -> add it
+                    const auto key = json_pointer::escape(it.key());
+                    result.push_back(
+                    {
+                        {"op", "add"}, {"path", path + "/" + key},
+                        {"value", it.value()}
+                    });
+                }
+            }
+
+            break;
+        }
+
+        default:
+        {
+            // both primitive type: replace value
+            result.push_back(
+            {
+                {"op", "replace"}, {"path", path}, {"value", target}
+            });
+            break;
+        }
         }
 
         return result;
@@ -22724,10 +22724,10 @@ inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std
 
 // restore GCC/clang diagnostic settings
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-    #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif
 #if defined(__clang__)
-    #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif
 
 // clean up
