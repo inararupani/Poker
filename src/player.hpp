@@ -22,6 +22,7 @@ public:
     bool status;
     bool turn;
     bool swapped;
+    bool checked;
 
     string playerName;
 

@@ -186,8 +186,8 @@ private:
                         {
                             gameStatus = 1;
 
-                            to_player["turn"]["name"] = playerInfo.at(idlist.at(0));
-                            to_player["turn"]["uuid"] = idlist.at(0);
+                            //to_player["turn"]["name"] = playerInfo.at(idlist.at(0));
+                            //to_player["turn"]["uuid"] = idlist.at(0);
 
                             for(int i = 0; i < (int)idlist.size(); i++)
                             {
@@ -268,10 +268,6 @@ private:
                                 playerInfo.clear();
                                 handInfo.clear();
 
-
-
-
-
                             }
                         }
 
@@ -280,11 +276,13 @@ private:
                             turn++;
                         }
 
-                        if(gameStatus != -1)
-                        {
-                            to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
-                            to_player["turn"]["uuid"] = idlist.at(turn);
-                        }
+                    }
+                    else if(to_dealer["event"] == "check"){
+                    	std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
+						std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
+                        turn = 0;
+                        to_player["current_bet"] = 0;
+                        
                     }
                     else if(to_dealer["event"] == "bet")
                     {
@@ -293,8 +291,21 @@ private:
 
                         turn++;
 
-                        to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
-                        to_player["turn"]["uuid"] = idlist.at(turn);
+                    }
+                    else if(to_dealer["event"] == "fold")
+                    {
+                    	int temp = turn;
+                    	if(turn == (int)idlist.size())
+                    	{
+                    		gameStatus++;
+                    		turn = 0;
+                    	}
+                    	
+                    	idlist.erase(idlist.begin() + temp);
+                    	
+						playerInfo.erase(std::string(to_dealer["from"]["uuid"]));
+						handInfo.erase(std::string(to_dealer["from"]["uuid"]));
+						
                     }
                     else if(to_dealer["event"] == "raise")
                     {
@@ -303,12 +314,15 @@ private:
 
                         std::rotate(idlist.begin(), idlist.begin() + turn,idlist.end());
 
-
-                        turn = 1;
+						turn = 1;
                     }
                     else if(to_dealer["event"] == "swap")
                     {
                         swapCount++;
+                        std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
+						std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
+                        turn = 0;
+                        
                         string cardSwaps = to_dealer["swap_cards"];
 
                         if(atoi(cardSwaps.c_str()) == 0)
@@ -327,7 +341,7 @@ private:
 
                         if(swapCount == (int)idlist.size())
                         {
-                            turn = 0;
+                            
                             gameStatus++;
                             to_player["current_bet"] = 0;
                         }
@@ -345,23 +359,6 @@ private:
                 to_player["total_pot"] = std::to_string(totalPot);
 
                 to_player["game_round"] = std::to_string(gameStatus);
-
-
-                /*
-                to_player["turn"] = "3f96b414-9ac9-40b5-8007-90d0e771f0d0";   // UUID of the current player.
-                to_player["chat"] = to_dealer["chat"];
-                to_player["dealer_comment"] = "fred has raised and received 2 new cards";
-                to_player["recommended_play"] = "you should fold";
-                to_player["hand"] = {
-                      {{"bet",1},{"current_bet",10}, {"uuid","3f96b414-9ac9-40b5-8007-90d0e771f0d0"} , {"name","Bud"} ,{"cards",{"acespades","10hearts","9clubs","2diamonds","kinghearts"}}},
-                      {{"bet",2},{"current_bet",1}, {"uuid","3f96b414-9ac9-40b5-8007-20d0e771f0d0"} , {"name","Donald"} ,{"cards",{"acehearts","10spades","9clubs","2clubs","jackhearts"}}},
-                      {{"bet",5},{"current_bet",5}, {"uuid","3f96b414-9ac9-40b5-8007-30d0e771f0d0"} , {"name","Ann"} ,{"cards",{"aceclubs","10diamonds","9clubs","2hearts","queenhearts"}}},
-                      {{"bet",10},{"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-40d0e771f0d0"} , {"name","Melania"} ,{"cards",{"acediamonds","10clubs","9clubs","2spades","kinghearts"}}}
-                                   };
-
-                //std::cout << "to player:" << std::endl;
-                //std::cout << to_player.dump(2) << std::endl;
-                */
 
                 std::string t = to_player.dump();
                 chat_message sending;
@@ -447,7 +444,6 @@ private:
 int main(int argc, char* argv[])
 {
     deck = new Deck();
-    deck->shuffle_deck();
     deck->shuffle_deck();
     totalPot = 0;
     gameStatus = -1;

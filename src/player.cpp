@@ -20,4 +20,5 @@ player::player(string playerName)
     chip25 = 1;
     swapped = false;
     turn = false;
+    checked = false;
 }

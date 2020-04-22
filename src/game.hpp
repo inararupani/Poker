@@ -50,6 +50,7 @@ public:
     void on_Exit();
     void on_CardSwap();
     void on_Send();
+    void on_Check();
     void on_SitOut();
     void on_chip_1();
     void on_chip_5();
@@ -86,6 +87,7 @@ public:
     Gtk::Button chip25;
     Gtk::Button clear;
     Gtk::Button Help;
+    Gtk::Button Check;
     Gtk::Button Bet;
     Gtk::Button Call;
     Gtk::Button Raise;

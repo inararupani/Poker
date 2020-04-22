@@ -257,6 +257,11 @@ private:
                                     + chatBox[2] + "\n"
                                     + chatBox[3] + "\n"
                                     + chatBox[4]);
+                                    
+                if(gameStatus == 2)
+                {	
+                	curr_player->checked = false;	
+                }
 
                 if(gameStatus == -1 && !to_player["winner"].empty())  //need to make 0 later
                 {
@@ -276,6 +281,10 @@ private:
                     {
                         chatBox[i] = chatBox[i+1];
                     }
+                    curr_player->swapped = false;
+                    curr_player->checked = false;
+                    curr_player->turn = false;
+                    curr_player->status = false;
 
                     chatBox[4] = std::string(to_player["winner"]) + " is the winner with " + std::string(to_player["winner_hand"]);
                     currTurn->set_markup("Turn: None");
@@ -492,6 +501,10 @@ playerWindow::playerWindow(player *p):Player(p)
 
     Box.pack_start(chipBox);
 
+	Check.set_label("Check");
+	Check.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Check));
+	actionBox.pack_start(Check);
+
     Call.set_label("Call");
     Call.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Call));
     actionBox.pack_start(Call);
@@ -606,7 +619,6 @@ void playerWindow::on_Ante()
     }
 }
 
-void playerWindow::on_Menu() {}
 void playerWindow::on_Help()
 {
     Gtk::MessageDialog dialog(*this, "Learn how to play 5 card draw:\nhttps://www.youtube.com/watch?v=UmtSUhSfyYE");
@@ -615,7 +627,8 @@ void playerWindow::on_Help()
 }
 void playerWindow::on_Call()
 {
-    if(std::atoi(Amount.get_text().c_str()) == curr_bet && Player->status == true)
+	
+    if(curr_bet != 0 && std::atoi(Amount.get_text().c_str()) == curr_bet && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus !=-1) 
     {
         temp1 = 0;
         temp5 = 0;
@@ -635,14 +648,43 @@ void playerWindow::on_Call()
         msg.encode_header();
         c->write(msg);
     }
-    else if(curr_bet && Player->status == false)
+    else if(Player->status == false)
     {
         Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
         dialog.run();
         dialog.hide();
 
     }
-    else
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
+
+    }
+    else if(gameStatus == 2)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is a swapping round.");
+        dialog.run();
+        dialog.hide();
+    
+    }
+    else if(curr_bet == 0)
+    {
+        Gtk::MessageDialog dialog(*this, "Bet before you call.");
+        dialog.run();
+        dialog.hide();    
+    }
+
+    else if(std::atoi(Amount.get_text().c_str()) != curr_bet)
     {
         Gtk::MessageDialog dialog(*this, "Your call doesn't match current bet.");
         dialog.run();
@@ -650,10 +692,11 @@ void playerWindow::on_Call()
     }
 
 
+
 }
 void playerWindow::on_Raise()
 {
-    if(std::atoi(Amount.get_text().c_str()) > curr_bet && Player->status == true)
+    if(std::atoi(Amount.get_text().c_str()) > curr_bet && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus != -1)
     {
         temp1 = 0;
         temp5 = 0;
@@ -680,21 +723,117 @@ void playerWindow::on_Raise()
         dialog.hide();
 
     }
-    else
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
+    }
+    else if(gameStatus == 2)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is a swapping round.");
+        dialog.run();
+        dialog.hide();
+    
+    }
+    else if(std::atoi(Amount.get_text().c_str()) <= curr_bet)
     {
         Gtk::MessageDialog dialog(*this, "Raise should be greater than current bet.");
         dialog.run();
         dialog.hide();
     }
 
+
+
 }
 void playerWindow::on_Fold()
 {
-    to_dealer["event"] = "fold";
+   	if(Player->status == true && Player->turn == true && gameStatus != -1)
+    {
+        to_dealer["event"] = "fold";
+        to_dealer["chat"] = Player->playerName + " folded.";
+		Player->status = false;
+	
+        chat_message msg;
+        std::string t = to_dealer.dump();
+
+        msg.body_length(t.size());
+        std::memcpy(msg.body(), t.c_str(), msg.body_length());
+        msg.encode_header();
+        c->write(msg);
+    }
 }
+
+void playerWindow::on_Check()
+{
+	if(curr_bet == 0 && Player->status == true && Player->turn == true && gameStatus != 2 && Player->checked == false && gameStatus != -1)
+    {
+        to_dealer["event"] = "check";
+        to_dealer["chat"] = Player->playerName + " checked.";
+
+        chat_message msg;
+        std::string t = to_dealer.dump();
+
+        msg.body_length(t.size());
+        std::memcpy(msg.body(), t.c_str(), msg.body_length());
+        msg.encode_header();
+        c->write(msg);
+    }
+
+    else if(Player->status == false)
+    {
+        Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+        dialog.run();
+        dialog.hide();
+
+    }
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
+    }
+    else if(gameStatus == 2)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is a swapping round.");
+        dialog.run();
+        dialog.hide();
+    
+    }
+    else if(curr_bet != 0)
+    {
+        Gtk::MessageDialog dialog(*this, "Cannot check when already bet.");
+        dialog.run();
+        dialog.hide();
+    }
+    
+    else if(Player->checked == true)
+    {	
+    	Gtk::MessageDialog dialog(*this, "You have already checked.");
+        dialog.run();
+        dialog.hide();
+    }
+}
+
+
 void playerWindow::on_Bet()
 {
-    if(curr_bet == 0 && Player->status == true)
+    if(curr_bet == 0 && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus != -1)
     {
         temp1 = 0;
         temp5 = 0;
@@ -714,19 +853,41 @@ void playerWindow::on_Bet()
         msg.encode_header();
         c->write(msg);
     }
-    else if(curr_bet && Player->status == false)
+    else if(Player->status == false)
     {
         Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
         dialog.run();
         dialog.hide();
 
     }
-    else
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
+    }
+    else if(gameStatus == 2)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is a swapping round.");
+        dialog.run();
+        dialog.hide();
+    
+    }
+    else if(curr_bet != 0)
     {
         Gtk::MessageDialog dialog(*this, "Call current bet or raise.");
         dialog.run();
         dialog.hide();
     }
+
+    
 }
 
 void playerWindow::on_CardSwap()
@@ -737,9 +898,17 @@ void playerWindow::on_CardSwap()
         dialog.run();
         dialog.hide();
     }
+    
     else
-    {
-        if(curr_player->swapped)
+    {	
+    	if(Player->turn == false)
+    	{	
+    		Gtk::MessageDialog dialog(*this, "It is not your turn.");
+    		dialog.run();
+    		dialog.hide();	
+    	}
+    	
+        else if(curr_player->swapped)
         {
             Gtk::MessageDialog dialog(*this, "Already swapped.");
             dialog.run();
