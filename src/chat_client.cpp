@@ -525,10 +525,6 @@ playerWindow::playerWindow(player *p):Player(p)
     CardSwap.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_CardSwap));
     actionBox.pack_start(CardSwap);
 
-    SitOut.set_label("Sit Out");
-    SitOut.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_SitOut));
-    actionBox.pack_start(SitOut);
-
     Box.pack_start(actionBox);
 
     Chat.set_placeholder_text("eg: Hi");
@@ -552,7 +548,7 @@ playerWindow::playerWindow(player *p):Player(p)
 
     Box.pack_start(*chatLabel);
 
-    Exit.set_label("Exit");
+    Exit.set_label("Fold and Leave");
     Exit.signal_clicked().connect(sigc::mem_fun(*this, &playerWindow::on_Exit));
     Box.pack_start(Exit);
 
@@ -716,7 +712,7 @@ void playerWindow::on_Raise()
         msg.encode_header();
         c->write(msg);
     }
-    else if(curr_bet && Player->status == false)
+    else if(Player->status == false)
     {
         Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
         dialog.run();
@@ -769,6 +765,30 @@ void playerWindow::on_Fold()
         std::memcpy(msg.body(), t.c_str(), msg.body_length());
         msg.encode_header();
         c->write(msg);
+    }
+    else if(Player->status == false)
+    {
+        Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+        dialog.run();
+        dialog.hide();
+
+    }
+
+
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+
+
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
     }
 }
 
@@ -985,15 +1005,50 @@ void playerWindow::on_CardSwap()
     }
 }
 
-void playerWindow::on_SitOut()
-{
-    to_dealer["event"] = "sit_out";
-    hide();
-}
 void playerWindow::on_Exit()
 {
-    hide();
+	
+   	if(Player->status == true && Player->turn == true && gameStatus != -1)
+    {
+        to_dealer["event"] = "fold";
+        to_dealer["chat"] = Player->playerName + " exited.";
+		Player->status = false;
+	
+        chat_message msg;
+        std::string t = to_dealer.dump();
+
+        msg.body_length(t.size());
+        std::memcpy(msg.body(), t.c_str(), msg.body_length());
+        msg.encode_header();
+        c->write(msg);
+        hide();
+    }
+    else if(Player->status == false)
+    {
+        Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
+        dialog.run();
+        dialog.hide();
+
+    }
+
+
+    else if(gameStatus == -1)
+    {
+		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
+        dialog.run();
+        dialog.hide();    
+    
+    }
+
+
+    else if(Player->turn == false)
+    {
+    	Gtk::MessageDialog dialog(*this, "It is not your turn.");
+        dialog.run();
+        dialog.hide();
+    }
 }
+
 
 
 void playerWindow::on_Send()

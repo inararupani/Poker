@@ -51,14 +51,12 @@ public:
     void on_CardSwap();
     void on_Send();
     void on_Check();
-    void on_SitOut();
     void on_chip_1();
     void on_chip_5();
     void on_chip_25();
     void on_Clear();
 
 
-    Gtk::Image deck;
     Gtk::Image* Card1;
     Gtk::Image* Card2;
     Gtk::Image* Card3;
@@ -94,7 +92,6 @@ public:
     Gtk::Button Fold;
     Gtk::Button Exit;
     Gtk::Button CardSwap;
-    Gtk::Button SitOut;
     Gtk::Button Send;
     Gtk::VBox Box;
     Gtk::HBox checkBox;
