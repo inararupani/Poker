@@ -11,7 +11,6 @@
 #include <cstdlib>
 #include <deque>
 #include <iostream>
-#include <thread>
 #include <cstring>
 #include <assert.h>
 #include <vector>
@@ -40,7 +39,9 @@ typedef std::deque<chat_message> chat_message_queue;
 
 
 nlohmann::json to_dealer;
-int curr_bet; // the most recent bet amount to be
+
+//Global variables to show details in the GUI
+int curr_bet;
 int tot_pot;
 Gtk::Label *fromView = NULL;
 Gtk::Label *totPot = NULL;
@@ -50,43 +51,8 @@ Gtk::Label *balanceLbl = NULL;
 player *curr_player = NULL;
 std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
-int gameStatus;
 
-
-bool is_number(const std::string& s)
-{
-    return !s.empty() && std::find_if(s.begin(),
-                                      s.end(), [](unsigned char c)
-    {
-        return !std::isdigit(c);
-    }) == s.end();
-}
-
-bool valid_number(std::string numstr)
-{
-    if(numstr.length()>3)
-    {
-        return false;
-    }
-    else
-    {
-        if(numstr.length() == 1 && atoi(numstr.c_str()) == 0)
-        {
-            return true;
-        }
-        else
-        {
-            for(int i = 0; i < (int)numstr.length(); i++)
-            {
-                if(atoi(numstr.substr(i,1).c_str()) > 5 || atoi(numstr.substr(i,1).c_str())  < 1 )
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-}
+int gameStatus; // -1 means game has not started/ ended already, 1 means first betting round, 2 means swapping round, 3 means final betting round 
 
 
 class chat_client
@@ -168,19 +134,22 @@ private:
                          [this](std::error_code ec, std::size_t /*length*/)
         {
             if (!ec)
-            {
-                nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body()));
+            {	
+            	// reads the instructions sent by the server and store it in json to_player
+                nlohmann::json to_player = nlohmann::json::parse(std::string(read_msg_.body())); 
 
 
-
+				
+                // updates the status of the game
                 if(!to_player["game_round"].empty())
-                {
+                {	
                     string tempStatus = to_player["game_round"];
                     gameStatus = atoi(tempStatus.c_str());
                 }
 
+				// updates turn status of current player and shows whose turn it is currently.
                 if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty())
-                {
+                {	
                     currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));
                     if(std::string(to_player["turn"]["uuid"]) == curr_player->id)
                     {
@@ -191,23 +160,31 @@ private:
                         curr_player->turn = false;
                     }
                 }
-
+	
+				// updates total pot in GUI
                 if(!to_player["total_pot"].empty())
                 {
                     totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>");
                 }
+                
+                
+                // updates current bet to match in GUI
                 if(!to_player["current_bet"].empty())
                 {
                     curr_bet = to_player["current_bet"];
                     currBet->set_markup("<b>" + to_string(curr_bet) + "</b>");
                 }
 
+				/*
+				 as the game is started/ cards are swapped, updates 5 cards of current player in GUI, one by one,
+				 with time break of 500 milliseconds
+				*/
+
                 if(!to_player["hand"][curr_player->id]["card1"].empty())
-                {
+                {	
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card1"];
-                    cardsImage.at(0)->set("src/cards/" + tempCard + ".png");
-                    //cardsImage.at(0)->set_markup(tempCard);
+                    cardsImage.at(0)->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
 
@@ -215,36 +192,33 @@ private:
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card2"];
-                    cardsImage.at(1)->set("src/cards/" + tempCard + ".png");
-                    //cardsImage.at(1)->set_markup(tempCard);
+                    cardsImage.at(1)->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card3"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card3"];
-                    cardsImage.at(2)->set("src/cards/" + tempCard + ".png");
-                    //cardsImage.at(2)->set_markup(tempCard);
+                    cardsImage.at(2)->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card4"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card4"];
-                    cardsImage.at(3)->set("src/cards/" + tempCard + ".png");
-                    //cardsImage.at(3)->set_markup(tempCard);
+                    cardsImage.at(3)->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card5"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card5"];
-                    cardsImage.at(4)->set("src/cards/" + tempCard + ".png");
+                    cardsImage.at(4)->set("src/cards/" + tempCard + ".jpg");
                 }
 
-
-
-
+				
+				
+				// updates the chat history with latest chats
                 for(int i = 0; i < 4; i++)
                 {
                     chatBox[i] = chatBox[i+1];
@@ -258,15 +232,17 @@ private:
                                     + chatBox[3] + "\n"
                                     + chatBox[4]);
                                     
+                // sets player's checked status to false in swapping round, so they can check again in final betting round                     
                 if(gameStatus == 2)
                 {	
                 	curr_player->checked = false;	
                 }
-
-                if(gameStatus == -1 && !to_player["winner"].empty())  //need to make 0 later
+				
+				// updates status of all players when game ends and updates balance of the winner 
+                if(gameStatus == -1 && !to_player["winner"].empty())
                 {
-
-                    if(to_player["prize"]["uuid"] == curr_player->id)
+					
+					if(to_player["prize"]["uuid"] == curr_player->id)
                     {
                         curr_player->balance = curr_player->balance + atoi(std::string(to_player["prize"]["amount"]).c_str());
                         curr_player->chip1 = curr_player->chip1 + atoi(std::string(to_player["prize"]["amount"]).c_str());
@@ -274,17 +250,21 @@ private:
                                                "\t$1: " + to_string(curr_player->chip1) +
                                                "\t$5: " + to_string(curr_player->chip5) +
                                                "\t$25: " + to_string(curr_player->chip25));
+                        std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
                     }
+                    
 
-                    for(int i = 0; i < 4; i++)
-                    {
-                        chatBox[i] = chatBox[i+1];
-                    }
+					
                     curr_player->swapped = false;
                     curr_player->checked = false;
                     curr_player->turn = false;
                     curr_player->status = false;
+					
+                    for(int i = 0; i < 4; i++)
+                    {
+                        chatBox[i] = chatBox[i+1];
+                    }
 
                     chatBox[4] = std::string(to_player["winner"]) + " is the winner with " + std::string(to_player["winner_hand"]);
                     currTurn->set_markup("Turn: None");
@@ -294,7 +274,16 @@ private:
                                          + chatBox[2] + "\n"
                                          + chatBox[3] + "\n"
                                          + "<b>" + chatBox[4] + "</b>");
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2000));                                         
+					for(int i = 0; i < 5; i++)
+					{
+						cardsImage.at(i)->set("src/cards/blank_card.jpg");
+					}
+                    
                 }
+                
+
+				
 
 
                 std::cout.write(read_msg_.body(), read_msg_.body_length());
@@ -339,13 +328,11 @@ private:
 
 chat_client *c;
 
-//gtk classes start
 playerNameWindow::playerNameWindow()
 {
     set_title("Enter game");
     set_border_width(30);
     resize(400,200);
-    //set_position(Gtk::WIN_POS_CENTER_ALWAYS);
     Box.set_spacing(10);
 
     nameLabel.set_text("Enter your name:");
@@ -375,8 +362,7 @@ void playerNameWindow::on_OK()
 
     playerWindow w(p);
     Gtk::Main::run(w);
-} // get player's name from entry, opens playerWindow
-
+} 
 
 playerWindow::playerWindow(player *p):Player(p)
 {
@@ -396,32 +382,27 @@ playerWindow::playerWindow(player *p):Player(p)
     cardsBox.set_spacing(10);
     Card1 = new Gtk::Image();
     cardsImage.push_back(Card1);
-    //Card1->set_markup("blank");
-    Card1->set("src/cards/blank_card.png");
+    Card1->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card1);
 
     Card2 = new Gtk::Image();
     cardsImage.push_back(Card2);
-    //Card2->set_markup("blank");
-    Card2->set("src/cards/blank_card.png");
+    Card2->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card2);
 
     Card3 = new Gtk::Image();
     cardsImage.push_back(Card3);
-    Card3->set("src/cards/blank_card.png");
-    //Card3->set_markup("blank");
+    Card3->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card3);
 
     Card4 = new Gtk::Image();
     cardsImage.push_back(Card4);
-    Card4->set("src/cards/blank_card.png");
-    //Card4->set_markup("blank");
+    Card4->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card4);
 
     Card5 = new Gtk::Image();
     cardsImage.push_back(Card5);
-    Card5->set("src/cards/blank_card.png");
-    //Card5->set_markup("blank");
+    Card5->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card5);
 
     Box.pack_start(cardsBox);
@@ -592,7 +573,7 @@ void playerWindow::on_Ante()
     }
     else
     {
-        Player->status = true; //player status is true when the player has already ante.
+        Player->status = true;
         to_dealer["event"] = "ante";
         to_dealer["chat"] = Player->playerName + " put ante $1.";
 
@@ -631,7 +612,7 @@ void playerWindow::on_Call()
         temp25 = 0;
 
         to_dealer["event"] = "call";
-        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
+        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());
         to_dealer["chat"] = Player->playerName + " called $" + Amount.get_text().c_str();
 
         Amount.set_markup("<b>0</b>");
@@ -699,7 +680,7 @@ void playerWindow::on_Raise()
         temp25 = 0;
 
         to_dealer["event"] = "raise";
-        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
+        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());
         to_dealer["chat"] = Player->playerName + " raised to $" + Amount.get_text().c_str();
 
         Amount.set_markup("<b>0</b>");
@@ -766,6 +747,7 @@ void playerWindow::on_Fold()
         msg.encode_header();
         c->write(msg);
     }
+    
     else if(Player->status == false)
     {
         Gtk::MessageDialog dialog(*this, "You haven't put ante yet.");
@@ -774,7 +756,6 @@ void playerWindow::on_Fold()
 
     }
 
-
     else if(gameStatus == -1)
     {
 		Gtk::MessageDialog dialog(*this, "Game hasn't started yet.");
@@ -782,7 +763,6 @@ void playerWindow::on_Fold()
         dialog.hide();    
     
     }
-
 
     else if(Player->turn == false)
     {
@@ -860,7 +840,7 @@ void playerWindow::on_Bet()
         temp25 = 0;
 
         to_dealer["event"] = "bet";
-        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());//bet done by user
+        to_dealer["total_bet"] = std::atoi(Amount.get_text().c_str());
         to_dealer["chat"] = Player->playerName + " bet $" + Amount.get_text().c_str();
 
         Amount.set_markup("<b>0</b>");
@@ -1173,9 +1153,6 @@ void playerWindow::on_Clear()
 
     Amount.set_markup("<b>0</b>");
 }
-
-//gtk classes end
-
 
 int main(int argc, char* argv[])
 {

@@ -6,6 +6,7 @@
 
 
 string getRank(hand H1){
+	// This function returns the rank of a hand as a string.
 	if(H1.isRoyalFlush())
 		return "a Royal Flush";
 	else if(H1.isStraight() && H1.isFlush())
@@ -31,6 +32,11 @@ string getRank(hand H1){
 }
 
 int compareHand(hand H1, hand H2){
+	/* This function returns positive integer if hand H1 is better than H2,
+		returns negative if hand H2 is better than hand H1. It compares ranks
+		of two hands to determine better hand. If they are tied, determines better
+	 	hand by comparing card values.
+	*/ 
 	int score1 = 0;
 	int score2 = 0;
 	

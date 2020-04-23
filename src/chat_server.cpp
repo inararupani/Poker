@@ -173,7 +173,8 @@ private:
                     to_player["current_bet"] = to_dealer["total_bet"];
 
                     if(to_dealer["event"] == "start")
-                    {
+                    {	
+                    	
                         if(gameStatus >= 1)
                         {
                             to_player["chat"] = "Game is already started.";
@@ -185,6 +186,7 @@ private:
                         else
                         {
                             gameStatus = 1;
+                            to_player["current_bet"] = 0;
 
                             //to_player["turn"]["name"] = playerInfo.at(idlist.at(0));
                             //to_player["turn"]["uuid"] = idlist.at(0);
@@ -257,6 +259,7 @@ private:
                                 to_player["winner_hand"] = getRank(handInfo.at(best));
                                 to_player["prize"]["amount"] = std::to_string(totalPot);
                                 to_player["prize"]["uuid"] = best;
+                                to_player["current_bet"] = 0;
 
                                 totalPot = 0;
                                 currentBet = 0;
@@ -295,16 +298,45 @@ private:
                     else if(to_dealer["event"] == "fold")
                     {
                     	int temp = turn;
-                    	if(turn == (int)idlist.size())
+                    	if(turn == 0)
                     	{
-                    		gameStatus++;
-                    		turn = 0;
+                    		to_player["current_bet"] = 0;
                     	}
                     	
-                    	idlist.erase(idlist.begin() + temp);
-                    	
+                    	if(turn == ((int)idlist.size() - 1))
+                    	{	
+                    		gameStatus++;
+                    		to_player["current_bet"] = 0;
+                    		turn = 0;
+                    	}
+						
+						idlist.erase(idlist.begin() + temp);
+						
 						playerInfo.erase(std::string(to_dealer["from"]["uuid"]));
 						handInfo.erase(std::string(to_dealer["from"]["uuid"]));
+						
+                    	
+                    	if((int)idlist.size() == 1)
+						{
+							handInfo.at(idlist.at(0)).sequenceHand();
+							to_player["winner"] = playerInfo.at(idlist.at(0));
+							to_player["winner_hand"] = "with all others folded";
+							to_player["prize"]["amount"] = std::to_string(totalPot);
+							to_player["prize"]["uuid"] = idlist.at(0);
+							to_player["current_bet"] = 0;
+							
+							totalPot = 0;
+							currentBet = 0;
+							gameStatus = -1;
+							swapCount = 0;
+							
+							idlist.clear();
+							playerInfo.clear();
+							handInfo.clear();
+							
+								
+						}
+	
 						
                     }
                     else if(to_dealer["event"] == "raise")
