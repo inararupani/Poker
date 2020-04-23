@@ -41,13 +41,15 @@ typedef std::deque<chat_message> chat_message_queue;
 nlohmann::json to_dealer;
 
 //Global variables to show details in the GUI
+playerWindow* window = NULL;
 int curr_bet;
 int tot_pot;
-Gtk::Label *fromView = NULL;
-Gtk::Label *totPot = NULL;
-Gtk::Label *currBet = NULL;
-Gtk::Label *currTurn = NULL;
-Gtk::Label *balanceLbl = NULL;
+//Gtk::Label *fromView = NULL;
+//Gtk::Label *totPot = NULL;
+//Gtk::Label *currBet = NULL;
+//Gtk::Label *currTurn = NULL;
+//Gtk::Label *balanceLbl = NULL;
+
 player *curr_player = NULL;
 std::string chatBox[5];
 std::vector <Gtk::Image*> cardsImage;
@@ -140,6 +142,7 @@ private:
 
 
 				
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 // updates the status of the game
                 if(!to_player["game_round"].empty())
                 {	
@@ -150,7 +153,7 @@ private:
 				// updates turn status of current player and shows whose turn it is currently.
                 if(!to_player["turn"]["name"].empty() && !to_player["turn"]["uuid"].empty())
                 {	
-                    currTurn->set_markup("Turn: " + std::string(to_player["turn"]["name"]));
+                    window->currTurnLabel->set_markup("Turn: " + std::string(to_player["turn"]["name"]));
                     if(std::string(to_player["turn"]["uuid"]) == curr_player->id)
                     {
                         curr_player->turn = true;
@@ -164,7 +167,7 @@ private:
 				// updates total pot in GUI
                 if(!to_player["total_pot"].empty())
                 {
-                    totPot->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>");
+                    window->totPotLabel->set_markup("<b>" + std::string(to_player["total_pot"]) + "</b>");
                 }
                 
                 
@@ -172,7 +175,7 @@ private:
                 if(!to_player["current_bet"].empty())
                 {
                     curr_bet = to_player["current_bet"];
-                    currBet->set_markup("<b>" + to_string(curr_bet) + "</b>");
+                    window->currBetLabel->set_markup("<b>" + to_string(curr_bet) + "</b>");
                 }
 
 				/*
@@ -184,7 +187,7 @@ private:
                 {	
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card1"];
-                    cardsImage.at(0)->set("src/cards/" + tempCard + ".jpg");
+                    window->Card1->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
 
@@ -192,28 +195,28 @@ private:
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card2"];
-                    cardsImage.at(1)->set("src/cards/" + tempCard + ".jpg");
+                    window->Card2->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card3"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card3"];
-                    cardsImage.at(2)->set("src/cards/" + tempCard + ".jpg");
+                    window->Card3->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card4"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card4"];
-                    cardsImage.at(3)->set("src/cards/" + tempCard + ".jpg");
+                    window->Card4->set("src/cards/" + tempCard + ".jpg");
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 }
                 if(!to_player["hand"][curr_player->id]["card5"].empty())
                 {
                     std::string tempCard;
                     tempCard = to_player["hand"][curr_player->id]["card5"];
-                    cardsImage.at(4)->set("src/cards/" + tempCard + ".jpg");
+                    window->Card5->set("src/cards/" + tempCard + ".jpg");
                 }
 
 				
@@ -226,7 +229,7 @@ private:
 
                 chatBox[4] = to_player["chat"];
 
-                fromView->set_label(chatBox[0] + "\n"
+                window->chatLabel->set_label(chatBox[0] + "\n"
                                     + chatBox[1] + "\n"
                                     + chatBox[2] + "\n"
                                     + chatBox[3] + "\n"
@@ -246,16 +249,16 @@ private:
                     {
                         curr_player->balance = curr_player->balance + atoi(std::string(to_player["prize"]["amount"]).c_str());
                         curr_player->chip1 = curr_player->chip1 + atoi(std::string(to_player["prize"]["amount"]).c_str());
-                        balanceLbl->set_markup("Balance: " + to_string(curr_player->balance) +
+                        window->balanceLabel->set_markup("Balance: " + to_string(curr_player->balance) +
                                                "\t$1: " + to_string(curr_player->chip1) +
                                                "\t$5: " + to_string(curr_player->chip5) +
                                                "\t$25: " + to_string(curr_player->chip25));
-                        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                        
 
                     }
                     
 
-					
+					std::this_thread::sleep_for(std::chrono::milliseconds(500));
                     curr_player->swapped = false;
                     curr_player->checked = false;
                     curr_player->turn = false;
@@ -267,18 +270,28 @@ private:
                     }
 
                     chatBox[4] = std::string(to_player["winner"]) + " is the winner with " + std::string(to_player["winner_hand"]);
-                    currTurn->set_markup("Turn: None");
+                    window->currTurnLabel->set_markup("Turn: None");
 
-                    fromView->set_markup(chatBox[0] + "\n"
+                    window->chatLabel->set_markup(chatBox[0] + "\n"
                                          + chatBox[1] + "\n"
                                          + chatBox[2] + "\n"
                                          + chatBox[3] + "\n"
                                          + "<b>" + chatBox[4] + "</b>");
+                                         
                     std::this_thread::sleep_for(std::chrono::milliseconds(2000));                                         
-					for(int i = 0; i < 5; i++)
-					{
-						cardsImage.at(i)->set("src/cards/blank_card.jpg");
-					}
+			
+					
+						window->Card1->set("src/cards/blank_card.jpg");
+						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+						window->Card2->set("src/cards/blank_card.jpg");
+						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+						window->Card3->set("src/cards/blank_card.jpg");
+						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+						window->Card4->set("src/cards/blank_card.jpg");
+						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+						window->Card5->set("src/cards/blank_card.jpg");
+					
+						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
                     
                 }
                 
@@ -360,8 +373,9 @@ void playerNameWindow::on_OK()
     to_dealer["from"] = { {"uuid", p->id}, {"name",p->playerName} };
     curr_player = p;
 
-    playerWindow w(p);
-    Gtk::Main::run(w);
+    playerWindow* w = new playerWindow(p);
+    window = w;
+    Gtk::Main::run(*w);
 } 
 
 playerWindow::playerWindow(player *p):Player(p)
@@ -375,33 +389,33 @@ playerWindow::playerWindow(player *p):Player(p)
     Box.set_spacing(10);
 
     currTurnLabel = new Gtk::Label();
-    currTurn = currTurnLabel;
+    //currTurn = currTurnLabel;
     currTurnLabel->set_markup("Turn: ");
     Box.pack_start(*currTurnLabel);
 
     cardsBox.set_spacing(10);
     Card1 = new Gtk::Image();
-    cardsImage.push_back(Card1);
+    //cardsImage.push_back(Card1);
     Card1->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card1);
 
     Card2 = new Gtk::Image();
-    cardsImage.push_back(Card2);
+    //cardsImage.push_back(Card2);
     Card2->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card2);
 
     Card3 = new Gtk::Image();
-    cardsImage.push_back(Card3);
+    //cardsImage.push_back(Card3);
     Card3->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card3);
 
     Card4 = new Gtk::Image();
-    cardsImage.push_back(Card4);
+    //cardsImage.push_back(Card4);
     Card4->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card4);
 
     Card5 = new Gtk::Image();
-    cardsImage.push_back(Card5);
+    //cardsImage.push_back(Card5);
     Card5->set("src/cards/blank_card.jpg");
     cardsBox.pack_start(*Card5);
 
@@ -423,7 +437,7 @@ playerWindow::playerWindow(player *p):Player(p)
     Box.pack_start(totalPot);
 
     totPotLabel = new Gtk::Label();
-    totPot = totPotLabel;
+    //totPot = totPotLabel;
     totPotLabel->set_markup("<b>0</b>");
     Box.pack_start(*totPotLabel);
 
@@ -431,12 +445,12 @@ playerWindow::playerWindow(player *p):Player(p)
     Box.pack_start(currentBet);
 
     currBetLabel = new Gtk::Label();
-    currBet = currBetLabel;
+    //currBet = currBetLabel;
     currBetLabel->set_markup("<b>" + to_string(curr_bet) + "</b>");
     Box.pack_start(*currBetLabel);
 
     balanceLabel  = new Gtk::Label();
-    balanceLbl = balanceLabel;
+    //balanceLbl = balanceLabel;
     balanceLabel->set_markup("Balance: " + to_string(Player->balance) +
                              "\t$1: " + to_string(Player->chip1) +
                              "\t$5: " + to_string(Player->chip5) +
@@ -519,7 +533,7 @@ playerWindow::playerWindow(player *p):Player(p)
     Box.pack_start(chatHistory);
 
     chatLabel = new Gtk::Label();
-    fromView = chatLabel;
+    //fromView = chatLabel;
     chatLabel->set_label(chatBox[0] + "\n"
                          + chatBox[1] + "\n"
                          + chatBox[2] + "\n"
