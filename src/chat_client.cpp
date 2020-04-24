@@ -278,20 +278,21 @@ private:
                                          + chatBox[3] + "\n"
                                          + "<b>" + chatBox[4] + "</b>");
                                          
+                    //resets cards to blank to start a new game
                     std::this_thread::sleep_for(std::chrono::milliseconds(2000));                                         
 			
 					
-						window->Card1->set("src/cards/blank_card.jpg");
-						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
-						window->Card2->set("src/cards/blank_card.jpg");
-						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
-						window->Card3->set("src/cards/blank_card.jpg");
-						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
-						window->Card4->set("src/cards/blank_card.jpg");
-						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
-						window->Card5->set("src/cards/blank_card.jpg");
-					
-						std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+					window->Card1->set("src/cards/blank_card.jpg");
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+					window->Card2->set("src/cards/blank_card.jpg");
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+					window->Card3->set("src/cards/blank_card.jpg");
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+					window->Card4->set("src/cards/blank_card.jpg");
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+					window->Card5->set("src/cards/blank_card.jpg");
+				
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
                     
                 }
                 
@@ -378,6 +379,7 @@ void playerNameWindow::on_OK()
     Gtk::Main::run(*w);
 } 
 
+//main player window
 playerWindow::playerWindow(player *p):Player(p)
 {
     temp1 = 0;
@@ -551,7 +553,7 @@ playerWindow::playerWindow(player *p):Player(p)
     add(Box);
 }
 
-
+// signal handlers for main player window
 void playerWindow::on_Start()
 {
     if(Player->status == false)

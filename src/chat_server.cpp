@@ -171,7 +171,12 @@ private:
                 if(to_dealer["event"] != "chat")
                 {
                     to_player["current_bet"] = to_dealer["total_bet"];
-
+ 					/*
+ 					dealer decides what to do based on the "event" choosed by the user below this
+ 					event could be "start", "ante", "call", "bet", "raise", "check", "fold"
+ 					based on the event, the turn is determined, round of the game is determined,
+ 					winner is determined, etc.
+ 					*/
                     if(to_dealer["event"] == "start")
                     {	
                     	
