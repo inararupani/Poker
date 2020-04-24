@@ -17,6 +17,7 @@ public:
 
     void shuffle_deck(); // shuffles the vector of initially 52 cards using using pre-defined function random_shuffle()
     Card get_card(); //gets the card needs to be distributed or swapped during the game
+    void reset_deck();
 
 };
 

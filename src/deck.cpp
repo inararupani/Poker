@@ -35,3 +35,15 @@ Card Deck::get_card()
     deckOfCards.erase(deckOfCards.begin());
     return retCard;
 }
+
+void Deck::reset_deck()
+{
+	for(int j = D; j <= S; j++)
+    {
+        for(int k = 1; k < 14; k++)
+        {
+            deckOfCards.push_back(Card(k,(SUIT)j));
+        }
+    }
+
+}

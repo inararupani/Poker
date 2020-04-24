@@ -192,17 +192,20 @@ private:
                         {
                             gameStatus = 1;
                             to_player["current_bet"] = 0;
-
-                            //to_player["turn"]["name"] = playerInfo.at(idlist.at(0));
-                            //to_player["turn"]["uuid"] = idlist.at(0);
-
+                            
                             for(int i = 0; i < (int)idlist.size(); i++)
                             {
                                 hand H;
 
                                 for(int j = 0; j < 5; j++)
                                 {
+                                	if(deck->deckOfCards.size() == 0)
+                                    {
+                                    	deck->reset_deck();
+                                    	deck->shuffle_deck();
+                                    }
                                     H.handOfCards.push_back(deck->get_card());
+                                    	
                                 }
 
 
@@ -223,7 +226,6 @@ private:
                     else if(to_dealer["event"] == "ante")
                     {
                         totalPot++;
-                        std::cout << (to_dealer["from"]["uuid"]) << std::endl;
                         idlist.push_back(to_dealer["from"]["uuid"]);
 
                         playerInfo.insert(pair<std::string,std::string> (std::string(to_dealer["from"]["uuid"]), std::string(to_dealer["from"]["name"])));
@@ -256,7 +258,6 @@ private:
                                     if(compareHand(handInfo.at(best), handInfo.at(idlist.at(i))) < 0)
                                     {
                                         best = idlist.at(i);
-                                        std::cout << "best hand changed" << std::endl;
                                     }
                                 }
 
@@ -362,15 +363,18 @@ private:
                         
                         string cardSwaps = to_dealer["swap_cards"];
 
-                        if(atoi(cardSwaps.c_str()) == 0)
-                        {
-                            std::cerr << "non-swapped" << std::endl;
-                        }
-                        else
+                        if(atoi(cardSwaps.c_str()) != 0)
+                        
                         {
                             string temp = to_dealer["from"]["uuid"];
                             for(int i = 0; i < (int)cardSwaps.length(); i++)
                             {
+                            	if(deck->deckOfCards.size() == 0)
+                                {
+                                    deck->reset_deck();
+                                    deck->shuffle_deck();
+                                }
+                        
                                 handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1) = deck->get_card();
                                 to_player["hand"][temp]["card" + cardSwaps.substr(i,1)] = handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1).generateCardName();
                             }
@@ -396,12 +400,13 @@ private:
                 to_player["total_pot"] = std::to_string(totalPot);
 
                 to_player["game_round"] = std::to_string(gameStatus);
+                
+                to_player["player_count"] = std::to_string(idlist.size());
 
                 std::string t = to_player.dump();
                 chat_message sending;
                 if (t.size() < chat_message::max_body_length)
                 {
-                    std::cout << "the size string being sent is " << t.size() << std::endl;
                     memcpy( sending.body(), t.c_str(), t.size() );
                     sending.body_length(t.size());
                     sending.encode_header();
