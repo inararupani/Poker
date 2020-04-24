@@ -239,7 +239,12 @@ private:
                         {
                             gameStatus++;
                             turn = 0;
-                            if(gameStatus >= 4)
+                            if(gameStatus == 2)
+                            {
+                            	to_player["chat"] = std::string(to_player["chat"]) + ". Swapping round begins.";
+                            	to_player["current_bet"] = 0;
+                            }
+                            else if(gameStatus >= 4)
                             {
                                 std::string best;
 
@@ -356,6 +361,7 @@ private:
                     }
                     else if(to_dealer["event"] == "swap")
                     {
+                    	to_player["current_bet"] = 0;
                         swapCount++;
                         std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
 						std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
@@ -384,7 +390,8 @@ private:
                         {
                             
                             gameStatus++;
-                            to_player["current_bet"] = 0;
+                            
+                            to_player["chat"] = std::string(to_player["chat"]) + ". Swapping round ends.";
                         }
 
 
