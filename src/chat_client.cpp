@@ -344,6 +344,9 @@ chat_client *c;
 
 playerNameWindow::playerNameWindow()
 {
+	/*
+	initial window to get players name before creating main game window
+	*/
     set_title("Enter game");
     set_border_width(30);
     resize(400,200);
@@ -366,6 +369,7 @@ playerNameWindow::playerNameWindow()
 
 void playerNameWindow::on_OK()
 {
+	// create new main game window when ok pressed
     hide();
 
     string playerName = Name.get_text();
@@ -379,9 +383,12 @@ void playerNameWindow::on_OK()
     Gtk::Main::run(*w);
 }
 
-//main player window
+/*
+main game window for players having buttons, labels, card images
+*/
 playerWindow::playerWindow(player *p):Player(p)
 {
+
     temp1 = 0;
     temp5 = 0;
     temp25 = 0;
@@ -559,7 +566,7 @@ playerWindow::playerWindow(player *p):Player(p)
 // signal handlers for main player window
 void playerWindow::on_Start()
 {
-
+	// start the dealing of card on pressing start
     if(gameStatus > -1)
     {
         Gtk::MessageDialog dialog(*this, "Game has already started. Wait for the game to finish.");
@@ -591,7 +598,7 @@ void playerWindow::on_Start()
 }
 
 void playerWindow::on_Ante()
-{
+{	// joins the game on pressing ante, balance is deducted, balance updated in the GUI on pressing ante button
     if(Player->chip1 <= 0)
     {
         Gtk::MessageDialog dialog(*this, "You do not have enough $1 chips.");
@@ -642,13 +649,13 @@ void playerWindow::on_Ante()
 }
 
 void playerWindow::on_Help()
-{
+{	// give link to youtube video that teaches how to play 5 card draw
     Gtk::MessageDialog dialog(*this, "Learn how to play 5 card draw:\nhttps://www.youtube.com/watch?v=UmtSUhSfyYE");
     dialog.run();
     dialog.hide();
 }
 void playerWindow::on_Call()
-{
+{	// matches current bet, balance deducted, balance updated in the GUI on pressing call button
 
     if(curr_bet != 0 && std::atoi(Amount.get_text().c_str()) == curr_bet && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus !=-1)
     {
@@ -717,7 +724,7 @@ void playerWindow::on_Call()
 
 }
 void playerWindow::on_Raise()
-{
+{	// raises current bet, balance deducted, balance updated in the GUI on pressing raise button
     if(std::atoi(Amount.get_text().c_str()) > curr_bet && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus != -1)
     {
         temp1 = 0;
@@ -777,7 +784,7 @@ void playerWindow::on_Raise()
 
 }
 void playerWindow::on_Fold()
-{
+{	// folds current hand, can wait until next game starts, on pressing fold button
     if(Player->status == true && Player->turn == true && gameStatus != -1)
     {
         to_dealer["event"] = "fold";
@@ -877,7 +884,7 @@ void playerWindow::on_Check()
 
 
 void playerWindow::on_Bet()
-{
+{	// initiates bet amount, balance deducted, balance updated in the GUI on pressing call button
     if(curr_bet == 0 && Player->status == true && Player->turn == true && gameStatus != 2 && gameStatus != -1)
     {
         temp1 = 0;
@@ -936,7 +943,7 @@ void playerWindow::on_Bet()
 }
 
 void playerWindow::on_CardSwap()
-{
+{	// requests dealer for particular cards to be swapped
     if(gameStatus != 2)
     {
         Gtk::MessageDialog dialog(*this, "Not a swapping round.");
@@ -1032,7 +1039,7 @@ void playerWindow::on_CardSwap()
 
 void playerWindow::on_Exit()
 {
-
+	// fold and leaves the room
     if(Player->status == true && Player->turn == true && gameStatus != -1)
     {
         to_dealer["event"] = "fold";
@@ -1077,7 +1084,7 @@ void playerWindow::on_Exit()
 
 
 void playerWindow::on_Send()
-{
+{	// sends text from the chat 
 
     to_dealer["event"] = "chat";
     to_dealer["chat"] =  Player->playerName + ": " + std::string((Chat.get_text()).c_str());
@@ -1098,7 +1105,7 @@ void playerWindow::on_Send()
 
 
 void playerWindow::on_chip_1()
-{
+{	// puts $1 chip to bet, call, or raise. GUI balance updated.
     if(Player->chip1 <= 0)
     {
         Gtk::MessageDialog dialog(*this, "Not enough $1 chips.");
@@ -1125,7 +1132,7 @@ void playerWindow::on_chip_1()
 
 }
 void playerWindow::on_chip_5()
-{
+{	// puts $5 chip to bet, call, or raise. GUI balance updated.
     if(Player->chip5 <= 0)
     {
         Gtk::MessageDialog dialog(*this, "Not enough $5 chips.");
@@ -1151,7 +1158,7 @@ void playerWindow::on_chip_5()
 
 }
 void playerWindow::on_chip_25()
-{
+{	// puts $25 chip to bet, call, or raise. GUI balance updated.
     if(Player->chip25 <= 0)
     {
         Gtk::MessageDialog dialog(*this, "Not enough $25 chips.");
@@ -1178,7 +1185,7 @@ void playerWindow::on_chip_25()
 }
 
 void playerWindow::on_Clear()
-{
+{	// clears current bet amount initially set by the player, GUI bet reset.
     Player->chip1 = Player->chip1 + temp1;
     Player->chip5 = Player->chip5 + temp5;
     Player->chip25 = Player->chip25 + temp25;
@@ -1233,7 +1240,7 @@ int main(int argc, char* argv[])
             io_context.run();
         });
 
-
+		// runs window requesting player's name
         Gtk::Main app(argc, argv);
         playerNameWindow w;
         Gtk::Main::run(w);

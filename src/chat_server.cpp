@@ -178,8 +178,14 @@ private:
                     winner is determined, etc.
                     */
                     if(to_dealer["event"] == "start")
-                    {
-
+                    {	
+                    	/*
+                    	if the event received is start, upon no interference, game status is updated,
+                    	current bet is initialized to 0, cards are dealt, sequenced and send back to
+                    	all players, players are only able to read cards sent to them based on uuid 
+                    	even though all the players are sent the same instruction 
+                    	*/
+		
                         if(gameStatus >= 1)
                         {
                             to_player["chat"] = "Game is already started.";
@@ -225,6 +231,10 @@ private:
                     }
                     else if(to_dealer["event"] == "ante")
                     {
+                    /*
+                    if the event recieved is ante, active player's list is updated, total pot is updated
+                    $1 per active player
+                    */
                         totalPot++;
                         idlist.push_back(to_dealer["from"]["uuid"]);
 
@@ -232,6 +242,13 @@ private:
                     }
                     else if(to_dealer["event"] == "call")
                     {
+                    /*
+                   	if the received event is call, turn is switched to next player, total pot is updated
+                   	based on the amount called by the player, game staus is updated and if it is the last 
+                   	call of the game, the winner is decided by comparision of hands of all active players. 
+                   	Also, total pot amountis sent to the players, so winner's total balance is updated, 
+                   	and other variables arereset to start a new game.
+                    */
                         int tempPot = to_dealer["total_bet"];
                         totalPot = totalPot + tempPot;
 
@@ -292,6 +309,9 @@ private:
 
                     }
                     else if(to_dealer["event"] == "check") {
+                    	/*
+                    	if the received event is check, the turn is switched to next player.
+                    	*/
                         std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
                         std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
                         turn = 0;
@@ -300,6 +320,10 @@ private:
                     }
                     else if(to_dealer["event"] == "bet")
                     {
+                    	/*
+                    	if the received event is bet, total pot is updated by the amount of bet 
+                    	done by the player, and turn is switched to next player.	
+                    	*/
                         int tempPot = to_dealer["total_bet"];
                         totalPot = totalPot + tempPot;
 
@@ -307,7 +331,14 @@ private:
 
                     }
                     else if(to_dealer["event"] == "fold")
-                    {
+                    {	
+                    	/*
+                    	if the received event is fold, turn is switched to next player, the player who fold
+                    	is removed from active players list. If only one player remain after a fold, the last
+                    	player standing wins automatically regardless of the rank of his hand. Also, total pot 
+                    	amount is sent to the players, so winner's total balance is updated, and other variables
+                    	are reset to start a new game.
+                    	*/
                         int temp = turn;
                         if(turn == 0)
                         {
@@ -352,6 +383,10 @@ private:
                     }
                     else if(to_dealer["event"] == "raise")
                     {
+                    	/*
+                    	if the received event is raise, total pot is updated by the amount of raised 
+                    	by the player, and turn is switched to next player.	
+                    	*/
                         int tempPot = to_dealer["total_bet"];
                         totalPot = totalPot + tempPot;
 
@@ -361,6 +396,11 @@ private:
                     }
                     else if(to_dealer["event"] == "swap")
                     {
+                    	/*
+                    	if received event is swap, dealer reads the cards that player wants to switch,
+                    	and get new card from the card to replace the old cards. if all swaps are
+                    	completed, game status is updated.
+                    	*/
                         to_player["current_bet"] = 0;
                         swapCount++;
                         std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
@@ -398,11 +438,17 @@ private:
                     }
                     if(gameStatus != -1)
                     {
+                    	/*
+                    	at any time, the game is being played (after start and before end), turn is sent to the players.
+                    	*/
                         to_player["turn"]["name"] = playerInfo.at(idlist.at(turn));
                         to_player["turn"]["uuid"] = idlist.at(turn);
                     }
 
                 }
+                /*
+                total pot, game round, player count are send to players regardless of the status of the game
+                */
 
                 to_player["total_pot"] = std::to_string(totalPot);
 
