@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class Deck{
+class Deck {
 public:
     vector <Card> deckOfCards;
 

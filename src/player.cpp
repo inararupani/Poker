@@ -10,8 +10,8 @@
 
 
 player::player(string playerName)
-{		
-	//player constructor: sets player name, status to false, generates id from uuid, initializes balance and chips, sets swapped, turn, checked to false.
+{
+    //player constructor: sets player name, status to false, generates id from uuid, initializes balance and chips, sets swapped, turn, checked to false.
     this->playerName = playerName;
     this->status = false;
     id = boost::uuids::to_string(boost::uuids::random_generator()());

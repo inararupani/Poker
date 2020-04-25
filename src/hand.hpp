@@ -26,7 +26,7 @@ public:
     bool isFullHouse();
     bool isFourOfAKind();
     bool isRoyalFlush();
-    
+
     int pairVal();
     int twoPairHigh();
     int twoPairLow();

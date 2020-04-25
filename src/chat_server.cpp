@@ -171,15 +171,15 @@ private:
                 if(to_dealer["event"] != "chat")
                 {
                     to_player["current_bet"] = to_dealer["total_bet"];
- 					/*
- 					dealer decides what to do based on the "event" choosed by the user below this
- 					event could be "start", "ante", "call", "bet", "raise", "check", "fold"
- 					based on the event, the turn is determined, round of the game is determined,
- 					winner is determined, etc.
- 					*/
+                    /*
+                    dealer decides what to do based on the "event" choosed by the user below this
+                    event could be "start", "ante", "call", "bet", "raise", "check", "fold"
+                    based on the event, the turn is determined, round of the game is determined,
+                    winner is determined, etc.
+                    */
                     if(to_dealer["event"] == "start")
-                    {	
-                    	
+                    {
+
                         if(gameStatus >= 1)
                         {
                             to_player["chat"] = "Game is already started.";
@@ -192,20 +192,20 @@ private:
                         {
                             gameStatus = 1;
                             to_player["current_bet"] = 0;
-                            
+
                             for(int i = 0; i < (int)idlist.size(); i++)
                             {
                                 hand H;
 
                                 for(int j = 0; j < 5; j++)
                                 {
-                                	if(deck->deckOfCards.size() == 0)
+                                    if(deck->deckOfCards.size() == 0)
                                     {
-                                    	deck->reset_deck();
-                                    	deck->shuffle_deck();
+                                        deck->reset_deck();
+                                        deck->shuffle_deck();
                                     }
                                     H.handOfCards.push_back(deck->get_card());
-                                    	
+
                                 }
 
 
@@ -241,8 +241,8 @@ private:
                             turn = 0;
                             if(gameStatus == 2)
                             {
-                            	to_player["chat"] = std::string(to_player["chat"]) + ". Swapping round begins.";
-                            	to_player["current_bet"] = 0;
+                                to_player["chat"] = std::string(to_player["chat"]) + ". Swapping round begins.";
+                                to_player["current_bet"] = 0;
                             }
                             else if(gameStatus >= 4)
                             {
@@ -291,12 +291,12 @@ private:
                         }
 
                     }
-                    else if(to_dealer["event"] == "check"){
-                    	std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
-						std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
+                    else if(to_dealer["event"] == "check") {
+                        std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
+                        std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
                         turn = 0;
                         to_player["current_bet"] = 0;
-                        
+
                     }
                     else if(to_dealer["event"] == "bet")
                     {
@@ -308,47 +308,47 @@ private:
                     }
                     else if(to_dealer["event"] == "fold")
                     {
-                    	int temp = turn;
-                    	if(turn == 0)
-                    	{
-                    		to_player["current_bet"] = 0;
-                    	}
-                    	
-                    	if(turn == ((int)idlist.size() - 1))
-                    	{	
-                    		gameStatus++;
-                    		to_player["current_bet"] = 0;
-                    		turn = 0;
-                    	}
-						
-						idlist.erase(idlist.begin() + temp);
-						
-						playerInfo.erase(std::string(to_dealer["from"]["uuid"]));
-						handInfo.erase(std::string(to_dealer["from"]["uuid"]));
-						
-                    	
-                    	if((int)idlist.size() == 1)
-						{
-							handInfo.at(idlist.at(0)).sequenceHand();
-							to_player["winner"] = playerInfo.at(idlist.at(0));
-							to_player["winner_hand"] = "with all others folded";
-							to_player["prize"]["amount"] = std::to_string(totalPot);
-							to_player["prize"]["uuid"] = idlist.at(0);
-							to_player["current_bet"] = 0;
-							
-							totalPot = 0;
-							currentBet = 0;
-							gameStatus = -1;
-							swapCount = 0;
-							
-							idlist.clear();
-							playerInfo.clear();
-							handInfo.clear();
-							
-								
-						}
-	
-						
+                        int temp = turn;
+                        if(turn == 0)
+                        {
+                            to_player["current_bet"] = 0;
+                        }
+
+                        if(turn == ((int)idlist.size() - 1))
+                        {
+                            gameStatus++;
+                            to_player["current_bet"] = 0;
+                            turn = 0;
+                        }
+
+                        idlist.erase(idlist.begin() + temp);
+
+                        playerInfo.erase(std::string(to_dealer["from"]["uuid"]));
+                        handInfo.erase(std::string(to_dealer["from"]["uuid"]));
+
+
+                        if((int)idlist.size() == 1)
+                        {
+                            handInfo.at(idlist.at(0)).sequenceHand();
+                            to_player["winner"] = playerInfo.at(idlist.at(0));
+                            to_player["winner_hand"] = "with all others folded";
+                            to_player["prize"]["amount"] = std::to_string(totalPot);
+                            to_player["prize"]["uuid"] = idlist.at(0);
+                            to_player["current_bet"] = 0;
+
+                            totalPot = 0;
+                            currentBet = 0;
+                            gameStatus = -1;
+                            swapCount = 0;
+
+                            idlist.clear();
+                            playerInfo.clear();
+                            handInfo.clear();
+
+
+                        }
+
+
                     }
                     else if(to_dealer["event"] == "raise")
                     {
@@ -357,30 +357,30 @@ private:
 
                         std::rotate(idlist.begin(), idlist.begin() + turn,idlist.end());
 
-						turn = 1;
+                        turn = 1;
                     }
                     else if(to_dealer["event"] == "swap")
                     {
-                    	to_player["current_bet"] = 0;
+                        to_player["current_bet"] = 0;
                         swapCount++;
                         std::rotate(idlist.begin(), idlist.begin() + turn, idlist.end());
-						std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
+                        std::rotate(idlist.begin(), idlist.begin() + 1, idlist.end());
                         turn = 0;
-                        
+
                         string cardSwaps = to_dealer["swap_cards"];
 
                         if(atoi(cardSwaps.c_str()) != 0)
-                        
+
                         {
                             string temp = to_dealer["from"]["uuid"];
                             for(int i = 0; i < (int)cardSwaps.length(); i++)
                             {
-                            	if(deck->deckOfCards.size() == 0)
+                                if(deck->deckOfCards.size() == 0)
                                 {
                                     deck->reset_deck();
                                     deck->shuffle_deck();
                                 }
-                        
+
                                 handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1) = deck->get_card();
                                 to_player["hand"][temp]["card" + cardSwaps.substr(i,1)] = handInfo.at(temp).handOfCards.at(atoi(cardSwaps.substr(i,1).c_str())-1).generateCardName();
                             }
@@ -388,9 +388,9 @@ private:
 
                         if(swapCount == (int)idlist.size())
                         {
-                            
+
                             gameStatus++;
-                            
+
                             to_player["chat"] = std::string(to_player["chat"]) + ". Swapping round ends.";
                         }
 
@@ -407,7 +407,7 @@ private:
                 to_player["total_pot"] = std::to_string(totalPot);
 
                 to_player["game_round"] = std::to_string(gameStatus);
-                
+
                 to_player["player_count"] = std::to_string(idlist.size());
 
                 std::string t = to_player.dump();
