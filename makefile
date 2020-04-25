@@ -7,13 +7,16 @@ CPPFLAGS+= ${GTKCOMPILEFLAGS} -I./include -I./asio-1.12.2/include -I./src -Wno-d
 LDLIBS+= -lpthread
 
 
-TARGETS=asio-1.12.2 chat_client chat_server
+TARGETS=asio-1.12.2 chat_client chat_server automated_tests
 
 all:${TARGETS}
 
 asio-1.12.2:
 	tar xzf asio-1.12.2.tar.gz
-
+	
+automated_tests:./src/automated_tests.cpp ./src/game.cpp ./src/hand.cpp ./src/deck.cpp ./src/card.cpp
+	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS}
+	
 chat_client:./src/chat_client.cpp  ./src/player.cpp ./src/game.cpp ./src/hand.cpp ./src/deck.cpp ./src/card.cpp
 	${CXX} -o $@ $^  ${CXXFLAGS} ${CPPFLAGS} ${LDLIBS} ${GTKLINKFLAGS}
 
@@ -24,3 +27,4 @@ clean:
 	-rm -rf asio-1.12.2
 	-rm -f chat_client
 	-rm -f chat_server
+	-rm -f automated_tests
