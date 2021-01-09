@@ -1,6 +1,6 @@
 Poker++
 
-Designed and Developed a n-tiered architecture poker design in a team of four. The initial code is being imported through bitbucket
+Designed and Developed a n-tiered architecture poker design in a team of four. 
 
 Instruction to run and compile code on the terminal
 
